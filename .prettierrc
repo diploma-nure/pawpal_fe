@@ -1,0 +1,23 @@
+{
+  "printWidth": 80,
+  "tabWidth": 2,
+  "semicolon": true,
+  "trailingComma": "all",
+  "bracketSpacing": true,
+  "bracketSameLine": false,
+  "endOfLine": "lf",
+  "singleQuote": true,
+  "importOrder": [
+    "^@features/(.*)$",
+    "^@components/(.*)$",
+    "^@stores/(.*)$",
+    "^@hooks/(.*)$",
+    "^@utils/(.*)$",
+    "^@lib/(.*)$",
+    "^@types/(.*)$",
+    "^@assets/(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
+}
