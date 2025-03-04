@@ -2,5 +2,8 @@
 
 
 .page {
-  background-color: $red;
+  display: flex;
+  flex-direction: column;
+
+  background-color: $beige;
 }
