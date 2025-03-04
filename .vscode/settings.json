@@ -1,0 +1,54 @@
+{
+  // Code Actions on Save Settings
+  "editor.codeActionsOnSave": {
+    "source.fixAll.prettier": "always",
+    "source.fixAll.eslint": "always",
+    "source.organizeImports": "always",
+    "source.sortImports": "always"
+  },
+
+  // Editor Formatting Settings
+  "eslint.format.enable": true,
+  "editor.formatOnSave": true,
+  "eslint.codeActionsOnSave.rules": null,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.endOfLine": "lf",
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "prettier.endOfLine": "lf"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "vscode.css-language-features"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "vscode.css-language-features"
+  },
+  "[go]": {
+    "editor.defaultFormatter": "golang.go",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "always"
+    },
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": true
+  },
+  "[markdown]": {
+    "files.trimTrailingWhitespace": false
+  },
+  "[svg]": {
+    "editor.defaultFormatter": "jock.svg"
+  },
+  "prettier.singleQuote": true
+}
