@@ -1,0 +1,86 @@
+@import "../styles/utils/variables";
+
+.leftIcon,
+.rightIcon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  &.sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  &.md {
+    padding: 0.75rem 2rem;
+
+    border-radius: 0.5rem;
+    font-size: 1.125rem;
+    line-height: 1.125rem;
+    font-weight: 600;
+  }
+
+  &.lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  &.primary {
+    &.filled {
+      background-color: $orange;
+      color: $white;
+      border: 1px solid $orange;
+
+      &:hover {
+        background-color: $dark-orange;
+        border-color: $dark-orange;
+      }
+
+      &:disabled {
+        background-color: $light-orange;
+        border-color: $light-orange;
+        cursor: not-allowed;
+      }
+    }
+
+    &.outline {
+      background-color: transparent;
+      color: $orange;
+      border: 1px solid $orange;
+
+      &:hover {
+        background-color: $pale-orange;
+      }
+
+      &:disabled {
+        color: $light-orange;
+        border-color: $light-orange;
+        cursor: not-allowed;
+      }
+    }
+
+    &.link {
+      background-color: transparent;
+      color: $orange;
+      border: none;
+      text-decoration: underline;
+
+      &:hover {
+        color: #2563eb;
+      }
+
+      &:disabled {
+        color: #93c5fd;
+        text-decoration: none;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
