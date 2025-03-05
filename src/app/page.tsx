@@ -1,4 +1,5 @@
 import { Button } from '@/components/Button/Button';
+import { Icon } from '@/components/Icon/Icon';
 import { MultiSelect } from '@/components/Select/Select';
 import styles from './page.module.scss';
 
@@ -17,6 +18,7 @@ export default function Home() {
         <div style={{ maxWidth: '300px' }}>
           <MultiSelect options={sortOptions} />
         </div>
+        <Icon name="Google" width={32} height={32} />
       </main>
     </div>
   );
