@@ -1,0 +1,98 @@
+@import "../styles/utils/variables";
+
+.multiSelectWrapper {
+  position: relative;
+  width: 100%;
+  // max-width: 320px;
+}
+
+.selectHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border: 1px solid $dark-blue;
+  border-radius: 8px;
+  background-color: transparent;
+  cursor: pointer;
+  color: $dark-blue;
+  font-size: 16px;
+
+  &.open {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: none;
+  }
+}
+
+.arrow {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 10px;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid $dark-blue;
+  transition: transform 0.3s ease;
+}
+
+.selectHeader.open .arrow {
+  transform: rotate(180deg);
+}
+
+.selectedOption {
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.optionsList {
+  position: absolute;
+  margin-top: 10px;
+  top: 100%;
+  left: 0;
+  right: 0;
+  border: 1px solid $blue;
+  border-radius: 8px;
+  background-color: $beige;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #F3F4F6;
+  }
+
+  input[type="checkbox"] {
+    flex-shrink: 0;
+    margin-right: 10px;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid $dark-blue;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+
+    &:checked {
+      background-color: $dark-blue;
+      border-color: $dark-blue;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='10' viewBox='0 0 12 10' fill='none'%3E%3Cpath d='M1 5.5L4 8.5L11 1.5' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  }
+}
+
+.checkboxText {
+  font-size: 16px;
+  color: $dark-blue;
+}
