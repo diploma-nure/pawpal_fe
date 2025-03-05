@@ -1,5 +1,6 @@
 'use client';
 
+import { useClickOutside } from '@/hooks';
 import React, { useState } from 'react';
 import styles from './styles.module.scss';
 
@@ -14,6 +15,9 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const ref = useClickOutside<HTMLDivElement>(() => {
+    setIsOpen(false);
+  });
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -26,7 +30,7 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
   };
 
   return (
-    <div className={styles.multiSelectWrapper}>
+    <div ref={ref} className={styles.multiSelectWrapper}>
       <div className={styles.selectHeader} onClick={toggleDropdown}>
         <p className={styles.selectedOption}>
           {selectedOptions.length > 0

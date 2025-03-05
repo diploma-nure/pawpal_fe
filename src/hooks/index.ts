@@ -1,1 +1,1 @@
-// shared hooks used across the entire application
+export * from './useClickOutside';
