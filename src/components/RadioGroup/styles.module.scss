@@ -1,0 +1,66 @@
+@import "../styles/utils/variables";
+
+.radio-button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: transparent;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  gap: 8px;
+
+  & input[type="radio"] {
+    position: relative;
+    opacity: 0;
+    cursor: pointer;
+  }
+}
+
+.radio-custom {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  height: 20px;
+  width: 20px;
+  background-color: transparent;
+  border: 1px solid $dark-blue;
+  border-radius: 50%;
+
+  &::after {
+    content: "";
+    position: absolute;
+    display: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: $dark-blue;
+  }
+}
+
+.radio-option:hover input~.radio-custom {
+  border-color: $dark-blue;
+}
+
+.radio-option input:checked~.radio-custom {
+  border: 1px solid $dark-blue;
+}
+
+.radio-option input:checked~.radio-custom:after {
+  display: block;
+}
+
+.radio-label {
+  color: $dark-blue;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 145%;
+  letter-spacing: 0%;
+}
