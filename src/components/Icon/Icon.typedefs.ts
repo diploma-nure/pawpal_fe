@@ -17,6 +17,7 @@ const icons = [
   'smile',
   'user',
   'video',
+  'logo',
 ] as const;
 
-export type IconName = typeof icons[number];
+export type IconName = (typeof icons)[number];
