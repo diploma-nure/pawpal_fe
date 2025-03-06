@@ -1,9 +1,6 @@
 @import "../styles/utils/variables";
 
-
-.page {
-  display: flex;
-  flex-direction: column;
-
+.main {
   background-color: $beige;
+  flex-grow: 1;
 }
