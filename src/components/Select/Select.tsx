@@ -1,5 +1,6 @@
 'use client';
 
+import { Checkbox } from '@/components';
 import { useClickOutside } from '@/hooks';
 import React, { useState } from 'react';
 import styles from './styles.module.scss';
@@ -42,16 +43,17 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
 
       {isOpen && (
         <div className={styles.optionsList}>
-          {options.map((option) => (
-            <label key={option} className={styles.checkboxLabel}>
-              <input
-                type="checkbox"
+          {options.map((option) => {
+            console.log(option);
+            return (
+              <Checkbox
+                key={option}
+                option={option}
                 checked={selectedOptions.includes(option)}
-                onChange={() => handleOptionToggle(option)}
+                toggleOption={handleOptionToggle}
               />
-              <p className={styles.checkboxText}>{option}</p>
-            </label>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>
