@@ -1,0 +1,15 @@
+.navigation {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+
+  list-style: none;
+}
+
+.header {
+  align-items: center;
+}
+
+.loginButton {
+  justify-self: flex-end;
+}
