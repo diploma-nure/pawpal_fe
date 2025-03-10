@@ -1,3 +1,5 @@
+'use client';
+
 import { ChangeEvent, FC, useState } from 'react';
 import styles from './styles.module.scss';
 

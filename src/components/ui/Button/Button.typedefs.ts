@@ -1,4 +1,4 @@
-export type ButtonVariant = 'filled' | 'outline';
+export type ButtonVariant = 'filled' | 'outline' | 'link';
 
 export type ButtonColor = 'primary';
 

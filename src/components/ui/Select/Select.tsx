@@ -1,6 +1,6 @@
 'use client';
 
-import { Checkbox } from '@/components';
+import { Checkbox } from '@/components/ui';
 import { useClickOutside } from '@/hooks';
 import React, { useState } from 'react';
 import styles from './styles.module.scss';

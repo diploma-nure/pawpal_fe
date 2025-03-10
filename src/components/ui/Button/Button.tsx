@@ -1,13 +1,13 @@
 'use client';
 
 import clsx from 'clsx';
-import { ButtonHTMLAttributes, DetailedHTMLProps, FC, ReactNode } from 'react';
+import { ButtonHTMLAttributes, DetailedHTMLProps, FC } from 'react';
 import { ButtonColor, ButtonSize, ButtonVariant } from './Button.typedefs';
 import styles from './styles.module.scss';
 
 type Props = {
-  leftIcon?: ReactNode;
-  rightIcon?: ReactNode;
+  leftIcon?: () => JSX.Element;
+  rightIcon?: () => JSX.Element;
   variant?: ButtonVariant;
   color?: ButtonColor;
   size?: ButtonSize;
@@ -37,11 +37,11 @@ export const Button: FC<Props> = ({
       )}
       {...props}
     >
-      {leftIcon && <span className={styles.leftIcon}>{leftIcon}</span>}
+      {leftIcon && <span className={styles.leftIcon}>{leftIcon()}</span>}
 
       {children}
 
-      {rightIcon && <span className={styles.rightIcon}>{rightIcon}</span>}
+      {rightIcon && <span className={styles.rightIcon}>{rightIcon()}</span>}
     </button>
   );
 };

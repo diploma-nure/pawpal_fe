@@ -74,20 +74,10 @@
     }
 
     &.link {
+      padding: 0;
       background-color: transparent;
-      color: $orange;
+      color: $dark-blue;
       border: none;
-      text-decoration: underline;
-
-      &:hover {
-        color: #2563eb;
-      }
-
-      &:disabled {
-        color: #93c5fd;
-        text-decoration: none;
-        cursor: not-allowed;
-      }
     }
   }
 }
