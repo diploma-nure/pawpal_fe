@@ -1,3 +1,4 @@
+import { Header } from '@/components/layout';
 import { Metadata } from 'next';
 import styles from './page.module.scss';
 
@@ -11,5 +12,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <main className={styles.main}>{children}</main>;
+  return (
+    <>
+      <Header />
+      <main className={styles.main}>{children}</main>;
+    </>
+  );
 }
