@@ -10,7 +10,9 @@
     "lint": "next lint",
     "process:svg": "node ./scripts/post-process.js",
     "prepare": "husky",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "axios": "^1.7.7",
@@ -23,6 +25,14 @@
     "xml2js": "^0.6.2"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^3.2.5",
+    "@storybook/addon-essentials": "^8.6.4",
+    "@storybook/addon-interactions": "^8.6.4",
+    "@storybook/addon-onboarding": "^8.6.4",
+    "@storybook/blocks": "^8.6.4",
+    "@storybook/nextjs": "^8.6.4",
+    "@storybook/react": "^8.6.4",
+    "@storybook/test": "^8.6.4",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/node": "^20",
     "@types/react": "^18",
@@ -30,10 +40,12 @@
     "eslint": "^8",
     "eslint-config-next": "^15.2.0",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-storybook": "^0.11.4",
     "husky": "^9.1.7",
     "lint-staged": "^15.4.3",
     "prettier": "3.3.3",
     "sass": "^1.79.2",
+    "storybook": "^8.6.4",
     "typescript": "^5"
   }
 }

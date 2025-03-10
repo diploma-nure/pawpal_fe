@@ -15,7 +15,10 @@
 
   &.sm {
     padding: 0.25rem 0.5rem;
+
+    border-radius: 0.5rem;
     font-size: 0.75rem;
+    font-weight: 600;
   }
 
   &.md {
@@ -28,8 +31,12 @@
   }
 
   &.lg {
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
+    padding: 1rem 2.5rem;
+
+    border-radius: 0.5rem;
+    font-size: 1.5rem;
+    line-height: 1.75rem;
+    font-weight: 600;
   }
 
   &.primary {
