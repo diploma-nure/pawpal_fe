@@ -1,0 +1,33 @@
+@import "utils/variables";
+
+.addresses {
+  list-style: none;
+  gap: 8px;
+}
+
+.address {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 145%;
+  letter-spacing: 0%;
+  color: $grey;
+
+  &Item {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+}
+
+.name {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 145%;
+  letter-spacing: 0%;
+  color: $dark-blue
+}
+
+.arrow {
+  flex-shrink: 0;
+  transform: scale(-1, 1);
+}
