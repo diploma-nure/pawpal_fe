@@ -18,6 +18,10 @@ const icons = [
   'user',
   'video',
   'logo',
+  'logo-no-color',
+  'tiktok',
+  'x',
+  'instagram',
 ] as const;
 
 export type IconName = (typeof icons)[number];

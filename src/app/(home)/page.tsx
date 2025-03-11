@@ -1,8 +1,7 @@
-'use client';
-import { Container, RadioGroup } from '@/components';
-import { Button } from '@/components/Button/Button';
-import { Icon } from '@/components/Icon/Icon';
-import { MultiSelect } from '@/components/Select/Select';
+import { Container } from '@/components/layout';
+import { Button } from '@/components/ui/Button/Button';
+import { Icon } from '@/components/ui/Icon/Icon';
+import { MultiSelect } from '@/components/ui/Select/Select';
 
 export default function Home() {
   const sortOptions = [
@@ -12,14 +11,14 @@ export default function Home() {
     'За розміром (спочатку великі)',
   ];
 
-  const options = [
-    { value: 'apartment', label: 'Квартира' },
-    { value: 'private_house', label: 'Приватний будинок' },
-  ];
+  // const options = [
+  //   { value: 'apartment', label: 'Квартира' },
+  //   { value: 'private_house', label: 'Приватний будинок' },
+  // ];
 
-  const handleChange = (value: string) => {
-    console.log('Selected value:', value);
-  };
+  // const handleChange = (value: string) => {
+  //   console.log('Selected value:', value);
+  // };
 
   return (
     <Container>
@@ -32,12 +31,12 @@ export default function Home() {
         </div>
         <Icon name="logo" width={32} height={32} />
 
-        <RadioGroup
+        {/* <RadioGroup
           name="housing-type"
           options={options}
           defaultValue="private_house"
           onChange={handleChange}
-        />
+        /> */}
       </div>
     </Container>
   );

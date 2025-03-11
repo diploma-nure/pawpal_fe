@@ -1,0 +1,55 @@
+@import "utils/variables";
+
+.footer {
+  padding-block: 40px;
+
+  border-radius: 16px 16px 0 0;
+  background-color: $orange;
+}
+
+.divider {
+  padding-block: 24px 20px;
+}
+
+.menu {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 20px;
+  align-content: center;
+  justify-items: center;
+
+  list-style: none;
+
+  & li {
+    display: inline-flex;
+
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 145%;
+    letter-spacing: 0%;
+    color: $beige;
+  }
+}
+
+.socials {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.rigths {
+  text-align: right;
+}
+
+.confidentials {
+  text-align: right;
+}
+
+.small-text {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 160%;
+  letter-spacing: 0%;
+  color: $beige;
+}

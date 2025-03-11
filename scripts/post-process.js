@@ -3,6 +3,7 @@ import path from 'path';
 import xml2js from 'xml2js';
 
 const inputDir = './src/assets/icons/svgs';
+const skipFiles = ['logo.svg', 'logo-no-color.svg'];
 
 const processSvgFile = (filePath) => {
   fs.readFile(filePath, 'utf-8', (err, data) => {
@@ -70,7 +71,7 @@ fs.readdir(inputDir, (err, files) => {
 
   svgFiles.forEach((file) => {
     const filePath = path.join(inputDir, file);
-    if (filePath.includes('logo.svg')) {
+    if (skipFiles.some((file) => filePath.includes(file))) {
       console.log(`Skip reading the file ${filePath}:`);
       return;
     }

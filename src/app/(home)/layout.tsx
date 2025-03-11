@@ -1,4 +1,4 @@
-import { Header } from '@/components/layout';
+import { Footer, Header } from '@/components/layout';
 import { Metadata } from 'next';
 import styles from './page.module.scss';
 
@@ -15,7 +15,8 @@ export default function RootLayout({
   return (
     <>
       <Header />
-      <main className={styles.main}>{children}</main>;
+      <main className={styles.main}>{children}</main>
+      <Footer />
     </>
   );
 }
