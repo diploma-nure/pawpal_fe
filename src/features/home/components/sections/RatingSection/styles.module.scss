@@ -1,0 +1,64 @@
+@import "utils/variables";
+
+.section {
+  align-items: center;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 44px;
+  line-height: 120%;
+  letter-spacing: 0%;
+
+  color: $dark-blue;
+
+  &Wrapper {
+    margin-bottom: 48px;
+  }
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  padding: 28px 32px;
+
+  border-radius: 16px;
+  color: $dark-blue;
+
+  &Rating {
+    font-weight: 600;
+    font-size: 64px;
+    line-height: 120%;
+    letter-spacing: 0%;
+  }
+
+
+
+  &Title {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: 0%;
+
+    &Wrapper {
+      margin-bottom: 20px;
+    }
+  }
+
+  &Description {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 145%;
+    letter-spacing: 0%;
+  }
+}
+
+.imageWrapper {
+  padding-right: 48px;
+}
