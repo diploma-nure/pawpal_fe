@@ -1,0 +1,11 @@
+@import "utils/variables";
+
+.divider {
+  border-top: 1px solid;
+
+  @each $name, $color in ('beige': $beige ) {
+    &-#{$name} {
+      border-color: $color;
+    }
+  }
+}
