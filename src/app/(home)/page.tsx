@@ -4,6 +4,7 @@ import { Icon } from '@/components/ui/Icon/Icon';
 import { MultiSelect } from '@/components/ui/Select/Select';
 import { MapSection } from '@/features/home/components/sections/MapSection/MapSection';
 import { RatingSection } from '@/features/home/components/sections/RatingSection/RatingSection';
+import { StepsSection } from '@/features/home/components/sections/StepsSection/StepsSection';
 
 export default function Home() {
   const sortOptions = [
@@ -43,6 +44,7 @@ export default function Home() {
         </div>
       </Container>
       <RatingSection />
+      <StepsSection />
       <MapSection />
     </>
   );
