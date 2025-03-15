@@ -120,7 +120,7 @@ export const Disabled: Story = {
 export const WithLeftIcon: Story = {
   args: {
     ...Default.args,
-    leftIcon: <Icon name="log-in" />,
+    leftIcon: () => <Icon name="log-in" />,
     children: 'Log in',
   },
 };
@@ -128,7 +128,7 @@ export const WithLeftIcon: Story = {
 export const WithRightIcon: Story = {
   args: {
     ...Default.args,
-    rightIcon: <Icon name="log-in" />,
+    rightIcon: () => <Icon name="log-in" />,
     children: 'Log in',
   },
 };
@@ -136,8 +136,8 @@ export const WithRightIcon: Story = {
 export const WithBothIcons: Story = {
   args: {
     ...Default.args,
-    leftIcon: <Icon name="log-in" />,
-    rightIcon: <Icon name="log-in" />,
+    leftIcon: () => <Icon name="log-in" />,
+    rightIcon: () => <Icon name="log-in" />,
     children: 'Log in',
   },
 };
