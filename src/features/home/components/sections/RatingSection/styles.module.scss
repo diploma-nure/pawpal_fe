@@ -1,4 +1,7 @@
-@import "utils/variables";
+// @import "utils/variables";
+// @import "utils/mixins";
+@use "utils/variables" as *;
+@use "utils/mixins" as *;
 
 .section {
   align-items: center;
@@ -9,8 +12,12 @@
   font-size: 44px;
   line-height: 120%;
   letter-spacing: 0%;
-
+  text-align: center;
   color: $dark-blue;
+
+  @include onTablet {
+    text-align: left;
+  }
 
   &Wrapper {
     margin-bottom: 48px;
@@ -61,4 +68,9 @@
 
 .imageWrapper {
   padding-right: 48px;
+  display: none;
+
+  @include onTablet {
+    display: block;
+  }
 }

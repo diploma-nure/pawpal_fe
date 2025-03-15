@@ -6,18 +6,20 @@ import styles from './styles.module.scss';
 
 export const ReviewsSection = () => {
   return (
-    <Container>
-      <div className="grid">
-        <div className="col-desktop-1-12">
-          <h2 className={styles.title}>
-            Відгуки наших{' '}
-            <AccentText color={colors.orange}>щасливих</AccentText> друзів
-          </h2>
+    <section className="section">
+      <Container>
+        <div className="grid">
+          <div className="col-desktop-1-12">
+            <h2 className={styles.title}>
+              Відгуки наших{' '}
+              <AccentText color={colors.orange}>щасливих</AccentText> друзів
+            </h2>
+          </div>
+          <div className="col-desktop-1-12">
+            <ReviewCarousel />
+          </div>
         </div>
-        <div className="col-desktop-1-12">
-          <ReviewCarousel />
-        </div>
-      </div>
-    </Container>
+      </Container>
+    </section>
   );
 };

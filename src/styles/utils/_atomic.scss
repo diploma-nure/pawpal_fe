@@ -1,0 +1,13 @@
+@import './mixins';
+
+.section {
+  margin-bottom: 40px;
+
+  @include onTablet {
+    margin-bottom: 80px;
+  }
+
+  @include onDesktop {
+    margin-bottom: 120px;
+  }
+}
