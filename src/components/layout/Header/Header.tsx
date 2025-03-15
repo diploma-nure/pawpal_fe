@@ -2,12 +2,17 @@
 
 import { Button, Icon } from '@/components/ui';
 import clsx from 'clsx';
+import { FC } from 'react';
 import { Container } from '../Container/Container';
 import styles from './styles.module.scss';
 
-export const Header = () => {
+type Props = {
+  bgColor?: string;
+};
+
+export const Header: FC<Props> = ({ bgColor }) => {
   return (
-    <header>
+    <header style={{ backgroundColor: bgColor }}>
       <Container>
         <div className={clsx('grid', styles.header)}>
           <div className="col-desktop-1-2">

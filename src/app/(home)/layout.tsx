@@ -1,4 +1,5 @@
 import { Footer, Header } from '@/components/layout';
+import { colors } from '@/styles/colors';
 import { Metadata } from 'next';
 import styles from './page.module.scss';
 
@@ -14,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <Header />
+      <Header bgColor={colors.beige} />
       <main className={styles.main}>{children}</main>
       <Footer />
     </>

@@ -22,6 +22,7 @@ const icons = [
   'tiktok',
   'x',
   'instagram',
+  'quotation-mark',
 ] as const;
 
 export type IconName = (typeof icons)[number];

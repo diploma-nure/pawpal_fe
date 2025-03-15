@@ -1,0 +1,40 @@
+@import "utils/variables";
+
+.reviewCard {
+  display: flex;
+  flex-direction: column;
+  width: 389px;
+  height: 378px;
+  padding: 40px 28px;
+
+  border-radius: 16px;
+  background-color: $white;
+  color: $dark-blue;
+
+  &Text {
+    flex-grow: 1;
+
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 145%;
+    letter-spacing: 0%;
+  }
+
+  &Author {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    &Name {
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 100%;
+      letter-spacing: 0%;
+
+    }
+  }
+}
+
+.icon {
+  margin-bottom: 32px;
+}
