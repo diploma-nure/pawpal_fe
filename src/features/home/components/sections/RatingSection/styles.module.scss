@@ -1,5 +1,3 @@
-// @import "utils/variables";
-// @import "utils/mixins";
 @use "utils/variables" as *;
 @use "utils/mixins" as *;
 
@@ -26,8 +24,12 @@
 
 .list {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   gap: 24px;
+
+  @include onTablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .block {
@@ -70,7 +72,7 @@
   padding-right: 48px;
   display: none;
 
-  @include onTablet {
+  @include onDesktop {
     display: block;
   }
 }

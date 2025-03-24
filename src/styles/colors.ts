@@ -1,7 +1,7 @@
 export const colors = {
   beige: '#FEFAF4',
   darkBlue: '#020454',
-  orange: '#E66A58',
+  orange: '#FB8218',
   darkOrange: '#b02e1a',
   paleOrange: 'rgba(221, 56, 30, 0.1)',
   grey: '#625C73',
@@ -14,4 +14,5 @@ export const colors = {
   lightGreen: '#1BC760',
   green: '#169C4C',
   white: '#FFFFFF',
+  someNewColor: 'some hahaha',
 };
