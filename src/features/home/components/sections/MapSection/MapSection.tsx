@@ -10,7 +10,7 @@ export const MapSection = () => {
     <section className="section">
       <Container>
         <div className={clsx('grid', styles.section)}>
-          <div className="col-desktop-1-4">
+          <div className="col-desktop-1-4 col-tablet-1-6 col-1-2">
             <div className={styles.titleWrapper}>
               <h2 className={styles.title}>Ми поруч, де б ви не були</h2>
             </div>
@@ -18,7 +18,7 @@ export const MapSection = () => {
             <AddressList />
           </div>
 
-          <div className="col-desktop-6-12">
+          <div className="col-desktop-6-12 col-tablet-1-6 col-1-2">
             <Image
               src={UkraineMap}
               alt="Map of Ukraine"

@@ -1,5 +1,6 @@
 import { Container } from '@/components/layout';
 import { AccentText } from '@/components/ui';
+import { colors } from '@/styles/colors';
 import clsx from 'clsx';
 import Image from 'next/image';
 import Spits from '../../../../../assets/images/spits.png';
@@ -11,7 +12,7 @@ export const RatingSection = () => {
     <section className="section">
       <Container>
         <div className={clsx('grid', styles.section)}>
-          <div className="col-desktop-1-5 col-tablet-1-3">
+          <div className="col-desktop-1-5">
             <div className={styles.imageWrapper}>
               <Image
                 src={Spits}
@@ -23,11 +24,11 @@ export const RatingSection = () => {
               />
             </div>
           </div>
-          <div className="col-desktop-6-12 col-tablet-4-6 col-1-2">
+          <div className="col-desktop-6-12 col-tablet-1-6 col-1-2">
             <div className={styles.titleWrapper}>
               <h2 className={styles.title}>
                 PawPal – місце, де любов знаходить{' '}
-                <AccentText color="#E66A58">дім</AccentText>
+                <AccentText color={colors.orange}>дім</AccentText>
               </h2>
             </div>
 

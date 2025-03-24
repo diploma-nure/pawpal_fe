@@ -3,7 +3,17 @@
 .steps {
   display: flex;
   align-items: flex-start;
+  flex-wrap: wrap;
+  row-gap: 24px;
   padding: 20px;
+
+  @for $start from 1 through 4 {
+    @for $end from $start through 4 {
+      &-#{$start}-#{$end} {
+        grid-column: #{$start} / #{$end + 1};
+      }
+    }
+  }
 }
 
 .line {

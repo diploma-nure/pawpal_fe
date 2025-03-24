@@ -1,10 +1,22 @@
 @import "utils/variables";
+@import "utils/mixins";
 
 .footer {
-  padding-block: 40px;
+  padding-block: 20px;
 
   border-radius: 16px 16px 0 0;
   background-color: $orange;
+
+  @include onTablet {
+    padding-block: 40px;
+  }
+
+  &_logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 24px;
+  }
 }
 
 .divider {
@@ -33,9 +45,16 @@
 
 .socials {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
   gap: 16px;
+  margin-top: 32px;
+
+  @include onTablet {
+    flex-direction: column;
+    margin-top: unset;
+  }
 }
 
 .rigths {
