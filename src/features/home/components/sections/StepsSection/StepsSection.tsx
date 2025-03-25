@@ -11,7 +11,7 @@ export const StepsSection = () => {
       <Container>
         <div className="grid">
           <div className="col-desktop-1-6 col-tablet-1-4 col-1-2">
-            <h2 className={styles.title}>
+            <h2 className={clsx(styles.title, 'heading2')}>
               4 простих кроки <br />
               до <AccentText color={colors.orange}>очікуваної</AccentText>{' '}
               зустрічі

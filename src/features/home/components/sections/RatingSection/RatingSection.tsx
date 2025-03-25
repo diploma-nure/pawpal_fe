@@ -26,7 +26,7 @@ export const RatingSection = () => {
           </div>
           <div className="col-desktop-6-12 col-tablet-1-6 col-1-2">
             <div className={styles.titleWrapper}>
-              <h2 className={styles.title}>
+              <h2 className={clsx(styles.title, 'heading2')}>
                 PawPal – місце, де любов знаходить{' '}
                 <AccentText color={colors.orange}>дім</AccentText>
               </h2>
@@ -40,7 +40,7 @@ export const RatingSection = () => {
                     style={{ backgroundColor: block.color }}
                     key={block.rating}
                   >
-                    <h3 className={styles.blockRating}>{block.rating}</h3>
+                    <h3 className="heading1">{block.rating}</h3>
 
                     <div className={styles.blockTitleWrapper}>
                       <h4 className={styles.blockTitle}>{block.title}</h4>

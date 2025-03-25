@@ -1,18 +1,26 @@
 @import "utils/variables";
+@import "utils/mixins";
 
 .section {
   align-items: center;
 }
 
 .title {
-  font-weight: 600;
-  font-size: 44px;
-  line-height: 120%;
-  letter-spacing: 0%;
+  text-align: center;
 
-  color: $dark-blue;
+  @include onTablet {
+    text-align: left;
+  }
 
   &Wrapper {
     margin-bottom: 48px;
+  }
+}
+
+.addressWrapper {
+  margin-bottom: 16px;
+
+  @include onTablet {
+    margin-bottom: unset;
   }
 }

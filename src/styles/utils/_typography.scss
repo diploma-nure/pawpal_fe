@@ -1,0 +1,34 @@
+@import './mixins';
+@import './variables';
+
+.heading1 {
+  @include text-h1 {
+    & {
+      color: $dark-blue;
+    }
+  }
+}
+
+.heading2 {
+  @include text-h2 {
+    & {
+      color: $dark-blue;
+    }
+  }
+}
+
+.heading3 {
+  @include text-h3 {
+    & {
+      color: $dark-blue;
+    }
+  }
+}
+
+.heading4 {
+  @include text-h4 {
+    & {
+      color: $dark-blue;
+    }
+  }
+}

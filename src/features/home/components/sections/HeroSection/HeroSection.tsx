@@ -15,7 +15,7 @@ export const HeroSection = () => {
       <Container>
         <div className={clsx('grid', styles.hero)}>
           <div className="col-desktop-1-7 col-tablet-1-4 col-1-2">
-            <h1 className={styles.heroTitle}>
+            <h1 className={clsx(styles.heroTitle, 'heading1')}>
               Подаруй свою <AccentText color={colors.orange}>любов</AccentText>{' '}
               тому, хто її потребує
             </h1>

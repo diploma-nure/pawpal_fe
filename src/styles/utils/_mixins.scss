@@ -1,3 +1,5 @@
+@use "./functions" as *;
+
 @mixin onDesktop {
   @media (min-width: 1200px) {
     @content;
@@ -7,5 +9,70 @@
 @mixin onTablet {
   @media (min-width: 744px) {
     @content;
+  }
+}
+
+@mixin text-h1 {
+  font-weight: 600;
+  font-size: rem-calc(36);
+  line-height: 120%;
+  @content;
+
+  @include onTablet {
+    font-size: rem-calc(50);
+  }
+
+  @include onDesktop {
+    font-size: rem-calc(64);
+  }
+}
+
+@mixin text-h2 {
+  font-weight: 600;
+  font-size: rem-calc(28);
+  line-height: 120%;
+
+  @content;
+
+  @include onTablet {
+    font-size: rem-calc(38);
+  }
+
+  @include onDesktop {
+    font-size: rem-calc(44);
+  }
+}
+
+@mixin text-h3 {
+  font-weight: 500;
+  font-size: rem-calc(20);
+  line-height: 120%;
+  letter-spacing: 0%;
+  @content;
+
+
+  @include onTablet {
+    font-size: rem-calc(24);
+  }
+
+  @include onDesktop {
+    font-size: rem-calc(28);
+  }
+}
+
+@mixin text-h4 {
+  font-weight: 600;
+  font-size: rem-calc(16);
+  line-height: 100%;
+  letter-spacing: 0%;
+  @content;
+
+
+  @include onTablet {
+    font-size: rem-calc(18);
+  }
+
+  @include onDesktop {
+    font-size: rem-calc(20);
   }
 }

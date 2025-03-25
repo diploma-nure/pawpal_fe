@@ -5,24 +5,15 @@
   align-items: center;
   gap: 74px;
 
+  text-align: center;
+
+  @include onTablet {
+    text-align: left;
+  }
+
+
   &Title {
     margin-bottom: 16px;
-
-    font-weight: 600;
-    font-size: 40px;
-    line-height: 120%;
-    letter-spacing: 0%;
-    color: $dark-blue;
-    text-align: center;
-
-    @include onTablet {
-      font-size: 52px;
-      text-align: left;
-    }
-
-    @include onDesktop {
-      font-size: 64px;
-    }
   }
 
   &SubTitle {
