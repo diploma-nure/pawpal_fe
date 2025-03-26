@@ -1,9 +1,18 @@
-@import "../styles/utils/variables";
+@import "utils/variables";
+@import "utils/functions";
 
 .leftIcon,
 .rightIcon {
   display: inline-flex;
   align-items: center;
+}
+
+.leftIcon {
+  margin-right: rem-calc(8);
+}
+
+.rightIcon {
+  margin-left: rem-calc(8);
 }
 
 .button {

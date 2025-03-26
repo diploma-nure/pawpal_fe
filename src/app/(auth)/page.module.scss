@@ -1,0 +1,8 @@
+@import "../styles/utils/variables";
+
+.main {
+  background-color: $beige;
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
