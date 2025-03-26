@@ -1,0 +1,56 @@
+@import 'utils/functions';
+@import 'utils/variables';
+
+$modal-max-width: 400px;
+
+.modal {
+  max-width: $modal-max-width;
+  width: 100%;
+  padding: rem-calc(48);
+
+  position: relative;
+
+  background-color: $white;
+  border-radius: rem-calc(8);
+
+  &Close {
+    position: absolute;
+    top: rem-calc(16);
+    right: rem-calc(16);
+
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  &TitleIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: rem-calc(16);
+  }
+
+  &Body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: rem-calc(16);
+  }
+}
+
+.overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  z-index: 100;
+
+  background-color: #000000B2;
+}

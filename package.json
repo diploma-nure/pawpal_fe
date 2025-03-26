@@ -21,6 +21,7 @@
     "next": "^15.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-modal": "^3.16.3",
     "svg-symbol-sprite": "^1.5.2",
     "swiper": "^11.2.5",
     "xml2js": "^0.6.2"
@@ -38,6 +39,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-modal": "^3.16.3",
     "eslint": "^8",
     "eslint-config-next": "^15.2.0",
     "eslint-config-prettier": "^9.1.0",
