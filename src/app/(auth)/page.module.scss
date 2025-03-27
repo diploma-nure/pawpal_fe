@@ -1,8 +1,13 @@
-@import "../styles/utils/variables";
+@import "utils/variables";
+@import "utils/mixins";
 
 .main {
   background-color: $beige;
   flex-grow: 1;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  justify-content: center;
+
+  @include onDesktop {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

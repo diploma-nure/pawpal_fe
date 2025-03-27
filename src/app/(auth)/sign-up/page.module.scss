@@ -1,0 +1,12 @@
+@use 'utils/mixins' as *;
+
+
+.signUp {
+  display: flex;
+  align-items: center;
+  padding-inline: 20px;
+
+  @include onTablet {
+    padding-inline: 147px;
+  }
+}

@@ -1,0 +1,18 @@
+@import 'utils/mixins';
+
+.imagePart {
+  display: none;
+
+  @include onDesktop {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    position: relative;
+
+    background-color: #FFE6E6;
+  }
+}
+
+.image {
+  max-width: 290px;
+}
