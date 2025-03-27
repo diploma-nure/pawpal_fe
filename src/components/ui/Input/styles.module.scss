@@ -1,0 +1,46 @@
+@use 'utils/mixins' as *;
+@use 'utils/variables' as *;
+@use 'utils/functions' as *;
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.label {
+  font-weight: 600;
+  font-size: rem-calc(18);
+  line-height: 120%;
+  letter-spacing: 0%;
+  text-align: left;
+  color: $dark-blue;
+  margin-bottom: rem-calc(12);
+}
+
+.input {
+  width: 100%;
+  padding: rem-calc(12);
+
+  font-size: rem-calc(18);
+  transition: 0.3s;
+  border: 1px solid $dark-blue;
+  border-radius: rem-calc(8);
+  outline: none;
+  background-color: transparent;
+
+  &::placeholder {
+    color: $light-grey;
+  }
+}
+
+.error {
+  border-color: red;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 12px;
+  margin-top: 3px;
+  text-align: left;
+}
