@@ -22,7 +22,7 @@
   transition: all 0.3s ease;
   cursor: pointer;
 
-  &.sm {
+  &_sm {
     padding: 0.25rem 0.5rem;
 
     border-radius: 0.5rem;
@@ -30,7 +30,7 @@
     font-weight: 600;
   }
 
-  &.md {
+  &_md {
     padding: 0.75rem 2rem;
 
     border-radius: 0.5rem;
@@ -39,7 +39,7 @@
     font-weight: 600;
   }
 
-  &.lg {
+  &_lg {
     padding: 1rem 2.5rem;
 
     border-radius: 0.5rem;
@@ -48,8 +48,8 @@
     font-weight: 600;
   }
 
-  &.primary {
-    &.filled {
+  &_primary {
+    &_filled {
       background-color: $orange;
       color: $white;
       border: 1px solid $orange;
@@ -66,7 +66,7 @@
       }
     }
 
-    &.outline {
+    &_outline {
       background-color: transparent;
       color: $orange;
       border: 1px solid $orange;
@@ -82,7 +82,7 @@
       }
     }
 
-    &.link {
+    &_link {
       padding: 0;
       background-color: transparent;
       color: $dark-blue;

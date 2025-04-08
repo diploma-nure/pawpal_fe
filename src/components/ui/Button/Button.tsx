@@ -30,9 +30,9 @@ export const Button: FC<Props> = ({
     <button
       className={clsx(
         styles.button,
-        styles[variant],
-        styles[color],
-        styles[size],
+        styles[`button_${variant}`],
+        styles[`button_${color}_${variant}`],
+        styles[`button_${size}`],
         className,
       )}
       {...props}

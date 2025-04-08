@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+'use client';
 import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
 import styles from './styles.module.scss';
