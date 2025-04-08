@@ -1,0 +1,51 @@
+@use 'utils/functions' as *;
+@use 'utils/variables' as *;
+@use 'utils/mixins' as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: rem-calc(32);
+
+  text-align: center;
+}
+
+.button {
+  width: 100%;
+  text-wrap: nowrap;
+
+  &Container {
+    display: flex;
+    flex-direction: column;
+    gap: rem-calc(16);
+    width: 100%;
+
+    @include onTablet {
+      flex-direction: row;
+      gap: rem-calc(32);
+    }
+  }
+}
+
+.text {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+  color: $grey;
+}
+
+.inputWrapper {
+  width: 100%;
+}
+
+.sendLetter {
+  margin-top: rem-calc(8);
+
+  text-align: left;
+  text-decoration: underline;
+  color: $grey;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 100%;
+}
