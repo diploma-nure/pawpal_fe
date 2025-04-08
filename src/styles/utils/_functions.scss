@@ -1,11 +1,15 @@
 $rem-base: 16px;
 
-@function strip-unit($num) {
-  @return $num / ($num * 0 + 1);
+@function strip-unit($number) {
+  @if type-of($number)=='number' and not unitless($number) {
+    @return calc($number / ($number * 0 + 1px));
+  }
+
+  @return $number;
 }
 
 @function convert-to-rem($value, $base-value: $rem-base) {
-  $value: strip-unit($value) / strip-unit($base-value) * 1rem;
+  $value: calc(strip-unit($value) / strip-unit($base-value)) * 1rem;
 
   @if ($value ==0rem) {
     $value: 0;
