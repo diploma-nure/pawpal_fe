@@ -1,4 +1,4 @@
-@import "../styles/utils/mixins";
+@use 'utils' as *;
 
 .container {
   margin: 0 auto;

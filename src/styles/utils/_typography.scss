@@ -1,5 +1,5 @@
-@import './mixins';
-@import './variables';
+@use 'mixins' as *;
+@use './variables' as *;
 
 .heading1 {
   @include text-h1 {

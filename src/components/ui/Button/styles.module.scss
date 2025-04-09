@@ -1,5 +1,4 @@
-@import "utils/variables";
-@import "utils/functions";
+@use 'utils' as *;
 
 .leftIcon,
 .rightIcon {

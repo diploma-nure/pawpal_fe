@@ -1,4 +1,4 @@
-@import "../styles/utils/variables";
+@use 'utils' as *;
 
 .multiSelectWrapper {
   position: relative;

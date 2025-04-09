@@ -1,4 +1,4 @@
-@use "./functions" as *;
+@use "functions" as *;
 
 @mixin onDesktop {
   @media (min-width: 1200px) {

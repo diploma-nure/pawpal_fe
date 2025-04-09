@@ -1,5 +1,4 @@
-@import 'utils/functions';
-@import 'utils/variables';
+@use 'utils' as *;
 
 $modal-max-width: 400px;
 

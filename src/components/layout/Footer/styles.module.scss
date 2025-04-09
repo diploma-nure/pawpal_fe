@@ -1,5 +1,4 @@
-@import "utils/variables";
-@import "utils/mixins";
+@use 'utils' as *;
 
 .footer {
   padding-block: 20px;

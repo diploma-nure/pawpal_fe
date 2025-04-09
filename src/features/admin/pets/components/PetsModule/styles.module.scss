@@ -1,5 +1,4 @@
-@import "utils/mixins";
-@import "utils/functions";
+@use 'utils' as *;
 
 .titleWrapper {
   width: 100%;

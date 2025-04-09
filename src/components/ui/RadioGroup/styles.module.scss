@@ -1,4 +1,4 @@
-@import "../styles/utils/variables";
+@use 'utils' as *;
 
 .radio-button-container {
   display: flex;
