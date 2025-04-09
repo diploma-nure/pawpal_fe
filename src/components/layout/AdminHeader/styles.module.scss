@@ -1,0 +1,30 @@
+@import "utils/variables";
+@import "utils/mixins";
+
+
+
+.navigation {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+
+  list-style: none;
+
+  &_container {
+    display: none;
+
+    @include onTablet {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+
+.header {
+  align-items: center;
+  padding-block: 40px;
+}
+
+.loginButton {
+  justify-self: flex-end;
+}
