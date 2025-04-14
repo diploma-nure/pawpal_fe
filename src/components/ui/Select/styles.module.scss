@@ -1,8 +1,7 @@
-@use 'utils' as *;
+@use 'utils/variables' as *;
 
 .multiSelectWrapper {
   position: relative;
-  // width: 100%;
 }
 
 .selectHeader {

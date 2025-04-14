@@ -1,1 +1,8 @@
-@use 'utils';
+@use 'utils/normalize' as *;
+@use 'utils/reset' as *;
+@use 'utils/variables' as *;
+@use 'utils/mixins' as *;
+@use 'utils/grid' as *;
+@use 'utils/atomic' as *;
+@use 'utils/typography' as *;
+@use 'utils/functions' as *;
