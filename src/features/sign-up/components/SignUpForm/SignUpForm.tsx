@@ -2,12 +2,16 @@
 import { Button, Icon, Input } from '@/components/ui';
 import { colors } from '@/styles/colors';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
+import { login } from '../../api/login';
 import { SignUpSchemaType, signUpSchema } from './schema';
 import styles from './styles.module.scss';
 
 export const SignUpForm: FC = () => {
+  const { push } = useRouter();
   const {
     handleSubmit,
     control,
@@ -16,11 +20,24 @@ export const SignUpForm: FC = () => {
     resolver: zodResolver(signUpSchema),
     defaultValues: {
       email: '',
+      password: '',
     },
   });
 
-  const onSignUp = handleSubmit((data: SignUpSchemaType) => {
-    console.log('Submitted Data:', data);
+  const onSignUp = handleSubmit(async (data: SignUpSchemaType) => {
+    const response = await login({
+      email: data.email,
+      password: data.password,
+    });
+
+    if (response.data.isNewUser) {
+      push('/sign-up/complete');
+    }
+
+    if (response.data.token) {
+      Cookies.set('token', response.data.token);
+      push('/');
+    }
   });
 
   return (
