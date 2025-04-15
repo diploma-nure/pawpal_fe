@@ -3,6 +3,7 @@ import { Button, Icon, Input } from '@/components/ui';
 import { colors } from '@/styles/colors';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Cookies from 'js-cookie';
+import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
@@ -77,6 +78,8 @@ export const SignUpForm: FC = () => {
           variant="outline"
           className={styles.button}
           leftIcon={() => <Icon name="Google" fill={colors.orange} />}
+          type="button"
+          onClick={() => signIn('google')}
         >
           Продовжити з Google
         </Button>

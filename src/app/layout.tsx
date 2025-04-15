@@ -1,3 +1,4 @@
+import { AuthProvider } from '@/config/Auth/AuthProvider';
 import '@/styles/main.scss';
 
 import { Montserrat_Alternates } from 'next/font/google';
@@ -16,7 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={montserratAlternates.className}>
-      <body>{children}</body>
+      <body>
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 }
