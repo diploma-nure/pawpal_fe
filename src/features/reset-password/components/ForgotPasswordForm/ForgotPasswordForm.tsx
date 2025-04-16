@@ -1,8 +1,10 @@
 'use client';
 import { Button, Icon, Input } from '@/components/ui';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
+import { sendCode } from '../../api/sendCode';
 import { ForgotPasswordSchemaType, forgotPasswordSchema } from './schema';
 import styles from './styles.module.scss';
 
@@ -17,10 +19,16 @@ export const ForgotPasswordForm: FC = () => {
       email: '',
     },
   });
+  const { back } = useRouter();
 
-  const onForgotPassword = handleSubmit((data: ForgotPasswordSchemaType) => {
-    console.log('Submitted Data:', data);
-  });
+  const onForgotPassword = handleSubmit(
+    async (data: ForgotPasswordSchemaType) => {
+      const response = await sendCode(data.email);
+      if (response) {
+        alert('Лист з інструкцією надіслано на вашу пошту');
+      }
+    },
+  );
 
   return (
     <form onSubmit={onForgotPassword} className={styles.form}>
@@ -49,6 +57,7 @@ export const ForgotPasswordForm: FC = () => {
           className={styles.button}
           variant="outline"
           style={{ flexShrink: 2 }}
+          onClick={back}
         >
           Повернутись
         </Button>
