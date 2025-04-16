@@ -1,5 +1,7 @@
+import { loginGoogle } from '@/features/sign-up/api/loginGoogle';
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
+import { cookies } from 'next/headers';
 
 export const handler = NextAuth({
   providers: [
@@ -11,7 +13,12 @@ export const handler = NextAuth({
   secret: process.env.NEXT_PUBLIC_AUTH_SECRET,
   callbacks: {
     async signIn({ account }) {
-      console.log(account?.id_token);
+      const cookieStore = await cookies();
+      const response = await loginGoogle({
+        token: account?.id_token as string,
+      });
+      cookieStore.set('token', response.data.token);
+
       return true;
     },
   },

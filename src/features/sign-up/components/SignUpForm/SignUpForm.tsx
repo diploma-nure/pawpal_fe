@@ -79,7 +79,7 @@ export const SignUpForm: FC = () => {
           className={styles.button}
           leftIcon={() => <Icon name="Google" fill={colors.orange} />}
           type="button"
-          onClick={() => signIn('google')}
+          onClick={() => signIn('google', { callbackUrl: '/' })}
         >
           Продовжити з Google
         </Button>
