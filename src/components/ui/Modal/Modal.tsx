@@ -10,14 +10,14 @@ type Props = {
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
-  renderIconTitleIcon?: () => JSX.Element;
+  renderTitleIcon?: () => JSX.Element;
 };
 
 export const Modal: FC<Props> = ({
   isOpen = true,
   onClose,
   children,
-  renderIconTitleIcon = () => <Icon name="logo" width={92} height={78} />,
+  renderTitleIcon = () => <Icon name="logo" width={92} height={78} />,
 }) => {
   useEffect(() => {
     if (isOpen) {
@@ -41,8 +41,8 @@ export const Modal: FC<Props> = ({
         <Icon width={24} height={24} name="close" />
       </button>
 
-      {renderIconTitleIcon && (
-        <div className={styles.modalTitleIcon}>{renderIconTitleIcon?.()}</div>
+      {renderTitleIcon && (
+        <div className={styles.modalTitleIcon}>{renderTitleIcon?.()}</div>
       )}
 
       <div className={styles.modalBody}>{children}</div>

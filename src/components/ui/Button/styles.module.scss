@@ -83,8 +83,13 @@
 
     &_link {
       padding: 0;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 100%;
+      letter-spacing: 0%;
+      text-decoration: underline;
+      color: $grey;
       background-color: transparent;
-      color: $dark-blue;
       border: none;
     }
   }

@@ -10,24 +10,24 @@ type ChangePasswordPayload = {
   userId: number;
   newPassword1: string;
   newPassword2: string;
-  recoverCode: string;
+  recoveryCode: string;
 };
 
-export const sendCode = async ({
+export const changePassword = async ({
   userId,
   newPassword1,
   newPassword2,
-  recoverCode,
+  recoveryCode,
 }: ChangePasswordPayload) => {
-  const response = await client.post<ChangePasswordResponse>(
-    '/auth/password/recovery/send-code',
+  const response = await client.patch<ChangePasswordResponse>(
+    '/auth/password/change',
     {
       userId,
       newPassword1,
       newPassword2,
-      recoverCode,
+      recoveryCode,
     },
   );
 
-  return response.data.message;
+  return response.data;
 };

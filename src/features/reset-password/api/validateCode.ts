@@ -2,7 +2,7 @@ import { client } from '@/lib/api-client';
 
 type ValidateCodePayload = {
   userId: number;
-  recoverCode: string;
+  recoveryCode: string;
 };
 
 type ValidateCodeResponse = {
@@ -11,16 +11,16 @@ type ValidateCodeResponse = {
   errors: string[];
 };
 
-export const sendCode = async ({
+export const validateCode = async ({
   userId,
-  recoverCode,
+  recoveryCode,
 }: ValidateCodePayload) => {
   const response = await client.post<ValidateCodeResponse>(
     '/auth/password/recovery/validate-code',
     {
       userId,
-      recoverCode,
+      recoveryCode,
     },
   );
-  return response.data.message;
+  return response.data;
 };

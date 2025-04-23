@@ -56,14 +56,24 @@ export const SignUpForm: FC = () => {
         error={errors.email}
         type="text"
       />
-      <Input
-        name="password"
-        control={control}
-        label="Пароль"
-        error={errors.password}
-        placeholder="********"
-        type="password"
-      />
+
+      <div className={styles.inputWrapper}>
+        <Input
+          name="password"
+          control={control}
+          label="Пароль"
+          error={errors.password}
+          placeholder="********"
+          type="password"
+        />
+        <Button
+          type="button"
+          variant="link"
+          onClick={() => push('/reset-password')}
+        >
+          Забули пароль?
+        </Button>
+      </div>
 
       <div className={styles.buttonContainer}>
         <Button className={styles.button} variant="filled">

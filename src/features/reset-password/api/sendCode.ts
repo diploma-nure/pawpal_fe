@@ -13,5 +13,5 @@ export const sendCode = async (email: string) => {
       email,
     },
   );
-  return response.data.message;
+  return response.data;
 };
