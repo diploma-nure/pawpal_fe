@@ -1,0 +1,41 @@
+@import 'utils';
+
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.pageItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.active {
+    .pageLink {
+      background-color: $dark-blue;
+      color: $white;
+      border-color: $dark-blue;
+    }
+  }
+}
+
+.pageLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid $dark-blue;
+  background-color: transparent;
+  color: $dark-blue;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.2s;
+  cursor: pointer;
+}
