@@ -1,6 +1,4 @@
-@use 'utils/functions' as *;
-@use 'utils/variables' as *;
-@use 'utils/mixins' as *;
+@use 'utils' as *;
 
 .form {
   display: flex;
@@ -36,7 +34,7 @@
 }
 
 .inputWrapper {
-  & > :first-child {
+  &> :first-child {
     margin-bottom: rem-calc(24);
   }
 

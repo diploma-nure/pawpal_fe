@@ -1,6 +1,4 @@
-@use 'utils/functions' as *;
-@use 'utils/variables' as *;
-@use 'utils/mixins' as *;
+@use 'utils' as *;
 
 .form {
   display: flex;
