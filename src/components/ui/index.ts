@@ -8,3 +8,4 @@ export * from './Modal/Modal';
 export * from './Pagination/Pagination';
 export * from './RadioGroup/RadioGroup';
 export * from './Select/Select';
+export * from './Tag/Tag';

@@ -58,9 +58,7 @@ export const Pagination = ({
         />
       }
       marginPagesDisplayed={1}
-      pageRangeDisplayed={3}
+      pageRangeDisplayed={1}
     />
   );
 };
-
-export default Pagination;

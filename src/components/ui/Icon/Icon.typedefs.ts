@@ -9,6 +9,8 @@ const icons = [
   'diagonal-arrow',
   'dropdown-arrow',
   'Google',
+  'heart',
+  'heart-filled',
   'hourglass',
   'log-in',
   'logout',
