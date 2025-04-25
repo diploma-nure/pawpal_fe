@@ -43,6 +43,11 @@
   text-overflow: ellipsis;
   overflow: hidden;
   max-width: 100%;
+
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 145%;
+  letter-spacing: 0%;
 }
 
 .optionsList {
@@ -51,7 +56,7 @@
   top: 100%;
   left: 0;
   right: 0;
-  border: 1px solid $blue;
+  border: 1px solid $dark-blue;
   border-radius: 8px;
   background-color: $beige;
   max-height: 300px;

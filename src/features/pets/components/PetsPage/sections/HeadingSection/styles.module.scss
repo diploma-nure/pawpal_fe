@@ -1,0 +1,17 @@
+@use 'utils' as *;
+
+.surveyRedirection {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 16px;
+
+  &__text {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 145%;
+    letter-spacing: 0%;
+    color: $dark-blue;
+  }
+}

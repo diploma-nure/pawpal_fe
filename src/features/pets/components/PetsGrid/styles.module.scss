@@ -1,0 +1,41 @@
+@use 'utils' as *;
+
+.filters {
+  gap: 16px;
+  margin-bottom: 40px;
+
+  &__recommendations {
+    order: -1;
+
+    @include onTablet() {
+      order: 1;
+    }
+
+    @include onDesktop() {
+      order: unset;
+    }
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 2rem;
+  justify-items: center;
+
+  @include onTablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include onDesktop {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.paginationWrapper {
+  margin-top: 32px;
+
+  @include onTablet {
+    margin-top: 72px;
+  }
+}

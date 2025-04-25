@@ -2,13 +2,8 @@
 
 .checkboxLabel {
   display: flex;
-  align-items: center;
-  padding: 10px 16px;
+  align-items: flex-start;
   cursor: pointer;
-
-  &:hover {
-    background-color: #F3F4F6;
-  }
 
   input[type="checkbox"] {
     flex-shrink: 0;
