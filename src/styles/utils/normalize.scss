@@ -3,6 +3,10 @@
   font-family: var(--montserrat-alternates), sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   display: flex;
   flex-direction: column;

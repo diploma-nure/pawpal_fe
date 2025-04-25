@@ -3,12 +3,21 @@
 .navigation {
   display: flex;
   gap: 32px;
-  justify-content: center;
-
   list-style: none;
+
+  & a {
+    color: $dark-blue;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 145%;
+    letter-spacing: 0%;
+  }
 
   &_container {
     display: none;
+    justify-content: center;
+
 
     @include onTablet {
       display: flex;

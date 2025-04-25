@@ -7,7 +7,7 @@ import styles from './styles.module.scss';
 
 export const StepsSection = () => {
   return (
-    <section className="section">
+    <section className="section" id="how-we-work">
       <Container>
         <div className="grid">
           <div className="col-desktop-1-6 col-tablet-1-4 col-1-2">

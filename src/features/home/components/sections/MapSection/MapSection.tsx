@@ -7,7 +7,7 @@ import styles from './styles.module.scss';
 
 export const MapSection = () => {
   return (
-    <section className="section">
+    <section className="section" id="contacts">
       <Container>
         <div className={clsx('grid', styles.section)}>
           <div className="col-desktop-1-4 col-tablet-1-6 col-1-2">

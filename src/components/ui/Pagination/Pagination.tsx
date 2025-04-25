@@ -57,8 +57,8 @@ export const Pagination = ({
           height={24}
         />
       }
-      marginPagesDisplayed={1}
-      pageRangeDisplayed={1}
+      marginPagesDisplayed={0}
+      pageRangeDisplayed={2}
     />
   );
 };

@@ -31,7 +31,7 @@
 
   list-style: none;
 
-  & li {
+  & a {
     display: inline-flex;
 
     font-weight: 500;
@@ -39,6 +39,11 @@
     line-height: 145%;
     letter-spacing: 0%;
     color: $beige;
+    text-decoration: none;
+  }
+
+  @include onTablet() {
+    justify-items: flex-end;
   }
 }
 

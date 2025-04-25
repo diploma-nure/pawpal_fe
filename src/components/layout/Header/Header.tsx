@@ -2,6 +2,7 @@
 
 import { Button, Icon } from '@/components/ui';
 import clsx from 'clsx';
+import Link from 'next/link';
 import { FC } from 'react';
 import { Container } from '../Container/Container';
 import styles from './styles.module.scss';
@@ -26,10 +27,10 @@ export const Header: FC<Props> = ({ bgColor }) => {
             )}
           >
             <ul className={styles.navigation}>
-              <li>Про нас</li>
-              <li>Відгуки</li>
-              <li>Як працюємо</li>
-              <li>Контакти</li>
+              <Link href="/#about-us">Про нас</Link>
+              <Link href="/#how-we-work">Як працюємо</Link>
+              <Link href="/#reviews">Відгуки</Link>
+              <Link href="/#contacts">Контакти</Link>
             </ul>
           </nav>
 

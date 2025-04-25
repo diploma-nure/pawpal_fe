@@ -11,7 +11,7 @@ import styles from './styles.module.scss';
 
 export const HeroSection = () => {
   return (
-    <section className="section">
+    <section className="section" id="">
       <Container>
         <div className={clsx('grid', styles.hero)}>
           <div className="col-desktop-1-7 col-tablet-1-4 col-1-2">

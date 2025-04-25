@@ -7,7 +7,7 @@ import styles from './styles.module.scss';
 
 export const ReviewsSection = () => {
   return (
-    <section className="section">
+    <section className="section" id="reviews">
       <Container>
         <div className="grid">
           <div className="col-desktop-1-12 col-tablet-1-6 col-1-2">
