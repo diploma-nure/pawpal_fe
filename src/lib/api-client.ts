@@ -15,16 +15,18 @@ const instance = axios.create({
   },
 });
 
-export const client = setupCache(instance);
-
-client.interceptors.response.use(
+instance.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.request) {
-      console.error('Network error', error.request);
-    } else {
-      console.error('Error', error.message);
+    const message =
+      error.response?.data?.message || error.response?.data?.Message;
+
+    if (error.response?.status === 401) {
+      window.location.href = '/pets';
     }
-    return Promise.reject(error);
+
+    return Promise.reject(new Error(message));
   },
 );
+
+export const client = setupCache(instance);

@@ -1,9 +1,8 @@
 'use client';
 
-import PlaceholderCatImage from '@/assets/images/PlaceholderCat.jpg';
-import PlaceholderDogImage from '@/assets/images/PlaceholderDog.jpg';
 import { Tag } from '@/components/ui';
 import { Icon } from '@/components/ui/Icon/Icon';
+import { placeholderImages } from '@/features/pets/constants/placeholderImages';
 import {
   Pet,
   PetAge,
@@ -13,7 +12,7 @@ import {
 } from '@/features/pets/types';
 import { colors } from '@/styles/colors';
 import clsx from 'clsx';
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 import Link from 'next/link';
 import { FC, useState } from 'react';
 import styles from './styles.module.scss';
@@ -22,11 +21,6 @@ interface PetCardProps {
   pet: Pet;
   className?: string;
 }
-
-const placeholderImages: { [key: number]: StaticImageData } = {
-  0: PlaceholderCatImage,
-  1: PlaceholderDogImage,
-};
 
 export const PetCard: FC<PetCardProps> = ({ pet, className }) => {
   const [isFavorite, setIsFavorite] = useState(false);
