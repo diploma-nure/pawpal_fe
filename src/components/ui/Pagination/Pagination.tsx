@@ -1,5 +1,6 @@
 'use client';
 import { colors } from '@/styles/colors';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { Icon } from '../Icon/Icon';
@@ -7,22 +8,26 @@ import styles from './styles.module.scss';
 
 interface PaginationProps {
   pageCount: number;
-  onPageChange: (selectedItem: { selected: number }) => void;
-  initialPage?: number;
-  className?: string;
+  page: number;
+  href?: string;
 }
 
 export const Pagination = ({
   pageCount,
-  onPageChange,
-  initialPage = 0,
-  className = '',
+  page = 1,
+  href = '/pets',
 }: PaginationProps) => {
-  const [currentPage, setCurrentPage] = useState(initialPage);
+  const [currentPage, setCurrentPage] = useState(Number(page) - 1);
+  const { push } = useRouter();
+  const searchParams = useSearchParams();
 
   const handlePageChange = (selectedItem: { selected: number }) => {
     setCurrentPage(selectedItem.selected);
-    onPageChange(selectedItem);
+
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('page', (selectedItem.selected + 1).toString());
+
+    push(`${href}?${params.toString()}`);
   };
 
   return (
@@ -30,7 +35,7 @@ export const Pagination = ({
       pageCount={pageCount}
       onPageChange={handlePageChange}
       forcePage={currentPage}
-      containerClassName={`${styles.pagination} ${className}`}
+      containerClassName={styles.pagination}
       pageClassName={styles.pageItem}
       pageLinkClassName={styles.pageLink}
       previousClassName={styles.pageItem}

@@ -1,0 +1,18 @@
+@use 'utils' as *;
+
+.filters {
+  gap: 16px;
+  margin-bottom: 40px;
+
+  &__recommendations {
+    order: -1;
+
+    @include onTablet() {
+      order: 1;
+    }
+
+    @include onDesktop() {
+      order: unset;
+    }
+  }
+}

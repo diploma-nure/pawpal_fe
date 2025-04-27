@@ -51,15 +51,43 @@
 }
 
 .optionsList {
-  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   margin-top: 10px;
+  padding: 12px;
+  max-height: 300px;
+
+  position: absolute;
   top: 100%;
   left: 0;
   right: 0;
+
   border: 1px solid $dark-blue;
   border-radius: 8px;
   background-color: $beige;
-  max-height: 300px;
+
   overflow-y: auto;
   z-index: 10;
+}
+
+.singleOption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 145%;
+
+  &:hover {
+    background-color: rgba($dark-blue, 0.1);
+  }
+}
+
+.checkmark {
+  color: $dark-blue;
+  font-weight: bold;
 }

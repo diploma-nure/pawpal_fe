@@ -1,5 +1,7 @@
 'use client';
 
+import PlaceholderCatImage from '@/assets/images/PlaceholderCat.jpg';
+import PlaceholderDogImage from '@/assets/images/PlaceholderDog.jpg';
 import { Tag } from '@/components/ui';
 import { Icon } from '@/components/ui/Icon/Icon';
 import {
@@ -11,7 +13,7 @@ import {
 } from '@/features/pets/types';
 import { colors } from '@/styles/colors';
 import clsx from 'clsx';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import Link from 'next/link';
 import { FC, useState } from 'react';
 import styles from './styles.module.scss';
@@ -20,6 +22,12 @@ interface PetCardProps {
   pet: Pet;
   className?: string;
 }
+
+const placeholderImages: { [key: number]: StaticImageData } = {
+  0: PlaceholderCatImage,
+  1: PlaceholderDogImage,
+};
+
 export const PetCard: FC<PetCardProps> = ({ pet, className }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -33,7 +41,7 @@ export const PetCard: FC<PetCardProps> = ({ pet, className }) => {
     <div className={clsx(styles.card, className)}>
       <div className={styles.imageContainer}>
         <Image
-          src={pet.pictureUrl}
+          src={pet.pictureUrl ?? placeholderImages[pet.species]}
           alt={`Pet ${pet.name}`}
           className={styles.image}
           width={350}
@@ -62,11 +70,23 @@ export const PetCard: FC<PetCardProps> = ({ pet, className }) => {
         </div>
 
         <div className={styles.tags}>
-          <Tag variant="gender">{PetGender[pet.gender]}</Tag>
-          <Tag variant="age">{PetAge[pet.age]}</Tag>
-          <Tag variant="size">{PetSize[pet.size].split(' ').at(0)}</Tag>
+          <Tag variant="gender">
+            {PetGender.find((g) => g.value === pet.gender)?.title}
+          </Tag>
+          <Tag variant="age">
+            {PetAge.find((a) => a.value === pet.age)?.title}
+          </Tag>
+          <Tag variant="size">
+            {PetSize.find((s) => s.value === pet.size)
+              ?.title.split(' ')
+              .at(0)}
+          </Tag>
           <Tag variant="specialNeeds">
-            {PetsSpecialNeeds[pet.hasSpecialNeeds ? 1 : 0]}
+            {
+              PetsSpecialNeeds.find(
+                (sn) => sn.value === Number(pet.hasSpecialNeeds),
+              )?.title
+            }
           </Tag>
         </div>
 

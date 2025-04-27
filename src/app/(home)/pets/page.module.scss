@@ -1,0 +1,9 @@
+@use 'utils' as *;
+
+.paginationWrapper {
+  margin-top: 32px;
+
+  @include onTablet {
+    margin-top: 72px;
+  }
+}

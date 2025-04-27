@@ -1,59 +1,54 @@
 'use client';
 
-import { Checkbox } from '@/components/ui';
+import { Checkbox } from '@/components/ui/Checkbox/Checkbox';
 import { useClickOutside } from '@/hooks';
 import React, { useState } from 'react';
 import styles from './styles.module.scss';
 
-interface MultiSelectProps {
-  options: string[];
+interface SelectProps {
   placeholder?: string;
+  value: number | null;
+  options: { title: string; value: number }[];
+  onChange: (value: number) => void;
 }
 
-export const MultiSelect: React.FC<MultiSelectProps> = ({
-  options,
+export const Select: React.FC<SelectProps> = ({
   placeholder = 'Сортувати за',
+  options,
+  value,
+  onChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const ref = useClickOutside<HTMLDivElement>(() => {
     setIsOpen(false);
   });
-
   const toggleDropdown = () => setIsOpen(!isOpen);
 
-  const handleOptionToggle = (option: string) => {
-    setSelectedOptions((prev) =>
-      prev.includes(option)
-        ? prev.filter((item) => item !== option)
-        : [...prev, option],
-    );
+  const onSelect = (value: number) => {
+    onChange(value);
+    setIsOpen(false);
   };
 
   return (
     <div ref={ref} className={styles.multiSelectWrapper}>
       <div className={styles.selectHeader} onClick={toggleDropdown}>
         <p className={styles.selectedOption}>
-          {selectedOptions.length > 0
-            ? selectedOptions.join(', ')
-            : placeholder}
+          {options.find((item) => item.value === value)?.title ?? placeholder}
         </p>
         <span className={styles.arrow}></span>
       </div>
 
       {isOpen && (
         <div className={styles.optionsList}>
-          {options.map((option) => {
-            console.log(option);
-            return (
+          {options.map((option) => (
+            <div key={option.value} onClick={() => onSelect(option.value)}>
               <Checkbox
-                key={option}
-                option={option}
-                checked={selectedOptions.includes(option)}
-                toggleOption={handleOptionToggle}
+                option={option.title}
+                checked={value === option.value}
+                content={option.title}
               />
-            );
-          })}
+            </div>
+          ))}
         </div>
       )}
     </div>

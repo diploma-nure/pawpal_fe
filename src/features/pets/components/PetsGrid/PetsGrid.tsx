@@ -1,17 +1,6 @@
-'use client';
-
-import { Checkbox, MultiSelect, Pagination } from '@/components/ui';
 import { PetCard } from '@/features/pets/components/PetCard/PetCard';
-import {
-  Pet,
-  PetAge,
-  PetGender,
-  PetSize,
-  PetSpecies,
-  PetsSpecialNeeds,
-} from '@/features/pets/types';
-import clsx from 'clsx';
-import { useState } from 'react';
+import { Pet } from '@/features/pets/types';
+import { FC } from 'react';
 import styles from './styles.module.scss';
 
 const samplePets: Pet[] = [
@@ -56,96 +45,17 @@ const samplePets: Pet[] = [
   },
 ];
 
-interface Item {
-  id: number;
-  name: string;
-}
+type Props = {
+  page: number;
+  pets?: Pet[];
+};
 
-export const PetsGrid = () => {
-  const [currentPage, setCurrentPage] = useState(0);
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-
-  const toggleOption = (option: string) => {
-    setSelectedOptions((prev) => {
-      if (prev.includes(option)) {
-        return prev.filter((item) => item !== option);
-      } else {
-        return [...prev, option];
-      }
-    });
-  };
-
-  const itemsPerPage = 10;
-
-  const items: Item[] = Array.from({ length: 100 }, (_, index) => ({
-    id: index + 1,
-    name: `Item ${index + 1}`,
-  }));
-
-  const pageCount = Math.ceil(items.length / itemsPerPage);
-
-  const handlePageChange = ({ selected }: { selected: number }) => {
-    setCurrentPage(selected);
-  };
-
+export const PetsGrid: FC<Props> = ({ pets = samplePets }) => {
   return (
-    <>
-      <div className={clsx('grid', styles.filters)}>
-        <div className="col-desktop-1-3 col-tablet-1-3 col-1-2">
-          <MultiSelect
-            options={Object.values(PetSpecies)}
-            placeholder="Вид тваринки"
-          />
-        </div>
-        <div className="col-desktop-4-6 col-tablet-4-6 col-1-2">
-          <MultiSelect options={Object.values(PetAge)} placeholder="Вік" />
-        </div>
-        <div
-          className={clsx(
-            'col-desktop-7-9 col-tablet-1-6 col-1-2',
-            styles.filters__recommendations,
-          )}
-        >
-          <Checkbox
-            content="Показати мої рекомендації за анкетою"
-            option="showRecommendations"
-            checked={selectedOptions.includes('showRecommendations')}
-            toggleOption={toggleOption}
-          />
-        </div>
-        <div className="col-desktop-1-3 col-tablet-1-3 col-1-2">
-          <MultiSelect options={Object.values(PetGender)} placeholder="Стать" />
-        </div>
-        <div className="col-desktop-4-6 col-tablet-4-6 col-1-2">
-          <MultiSelect options={Object.values(PetSize)} placeholder="Розмір" />
-        </div>
-        <div className="col-desktop-7-9 col-tablet-1-3 col-1-2">
-          <MultiSelect
-            options={Object.values(PetsSpecialNeeds)}
-            placeholder="Особливості"
-          />
-        </div>
-        <div className="col-desktop-10-12 col-tablet-4-6 col-1-2">
-          <MultiSelect
-            options={Object.values(PetSpecies)}
-            placeholder="Сортувати за"
-          />
-        </div>
-      </div>
-
-      <div className={styles.grid}>
-        {samplePets.map((pet) => (
-          <PetCard key={pet.id} pet={pet} />
-        ))}
-      </div>
-
-      <div className={styles.paginationWrapper}>
-        <Pagination
-          pageCount={pageCount}
-          onPageChange={handlePageChange}
-          initialPage={currentPage}
-        />
-      </div>
-    </>
+    <div className={styles.grid}>
+      {pets.map((pet) => (
+        <PetCard key={pet.id} pet={pet} />
+      ))}
+    </div>
   );
 };

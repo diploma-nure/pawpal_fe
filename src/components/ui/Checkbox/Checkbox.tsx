@@ -9,7 +9,7 @@ type Props = {
   content: string;
   contentClassname?: string;
   checked: boolean;
-  toggleOption: (option: string) => void;
+  toggleOption?: (option: string, value?: boolean) => void;
 };
 
 export const Checkbox: FC<Props> = ({
@@ -24,7 +24,7 @@ export const Checkbox: FC<Props> = ({
       <input
         type="checkbox"
         checked={checked}
-        onChange={() => toggleOption(option)}
+        onChange={() => toggleOption?.(option, !checked)}
       />
       <p className={clsx(styles.checkboxText, contentClassname)}>{content}</p>
     </label>
