@@ -1,0 +1,16 @@
+@use 'utils' as *;
+
+.navLink {
+  padding: 12px;
+
+  color: $dark-blue;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-decoration: none;
+
+  &__active {
+    background: $beige;
+  }
+}

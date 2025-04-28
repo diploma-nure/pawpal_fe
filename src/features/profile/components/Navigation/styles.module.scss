@@ -1,0 +1,45 @@
+@use 'utils' as *;
+
+.avatar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 20px;
+
+  &__image {
+    border-radius: 50%;
+  }
+
+  &__name {
+    font-family: Montserrat Alternates;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 145%;
+    letter-spacing: 0%;
+    color: $dark-blue;
+  }
+}
+
+.navigation {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.linkList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.logOut {
+  justify-content: flex-start;
+  font-family: Montserrat Alternates;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: $dark-blue;
+  text-decoration: none;
+  padding: 12px;
+}

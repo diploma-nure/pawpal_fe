@@ -1,0 +1,32 @@
+@use 'utils' as *;
+
+.form {
+  background-color: $beige;
+  border-radius: 16px;
+  width: 100%;
+  padding: 24px 16px;
+
+  @include onTablet() {
+    padding: 32px;
+  }
+}
+
+.title {
+  margin-bottom: 32px;
+}
+
+.formFields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+
+  button {
+    min-width: 160px;
+  }
+}

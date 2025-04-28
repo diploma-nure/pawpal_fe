@@ -20,6 +20,10 @@ const nextConfig = {
         protocol: 'http',
         hostname: 'paw-pal-api-9w4py.ondigitalocean.app',
       },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+      },
     ],
   },
 };
