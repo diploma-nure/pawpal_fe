@@ -1,0 +1,14 @@
+@use 'utils' as *;
+
+.tilesWrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 40px 32px;
+  gap: 16px;
+
+  background-color: $beige;
+
+  @include onDesktop() {
+    gap: 32px;
+  }
+}
