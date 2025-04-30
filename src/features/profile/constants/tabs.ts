@@ -1,5 +1,6 @@
 import { ContactForm } from '@/features/profile/components/ContactForm';
 import { LikedSection } from '@/features/profile/components/LikedSection/LikedSection';
+import { SurveyForm } from '@/features/profile/components/SurveyForm';
 import { FC } from 'react';
 
 export enum ProfileTab {
@@ -14,5 +15,5 @@ export const ComponentByTab: Record<ProfileTab, FC<any>> = {
   [ProfileTab.Contacts]: ContactForm,
   [ProfileTab.Liked]: LikedSection,
   [ProfileTab.Requests]: ContactForm,
-  [ProfileTab.Surveys]: ContactForm,
+  [ProfileTab.Surveys]: SurveyForm,
 };
