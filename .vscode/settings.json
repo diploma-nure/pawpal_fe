@@ -50,5 +50,6 @@
   "[svg]": {
     "editor.defaultFormatter": "jock.svg"
   },
-  "prettier.singleQuote": true
+  "prettier.singleQuote": true,
+  "svg.preview.background": "black"
 }

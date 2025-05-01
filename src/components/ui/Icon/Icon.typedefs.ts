@@ -27,6 +27,7 @@ const icons = [
   'quotation-mark',
   'add',
   'bucket',
+  'letter',
 ] as const;
 
 export type IconName = (typeof icons)[number];
