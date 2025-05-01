@@ -1,0 +1,138 @@
+@use 'utils' as *;
+
+.date-form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 32px;
+
+  @include onTablet() {
+    gap: 48px;
+  }
+
+
+  :global {
+    .rdp-root {
+      --rdp-accent-color: #{$dark-blue};
+      --rdp-day-width: 40px;
+      --rdp-day-height: 40px;
+      --rdp-day_button-width: 40px;
+      --rdp-day_button-height: 40px;
+
+      display: inline-flex;
+    }
+
+    .rdp-month_grid {
+      border-collapse: separate;
+      border-spacing: 2px;
+
+      @include onTablet() {
+        border-spacing: 16px;
+      }
+    }
+
+    .rdp-nav {
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .rdp-month_caption {
+      justify-content: center;
+
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 100%;
+      color: $dark-blue;
+      text-transform: capitalize;
+    }
+
+    .rdp-weekday {
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 100%;
+      color: $dark-blue;
+      text-transform: uppercase;
+      opacity: 1;
+
+      &:where([aria-label="неділя"], [aria-label="субота"]) {
+        color: $light-grey;
+      }
+    }
+
+    .rdp-day_button {
+      border-radius: 50%;
+      transition: border ease-in 200ms;
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 100%;
+      color: $dark-blue;
+
+      &:disabled {
+        opacity: 1;
+        color: $light-grey;
+      }
+
+      &:hover:not(:disabled) {
+        border: 1px solid var(--rdp-accent-color);
+      }
+    }
+
+    .rdp-selected {
+      background-color: $dark-blue;
+      border-radius: 50%;
+
+      & .rdp-day_button {
+        color: $white;
+      }
+    }
+  }
+}
+
+.time-slots {
+  h4 {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+
+  .time-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+
+    @include onTablet() {
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+
+    button {
+      padding: 10px 16px;
+      border: 1px solid $dark-blue;
+      border-radius: 8px;
+      color: $dark-blue;
+      transition: all 0.2s ease;
+
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 145%;
+      letter-spacing: 0%;
+
+
+      &:hover {
+        background-color: #f5f5f5;
+      }
+
+      &:disabled {
+        background-color: $white;
+        color: $light-grey;
+        border-color: $light-grey;
+      }
+
+      &.selected {
+        background-color: $dark-blue;
+        color: $white;
+        border-color: $dark-blue;
+      }
+    }
+  }
+}
