@@ -1,0 +1,24 @@
+@use 'utils' as *;
+
+.container {
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+
+  @include onDesktop() {
+    padding-right: 24px;
+    background-color: #FFC940;
+  }
+}
+
+.image {
+  display: none;
+  max-width: 100%;
+  height: auto;
+  align-self: flex-end;
+
+  @include onDesktop() {
+    display: block;
+  }
+}

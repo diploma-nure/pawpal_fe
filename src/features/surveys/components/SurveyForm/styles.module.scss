@@ -1,0 +1,43 @@
+@use 'utils' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  padding-inline: 16px;
+}
+
+.titleContainer {
+  margin-bottom: 32px;
+
+  & h1,
+  h2 {
+    text-align: center;
+    color: $dark-blue;
+    font-weight: 500;
+  }
+
+  & h1 {
+    font-size: 28px;
+    line-height: 120%;
+    margin-bottom: 8px;
+  }
+
+  & h2 {
+    font-size: 18px;
+    line-height: 145%;
+  }
+}
+
+.formContainer {
+  max-width: 500px;
+  width: 100%;
+
+  & form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+}
