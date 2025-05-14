@@ -23,7 +23,11 @@
 }
 
 .step {
-  flex: 1 1 0;
+  flex: 1 1 100%;
+
+  @include onDesktop() {
+    flex-basis: 0;
+  }
 
   &Header {
     display: flex;

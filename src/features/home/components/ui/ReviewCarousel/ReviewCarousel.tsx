@@ -1,5 +1,6 @@
 'use client';
 
+import { NavButton } from '@/features/home/components/ui/ReviewCarousel/NavButton';
 import 'swiper/css';
 import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -21,6 +22,11 @@ export const ReviewCarousel = () => {
           <ReviewCard text={review.review} author={review.author} />
         </SwiperSlide>
       ))}
+
+      <div className={styles.buttons}>
+        <NavButton direction="prev" />
+        <NavButton direction="next" />
+      </div>
     </Swiper>
   );
 };
