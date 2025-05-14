@@ -1,0 +1,73 @@
+@use 'utils' as *;
+
+.menu {
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  transform: translateX(100%);
+  transition: transform 0.5s;
+  background-color: $beige;
+  z-index: 2;
+
+  @include onDesktop() {
+    display: none;
+  }
+
+  &__button {
+    @include onDesktop() {
+      display: none;
+    }
+  }
+
+  &__content {
+    box-sizing: border-box;
+    height: 100vh;
+    padding: 40px 16px 20px;
+  }
+
+  &--open {
+    transform: translateX(0);
+  }
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+}
+
+.loginButton {
+  & button {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 120%;
+    color: $dark-blue;
+    text-decoration: none;
+  }
+}
+
+.navigation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  margin-top: 90px;
+
+  & a {
+    font-family: Montserrat Alternates;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 145%;
+    letter-spacing: 0%;
+    color: $dark-blue;
+    text-decoration: none;
+  }
+}

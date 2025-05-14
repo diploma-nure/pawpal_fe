@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
-import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
+import { DetailedHTMLProps, FC, InputHTMLAttributes } from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
 import styles from './styles.module.scss';
 
@@ -12,7 +12,7 @@ type InputProps = {
   type?: string;
 } & DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
 
-export const Input: React.FC<InputProps> = ({
+export const Input: FC<InputProps> = ({
   name,
   control,
   label,

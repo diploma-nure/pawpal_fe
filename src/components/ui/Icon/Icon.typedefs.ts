@@ -28,6 +28,8 @@ const icons = [
   'add',
   'bucket',
   'letter',
+  'boldCross',
+  'menu',
 ] as const;
 
 export type IconName = (typeof icons)[number];

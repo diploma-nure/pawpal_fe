@@ -1,6 +1,7 @@
 'use client';
 
 import { Button, Icon } from '@/components/ui';
+import { Menu } from '@/components/ui/Menu';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { FC } from 'react';
@@ -43,6 +44,8 @@ export const Header: FC<Props> = ({ bgColor }) => {
             <Button variant="link" rightIcon={() => <Icon name="log-in" />}>
               Увійти
             </Button>
+
+            <Menu />
           </div>
         </div>
       </Container>
