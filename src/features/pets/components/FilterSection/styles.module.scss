@@ -1,18 +1,107 @@
 @use 'utils' as *;
 
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.placeholder {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+
+  background-color: transparent;
+
+  @include onTablet() {
+    display: none;
+  }
+}
+
 .filters {
-  gap: 16px;
+  position: relative;
   margin-bottom: 40px;
+  row-gap: 16px;
 
   &__recommendations {
+    display: flex;
+    gap: 8px;
     order: -1;
-
-    @include onTablet() {
-      order: 1;
-    }
 
     @include onDesktop() {
       order: unset;
     }
+  }
+
+  &__toggle {
+    position: relative;
+    display: inline-block;
+    align-self: flex-end;
+    width: 48px;
+    height: 48px;
+    transform: translateY(80%);
+
+    background: $orange;
+    border: 1px solid $orange;
+    padding: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1;
+
+    transition: all 300ms ease-in-out;
+
+    user-select: auto;
+
+    @include onTablet() {
+      display: none;
+    }
+
+    &::after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      content: "00";
+
+      transform: translate(-50%, -50%);
+      color: transparent;
+
+      background-image: url("../../../../assets/images/filter.png");
+      background-repeat: no-repeat;
+      background-position: 50%;
+    }
+  }
+
+  &__checkbox {
+    display: none;
+
+    &:checked~.filters__toggle {
+      background: transparent;
+
+      &::after {
+        background-image: url("../../../../assets/images/filterOrange.png");
+      }
+    }
+
+
+    &:checked~.filters .filters__additional {
+      display: block;
+    }
+  }
+
+
+  &__additional {
+    display: none;
+
+    @include onTablet() {
+      display: block;
+    }
+  }
+
+  &__reset {
+    font-family: Montserrat Alternates;
+    font-weight: 500;
+    font-size: 18px;
+    color: $grey;
+    text-decoration: none;
+    justify-self: flex-end;
   }
 }

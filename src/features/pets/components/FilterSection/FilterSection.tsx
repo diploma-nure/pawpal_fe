@@ -1,5 +1,5 @@
 'use client';
-import { Checkbox, Select } from '@/components/ui';
+import { Button, Checkbox, Select } from '@/components/ui';
 import {
   PetAge,
   PetGender,
@@ -92,68 +92,134 @@ export const FilterSection = ({
     updateSearchParam({ key, value });
   };
 
+  const clearFilters = () => {
+    setSelectedValues({
+      species: null,
+      ages: null,
+      genders: null,
+      sizes: null,
+      specialNeeds: null,
+      sortBy: null,
+    });
+    router.push('/pets');
+  };
+
   return (
-    <div className={clsx('grid', styles.filters)}>
-      <div className="col-desktop-1-3 col-tablet-1-3 col-1-2">
-        <Select
-          value={selectedValues.species}
-          options={PetSpecies}
-          placeholder="Вид тваринки"
-          onChange={(value) => handleSelectChange('species', value)}
-        />
-      </div>
-      <div className="col-desktop-4-6 col-tablet-4-6 col-1-2">
-        <Select
-          value={selectedValues.ages}
-          options={PetAge}
-          placeholder="Вік"
-          onChange={(value) => handleSelectChange('ages', value)}
-        />
-      </div>
-      <div
-        className={clsx(
-          'col-desktop-7-9 col-tablet-1-6 col-1-2',
-          styles.filters__recommendations,
-        )}
-      >
-        <Checkbox
-          content="Показати мої рекомендації за анкетою"
-          option="showRecommendations"
-          checked={checkedOptions.showRecommendations}
-          toggleOption={toggleOption}
-        />
-      </div>
-      <div className="col-desktop-1-3 col-tablet-1-3 col-1-2">
-        <Select
-          options={PetGender}
-          value={selectedValues.genders}
-          placeholder="Стать"
-          onChange={(value) => handleSelectChange('genders', value)}
-        />
-      </div>
-      <div className="col-desktop-4-6 col-tablet-4-6 col-1-2">
-        <Select
-          options={PetSize}
-          value={selectedValues.sizes}
-          placeholder="Розмір"
-          onChange={(value) => handleSelectChange('sizes', value)}
-        />
-      </div>
-      <div className="col-desktop-7-9 col-tablet-1-3 col-1-2">
-        <Select
-          options={PetsSpecialNeeds}
-          value={selectedValues.specialNeeds}
-          placeholder="Особливості"
-          onChange={(value) => handleSelectChange('specialNeeds', value)}
-        />
-      </div>
-      <div className="col-desktop-10-12 col-tablet-4-6 col-1-2">
-        <Select
-          options={SortByOptions}
-          value={selectedValues.sortBy}
-          placeholder="Сортувати за"
-          onChange={(value) => handleSelectChange('sortBy', value)}
-        />
+    <div className={styles.wrapper}>
+      <input
+        type="checkbox"
+        id="filtersToggle"
+        className={styles.filters__checkbox}
+      />
+      <label htmlFor="filtersToggle" className={styles.filters__toggle}></label>
+
+      <div className={clsx('grid', styles.filters)}>
+        <div
+          className={clsx(
+            'col-desktop-1-3 col-tablet-1-3 col-1-2',
+            styles.filters__additional,
+          )}
+        >
+          <Select
+            value={selectedValues.species}
+            options={PetSpecies}
+            placeholder="Вид тваринки"
+            onChange={(value) => handleSelectChange('species', value)}
+          />
+        </div>
+        <div
+          className={clsx(
+            'col-desktop-4-6 col-tablet-4-6 col-1-2',
+            styles.filters__additional,
+          )}
+        >
+          <Select
+            value={selectedValues.ages}
+            options={PetAge}
+            placeholder="Вік"
+            onChange={(value) => handleSelectChange('ages', value)}
+          />
+        </div>
+        <div
+          className={clsx(
+            'col-desktop-7-9 col-tablet-1-6 col-1-2',
+            styles.filters__recommendations,
+          )}
+        >
+          <Checkbox
+            content="Показати мої рекомендації за анкетою"
+            option="showRecommendations"
+            checked={checkedOptions.showRecommendations}
+            toggleOption={toggleOption}
+          />
+          <div className={styles.placeholder} />
+        </div>
+        <div
+          className={clsx(
+            'col-desktop-1-3 col-tablet-1-3 col-1-2',
+            styles.filters__additional,
+          )}
+        >
+          <Select
+            options={PetGender}
+            value={selectedValues.genders}
+            placeholder="Стать"
+            onChange={(value) => handleSelectChange('genders', value)}
+          />
+        </div>
+        <div
+          className={clsx(
+            'col-desktop-4-6 col-tablet-4-6 col-1-2',
+            styles.filters__additional,
+          )}
+        >
+          <Select
+            options={PetSize}
+            value={selectedValues.sizes}
+            placeholder="Розмір"
+            onChange={(value) => handleSelectChange('sizes', value)}
+          />
+        </div>
+        <div
+          className={clsx(
+            'col-desktop-7-9 col-tablet-1-3 col-1-2',
+            styles.filters__additional,
+          )}
+        >
+          <Select
+            options={PetsSpecialNeeds}
+            value={selectedValues.specialNeeds}
+            placeholder="Особливості"
+            onChange={(value) => handleSelectChange('specialNeeds', value)}
+          />
+        </div>
+        <div
+          className={clsx(
+            'col-desktop-10-12 col-tablet-4-6 col-1-2',
+            styles.filters__additional,
+          )}
+        >
+          <Select
+            options={SortByOptions}
+            value={selectedValues.sortBy}
+            placeholder="Сортувати за"
+            onChange={(value) => handleSelectChange('sortBy', value)}
+          />
+        </div>
+        <div
+          className={clsx(
+            'col-desktop-10-12 col-tablet-4-6 col-1-2',
+            styles.filters__additional,
+          )}
+        >
+          <Button
+            variant="link"
+            className={styles.filters__reset}
+            onClick={clearFilters}
+          >
+            Скинути всі фільтри
+          </Button>
+        </div>
       </div>
     </div>
   );
