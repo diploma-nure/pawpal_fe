@@ -12,6 +12,8 @@ $modal-max-width: 400px;
   background-color: $white;
   border-radius: rem-calc(8);
   outline: none;
+  overflow-y: auto;
+  max-height: 90%;
 
   &Close {
     position: absolute;

@@ -3,6 +3,7 @@
 import { FC, JSX, ReactNode, useEffect } from 'react';
 import styles from './styles.module.scss';
 
+import clsx from 'clsx';
 import ReactModal from 'react-modal';
 import { Icon } from '../Icon/Icon';
 
@@ -11,6 +12,7 @@ type Props = {
   onClose: () => void;
   children: ReactNode;
   renderTitleIcon?: () => JSX.Element;
+  className?: string;
 };
 
 export const Modal: FC<Props> = ({
@@ -18,6 +20,7 @@ export const Modal: FC<Props> = ({
   onClose,
   children,
   renderTitleIcon = () => <Icon name="logo" width={92} height={78} />,
+  className,
 }) => {
   useEffect(() => {
     if (isOpen) {
@@ -34,7 +37,7 @@ export const Modal: FC<Props> = ({
       shouldCloseOnEsc
       shouldCloseOnOverlayClick
       overlayClassName={styles.overlay}
-      className={styles.modal}
+      className={clsx(styles.modal, className)}
       ariaHideApp={false}
     >
       <button className={styles.modalClose} onClick={onClose}>

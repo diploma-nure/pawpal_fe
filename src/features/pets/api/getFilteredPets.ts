@@ -1,5 +1,7 @@
 import { Pet } from '@/features/pets/types';
 import { client } from '@/lib/api-client';
+import { queryOptions, useQuery } from '@tanstack/react-query';
+import { QueryConfig } from '@/lib/reactQuery';
 
 type FilteredPetsPayload = {
   Species?: string;
@@ -43,4 +45,32 @@ export const getFilteredPets = async ({
   });
 
   return response.data;
+};
+
+export const getFilteredPetsQueryOptions = (
+  payload: FilteredPetsPayload = {},
+) => {
+  return queryOptions({
+    queryKey: [payload],
+    queryFn: () =>
+      getFilteredPets({
+        ...payload,
+      }),
+  });
+};
+
+type UseFilteredPetsOptions = {
+  payload?: FilteredPetsPayload;
+  queryConfig?: QueryConfig<typeof getFilteredPetsQueryOptions>;
+};
+
+export const useFilteredPets = ({
+  queryConfig,
+  payload,
+}: UseFilteredPetsOptions) => {
+  console.log(payload);
+  return useQuery({
+    ...getFilteredPetsQueryOptions({ ...payload }),
+    ...queryConfig,
+  });
 };

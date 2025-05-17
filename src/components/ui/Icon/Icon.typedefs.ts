@@ -30,6 +30,7 @@ const icons = [
   'letter',
   'boldCross',
   'menu',
+  'upload',
 ] as const;
 
 export type IconName = (typeof icons)[number];

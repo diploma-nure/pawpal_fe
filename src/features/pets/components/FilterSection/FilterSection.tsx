@@ -18,7 +18,6 @@ type Props = {
   sizes?: string;
   ages?: string;
   genders?: string;
-  type?: string;
   specialNeeds?: string;
   showRecommendations?: string;
   sortBy?: string;
