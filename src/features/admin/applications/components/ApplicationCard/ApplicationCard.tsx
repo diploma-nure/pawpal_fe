@@ -2,7 +2,7 @@
 
 import { Button, Icon } from '@/components/ui';
 import { ApplicationStatus } from '@/features/admin/applications/components/ApplicationStatus';
-import { Meeting } from '@/features/admin/applications/types';
+import { Application } from '@/features/admin/applications/types';
 import { colors } from '@/styles/colors';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
@@ -11,17 +11,17 @@ import { FC } from 'react';
 import styles from './styles.module.scss';
 
 type Props = {
-  meeting: Meeting;
+  application: Application;
 };
 
-export const ApplicationCard: FC<Props> = ({ meeting }) => {
+export const ApplicationCard: FC<Props> = ({ application }) => {
   return (
     <div className={clsx(styles.card)}>
       <div className={styles.content}>
-        {meeting.pet.pictureUrl && (
+        {application.pet.pictureUrl && (
           <Image
-            src={meeting.pet.pictureUrl}
-            alt={`Pet ${meeting.pet.name}`}
+            src={application.pet.pictureUrl}
+            alt={`Pet ${application.pet.name}`}
             className={styles.image}
             width={72}
             height={72}
@@ -29,16 +29,16 @@ export const ApplicationCard: FC<Props> = ({ meeting }) => {
         )}
 
         <div className={styles.info}>
-          <p className={styles.name}>{meeting.pet.name}</p>
-          <p>{meeting.user.fullName}</p>
+          <p className={styles.name}>{application.pet.name}</p>
+          <p>{application.user.fullName}</p>
           <p className={styles.description}>
-            {dayjs(meeting.start).format('DD.MM.YYYY')}
+            {dayjs(application.createdAt).format('DD.MM.YYYY')}
           </p>
         </div>
       </div>
 
       <div className={styles.status}>
-        <ApplicationStatus status={meeting.status} />
+        <ApplicationStatus status={application.status} />
       </div>
 
       <div className={styles.actionsWrapper}>
@@ -52,11 +52,11 @@ export const ApplicationCard: FC<Props> = ({ meeting }) => {
               fill={colors.white}
             />
           )}
-          disabled={meeting.status !== 0}
+          disabled={application.status !== 0}
         >
           Призначити відеозустріч
         </Button>
-        <Button disabled={meeting.status !== 0} variant="outline">
+        <Button disabled={application.status !== 0} variant="outline">
           Відхилити заявку
         </Button>
       </div>

@@ -1,7 +1,7 @@
-export interface Application {
+export interface Meeting {
   id: number;
   status: number;
-  createdAt: string;
+  start: string;
   user: {
     id: number;
     fullName: string;
@@ -10,5 +10,8 @@ export interface Application {
     id: number;
     name: string;
     pictureUrl: string;
+  };
+  application: {
+    id: number;
   };
 }

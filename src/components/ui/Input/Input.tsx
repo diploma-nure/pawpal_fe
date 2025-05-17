@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
+import clsx from 'clsx';
 import { DetailedHTMLProps, FC, InputHTMLAttributes } from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
 import styles from './styles.module.scss';
@@ -10,6 +11,7 @@ type InputProps = {
   label?: string;
   error?: FieldError;
   type?: string;
+  classNames?: string;
 } & DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
 
 export const Input: FC<InputProps> = ({
@@ -18,6 +20,7 @@ export const Input: FC<InputProps> = ({
   label,
   error,
   type = 'text',
+  classNames,
   ...rest
 }) => {
   return (
@@ -31,7 +34,11 @@ export const Input: FC<InputProps> = ({
             <input
               {...field}
               placeholder="example@gmail.com"
-              className={`${styles.input} ${error ? styles.error : ''}`}
+              className={clsx(
+                styles.input,
+                { [styles.error]: error },
+                classNames,
+              )}
               type={type}
               {...rest}
             />

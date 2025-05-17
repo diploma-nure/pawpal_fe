@@ -40,7 +40,7 @@ export const ApplicationStatus: FC<Props> = ({ status }) => {
   };
 
   return (
-    <div className={styles.ApplicationStatus}>
+    <div className={styles.status}>
       {renderIcon()}
       <p className={styles.statusText} data-color={applicationStatus?.value}>
         {applicationStatus?.title}
