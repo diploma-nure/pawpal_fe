@@ -7,6 +7,15 @@
 
   list-style: none;
 
+  & a {
+    color: $dark-blue;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 145%;
+    letter-spacing: 0%;
+  }
+
   &_container {
     display: none;
 
@@ -23,5 +32,16 @@
 }
 
 .loginButton {
+  display: flex;
+  align-items: center;
+  gap: 16px;
   justify-self: flex-end;
+
+  & button {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 120%;
+    color: $dark-blue;
+    text-decoration: none;
+  }
 }

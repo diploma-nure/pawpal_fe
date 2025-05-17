@@ -1,7 +1,9 @@
 'use client';
 
 import { Button, Icon } from '@/components/ui';
+import { Menu } from '@/components/ui/Menu';
 import clsx from 'clsx';
+import Link from 'next/link';
 import { FC } from 'react';
 import { Container } from '../Container/Container';
 import styles from './styles.module.scss';
@@ -26,9 +28,17 @@ export const AdminHeader: FC<Props> = ({ bgColor }) => {
             )}
           >
             <ul className={styles.navigation}>
-              <li>Тваринки</li>
-              <li>Заявки</li>
-              <li>Відеоконференції</li>
+              <ul className={styles.navigation}>
+                <li>
+                  <Link href="/admin/pets">Тваринки</Link>
+                </li>
+                <li>
+                  <Link href="/admin/applications">Як працюємо</Link>
+                </li>
+                <li>
+                  <Link href="/admin/meetings">Відгуки</Link>
+                </li>
+              </ul>
             </ul>
           </nav>
 
@@ -41,6 +51,8 @@ export const AdminHeader: FC<Props> = ({ bgColor }) => {
             <Button variant="link" rightIcon={() => <Icon name="logout" />}>
               Вийти
             </Button>
+
+            <Menu />
           </div>
         </div>
       </Container>
