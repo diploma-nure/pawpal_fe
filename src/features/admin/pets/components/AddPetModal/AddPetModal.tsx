@@ -9,6 +9,7 @@ import {
   PetsSpecialNeeds,
 } from '@/features/pets/types';
 import { colors } from '@/styles/colors';
+import Image from 'next/image';
 import { FC, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Controller, useForm } from 'react-hook-form';
@@ -218,7 +219,7 @@ export const AddPetModal: FC<Props> = ({ isOpen, onClose }) => {
             <div className={styles.filePreview}>
               {files.map((file, index) => (
                 <div key={index} className={styles.previewItem}>
-                  <img
+                  <Image
                     src={URL.createObjectURL(file)}
                     alt={`Preview ${index}`}
                     className={styles.previewImage}

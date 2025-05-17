@@ -14,5 +14,5 @@ export const colors = {
   lightGreen: '#1BC760',
   green: '#169C4C',
   white: '#FFFFFF',
-  someNewColor: 'some hahaha',
+  red: '#E60000',
 };

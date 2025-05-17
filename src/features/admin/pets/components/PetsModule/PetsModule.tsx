@@ -1,15 +1,15 @@
 'use client';
 
-import { AddPet } from '../AddPet/AddPet';
-import styles from './styles.module.scss';
-import { Filters } from '@/features/admin/pets/components/Filters';
-import { useState } from 'react';
-import { FilterValues } from '@/features/admin/pets/types';
 import { Pagination } from '@/components/ui';
+import { safeStringify } from '@/features/admin/helpers/getDefaultValue';
+import { Filters } from '@/features/admin/pets/components/Filters';
+import { PetList } from '@/features/admin/pets/components/PetList/PetList';
+import { FilterValues } from '@/features/admin/pets/types';
 import { useFilteredPets } from '@/features/pets/api/getFilteredPets';
 import { useSearchParams } from 'next/navigation';
-import { PetList } from '@/features/admin/pets/components/PetList/PetList';
-import { safeStringify } from '@/features/admin/helpers/getDefaultValue';
+import { useState } from 'react';
+import { AddPet } from '../AddPet/AddPet';
+import styles from './styles.module.scss';
 
 export function PetsModule() {
   const params = useSearchParams();
@@ -75,7 +75,7 @@ export function PetsModule() {
           <Pagination
             pageCount={totalPages}
             page={page ? Number(page) : 1}
-            href="/pets"
+            href="/admin/pets"
           />
         </div>
       )}
