@@ -1,7 +1,7 @@
 @use 'utils' as *;
 
 .reviewSlide {
-  width: 389px;
+  width: 389px !important;
 }
 
 .prevIcon {
@@ -21,7 +21,7 @@
 }
 
 .buttons {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 12px;

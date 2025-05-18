@@ -1,10 +1,8 @@
-'use client';
-
-import { Button, Icon } from '@/components/ui';
+import { ProfileButton } from '@/components/layout/Header/ProfileButton';
+import { Icon } from '@/components/ui';
 import { Menu } from '@/components/ui/Menu';
 import clsx from 'clsx';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 import { Container } from '../Container/Container';
 import styles from './styles.module.scss';
@@ -14,8 +12,6 @@ type Props = {
 };
 
 export const Header: FC<Props> = ({ bgColor }) => {
-  const { push } = useRouter();
-
   return (
     <header style={{ backgroundColor: bgColor }}>
       <Container>
@@ -41,16 +37,10 @@ export const Header: FC<Props> = ({ bgColor }) => {
           <div
             className={clsx(
               'col-desktop-11-12 col-tablet-6-6 col-2-2',
-              styles.loginButton,
+              styles.menuContainer,
             )}
           >
-            <Button
-              variant="link"
-              rightIcon={() => <Icon name="log-in" />}
-              onClick={() => push('log-in')}
-            >
-              Увійти
-            </Button>
+            <ProfileButton />
 
             <Menu />
           </div>

@@ -1,5 +1,6 @@
 import { Container } from '@/components/layout';
-import { AccentText, Button } from '@/components/ui';
+import { AccentText } from '@/components/ui';
+import { RedirectButton } from '@/features/home/components/ui/RedirectButton';
 import { colors } from '@/styles/colors';
 import clsx from 'clsx';
 import { StepsList } from '../../ui/StepsList/StepsList';
@@ -25,7 +26,7 @@ export const StepsSection = () => {
             )}
           >
             <div className={styles.buttonWrapper}>
-              <Button>Знайти друга</Button>
+              <RedirectButton />
             </div>
           </div>
 

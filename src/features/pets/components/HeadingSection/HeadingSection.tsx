@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui';
+import { SurveyButton } from '@/features/pets/components/HeadingSection/SurveyButton';
 import clsx from 'clsx';
 import styles from './styles.module.scss';
 
@@ -19,7 +19,7 @@ export const HeadingSection = () => {
           Заповни анкету — і ми підберемо того самого пухнастика, який чекає
           саме на тебе
         </p>
-        <Button>Пройти анкетування</Button>
+        <SurveyButton />
       </div>
     </div>
   );

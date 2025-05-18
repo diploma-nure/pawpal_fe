@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon/Icon';
 import { useDisclosure } from '@/hooks/useDisclosure';

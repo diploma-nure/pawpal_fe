@@ -30,17 +30,18 @@
   padding-block: 40px;
 }
 
-.loginButton {
+.menuContainer {
   display: flex;
   align-items: center;
   gap: 16px;
   justify-self: flex-end;
 
-  & button {
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 120%;
-    color: $dark-blue;
-    text-decoration: none;
-  }
+}
+
+.profileButton {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 120%;
+  color: $dark-blue;
+  text-decoration: none;
 }

@@ -1,5 +1,6 @@
 import { Container } from '@/components/layout';
-import { AccentText, Button } from '@/components/ui';
+import { AccentText } from '@/components/ui';
+import { RedirectButton } from '@/features/home/components/ui/RedirectButton';
 import { colors } from '@/styles/colors';
 import clsx from 'clsx';
 import Image from 'next/image';
@@ -25,7 +26,7 @@ export const HeroSection = () => {
               Зроби перший крок!
             </p>
             <div className={styles.heroFindButton}>
-              <Button>Знайти друга</Button>
+              <RedirectButton />
             </div>
           </div>
 
