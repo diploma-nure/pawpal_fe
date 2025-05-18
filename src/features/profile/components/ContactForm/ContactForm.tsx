@@ -2,8 +2,10 @@
 
 import { Button, Input } from '@/components/ui';
 import { useGetUsersInfo } from '@/features/profile/api/getUsersInfo';
+import { SuccessModal } from '@/features/profile/components/SuccessModal/SuccessModal';
 import { useUpdateUsersInfo } from '@/features/profile/hooks';
 import { useGetUser } from '@/features/profile/hooks/useGetUser';
+import { useDisclosure } from '@/hooks/useDisclosure';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -12,6 +14,7 @@ import styles from './styles.module.scss';
 
 export const ContactForm: FC = () => {
   const user = useGetUser();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { data } = useGetUsersInfo({
     payload: {
@@ -19,7 +22,11 @@ export const ContactForm: FC = () => {
     },
   });
 
-  const { mutate } = useUpdateUsersInfo();
+  const { mutate } = useUpdateUsersInfo({
+    config: {
+      onSuccess: onOpen,
+    },
+  });
 
   const {
     handleSubmit,
@@ -100,6 +107,8 @@ export const ContactForm: FC = () => {
       <div className={styles.buttonContainer}>
         <Button type="submit">Зберегти зміни</Button>
       </div>
+
+      <SuccessModal isOpen={isOpen} onClose={onClose} />
     </form>
   );
 };
