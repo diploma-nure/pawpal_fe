@@ -1,7 +1,7 @@
 import { Pet } from '@/features/pets/types';
 import { client } from '@/lib/api-client';
-import { queryOptions, useQuery } from '@tanstack/react-query';
 import { QueryConfig } from '@/lib/reactQuery';
+import { queryOptions, useQuery } from '@tanstack/react-query';
 
 type FilteredPetsPayload = {
   Species?: string;
@@ -68,7 +68,6 @@ export const useFilteredPets = ({
   queryConfig,
   payload,
 }: UseFilteredPetsOptions) => {
-  console.log(payload);
   return useQuery({
     ...getFilteredPetsQueryOptions({ ...payload }),
     ...queryConfig,

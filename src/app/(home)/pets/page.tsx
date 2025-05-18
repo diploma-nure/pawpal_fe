@@ -1,49 +1,58 @@
+'use client';
+
 import { Container } from '@/components/layout';
 import { Pagination } from '@/components/ui';
-import { getFilteredPets } from '@/features/pets/api/getFilteredPets';
+import { usePets } from '@/features/pets/api/getPets';
+import { ErrorText } from '@/features/pets/components/ErrorText/ErrorText';
 import { FilterSection } from '@/features/pets/components/FilterSection/FilterSection';
 import { HeadingSection } from '@/features/pets/components/HeadingSection';
 import { PetsGrid } from '@/features/pets/components/PetsGrid/PetsGrid';
+import Cookies from 'js-cookie';
+import { useSearchParams } from 'next/navigation';
 import styles from './page.module.scss';
 
-type PetsPageProps = {
-  searchParams: Promise<{
-    page?: string;
-    species?: string;
-    sizes?: string;
-    ages?: string;
-    genders?: string;
-    type?: string;
-    specialNeeds?: string;
-    showRecommendations?: string;
-    sortBy?: string;
-  }>;
-};
+export default function PetsPage({}) {
+  const searchParams = useSearchParams();
 
-export default async function PetsPage({ searchParams }: PetsPageProps) {
-  const {
-    page,
-    ages,
-    genders,
-    species,
-    sizes,
-    sortBy,
-    specialNeeds,
-    showRecommendations,
-  } = await searchParams;
+  const options = {
+    page: searchParams.get('page') ?? undefined,
+    ages: searchParams.get('ages') ?? undefined,
+    genders: searchParams.get('genders') ?? undefined,
+    species: searchParams.get('species') ?? undefined,
+    sizes: searchParams.get('sizes') ?? undefined,
+    sortBy: searchParams.get('sortBy') ?? undefined,
+    specialNeeds: searchParams.get('specialNeeds') ?? undefined,
+    showRecommendations: searchParams.get('showRecommendations') ?? undefined,
+    token: Cookies.get('token'),
+  };
 
-  const {
-    data: { items, count },
-  } = await getFilteredPets({
-    Species: species,
-    Sizes: sizes,
-    Ages: ages,
-    Genders: genders,
-    Page: page,
-    SortBy: sortBy,
+  const { data, error } = usePets({
+    payload: {
+      Page: options.page,
+      Ages: options.ages,
+      Genders: options.genders,
+      Species: options.species,
+      Sizes: options.sizes,
+      SortBy: options.sortBy,
+      ShowRecommended: options.showRecommendations === 'true',
+      token: options.token,
+    },
   });
+  // const data = await getPets({
+  //   token: token,
+  //   ShowRecommended: showRecommendations === 'true',
+  //   Species: species,
+  //   Sizes: sizes,
+  //   Ages: ages,
+  //   Genders: genders,
+  //   Page: page,
+  //   SortBy: sortBy,
+  // });
+  console.log(error);
+  const items = data?.data.items;
+  const count = data?.data.count;
 
-  const totalPages = Math.ceil(count / 10);
+  const totalPages = count ? Math.ceil(count / 10) : 0;
 
   return (
     <section className="section">
@@ -51,22 +60,24 @@ export default async function PetsPage({ searchParams }: PetsPageProps) {
         <HeadingSection />
 
         <FilterSection
-          species={species}
-          sizes={sizes}
-          ages={ages}
-          genders={genders}
-          specialNeeds={specialNeeds}
-          showRecommendations={showRecommendations}
-          sortBy={sortBy}
+          species={options.species}
+          sizes={options.sizes}
+          ages={options.ages}
+          genders={options.genders}
+          specialNeeds={options.specialNeeds}
+          showRecommendations={options.showRecommendations}
+          sortBy={options.sortBy}
         />
 
-        <PetsGrid page={Number(page)} pets={items} />
+        {!error && <PetsGrid page={Number(options.page)} pets={items} />}
+
+        {error && <ErrorText text={error as unknown as string} />}
 
         {totalPages > 1 && (
           <div className={styles.paginationWrapper}>
             <Pagination
               pageCount={totalPages}
-              page={Number(page)}
+              page={Number(options.page)}
               href="/pets"
             />
           </div>

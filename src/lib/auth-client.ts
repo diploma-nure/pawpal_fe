@@ -1,12 +1,10 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { toast } from 'react-toastify';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 const API_TIMEOUT = 5000;
 
-/**
- * API instance for protected endpoints (auth required)
- */
 export const authClient = axios.create({
   baseURL: API_URL,
   timeout: API_TIMEOUT,
@@ -18,22 +16,38 @@ export const authClient = axios.create({
 authClient.interceptors.request.use(
   (config) => {
     const token = Cookies.get('token');
+
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = token;
     }
     return config;
   },
   (error) => {
-    return Promise.reject(error);
+    const message =
+      error.response?.data?.message || error.response?.data?.Message;
+
+    toast(message, { type: 'error', position: 'bottom-right' });
   },
 );
 
 authClient.interceptors.response.use(
   (response) => response,
   (error) => {
+    const message =
+      error.response?.data?.message || error.response?.data?.Message;
+
     if (error.response && error.response.status === 401) {
-      console.error('Authentication error');
+      console.error(message);
     }
-    return Promise.reject(error);
+
+    if (typeof window !== 'undefined') {
+      toast(message, {
+        type: 'error',
+      });
+    }
+
+    if (message) {
+      return Promise.reject(message);
+    }
   },
 );

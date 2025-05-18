@@ -71,6 +71,8 @@ export const FilterSection = ({
   };
 
   const toggleOption = (option: string, value?: boolean) => {
+    clearFilters();
+
     setCheckedOptions((prev) => ({
       ...prev,
       [option]: value ?? !prev[option],
