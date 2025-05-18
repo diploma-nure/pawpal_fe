@@ -10,6 +10,7 @@ import {
 import clsx from 'clsx';
 import Image from 'next/image';
 import { FC } from 'react';
+import { LikeButton } from './LikeButton';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -32,8 +33,15 @@ export const PetInfo: FC<Props> = ({ pet }) => {
         />
       </div>
       <div className="col-desktop-7-12 col-tablet-4-6 col-1-2">
-        <div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
           <h1 className="heading1">{pet.name}</h1>
+          <LikeButton pet={pet} />
         </div>
         <div className={styles.tags}>
           <Tag variant="gender">

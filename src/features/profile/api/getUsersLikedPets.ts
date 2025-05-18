@@ -1,15 +1,16 @@
 import { Pet } from '@/features/pets/types';
-import { client } from '@/lib/api-client';
+import { authClient } from '@/lib/auth-client';
 
-type GetUsersPetsLikeResponse = {
+type GetUsersPetsLikedResponse = {
   data: Pet[];
   message: string;
   errors: string[] | null;
 };
 
-export const getUsersPetsLike = async (): Promise<GetUsersPetsLikeResponse> => {
-  const response =
-    await client.put<GetUsersPetsLikeResponse>(`/users/pets/liked`);
+export const getUsersPetsLiked =
+  async (): Promise<GetUsersPetsLikedResponse> => {
+    const response =
+      await authClient.get<GetUsersPetsLikedResponse>(`/users/pets/liked`);
 
-  return response.data;
-};
+    return response.data;
+  };

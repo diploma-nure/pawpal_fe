@@ -2,6 +2,7 @@
 
 import { Tag } from '@/components/ui';
 import { Icon } from '@/components/ui/Icon/Icon';
+import { LikeButton } from '@/features/pets/components/PetInfo/LikeButton';
 import { placeholderImages } from '@/features/pets/constants/placeholderImages';
 import {
   Pet,
@@ -10,11 +11,10 @@ import {
   PetSize,
   PetsSpecialNeeds,
 } from '@/features/pets/types';
-import { colors } from '@/styles/colors';
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import styles from './styles.module.scss';
 
 interface PetCardProps {
@@ -23,14 +23,6 @@ interface PetCardProps {
 }
 
 export const PetCard: FC<PetCardProps> = ({ pet, className }) => {
-  const [isFavorite, setIsFavorite] = useState(false);
-
-  const toggleFavorite = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsFavorite(!isFavorite);
-  };
-
   return (
     <div className={clsx(styles.card, className)}>
       <div className={styles.imageContainer}>
@@ -46,21 +38,7 @@ export const PetCard: FC<PetCardProps> = ({ pet, className }) => {
       <div className={styles.content}>
         <div className={styles.header}>
           <h3 className={styles.name}>{pet.name}</h3>
-          <button
-            onClick={toggleFavorite}
-            className={styles.favoriteButton}
-            aria-label={
-              isFavorite ? 'Видалити з улюблених' : 'Додати до улюблених'
-            }
-          >
-            <Icon
-              name={isFavorite ? 'heart-filled' : 'heart'}
-              width={24}
-              height={24}
-              fill={isFavorite ? colors.pink : 'transparent'}
-              stroke={isFavorite ? colors.pink : colors.darkBlue}
-            />
-          </button>
+          <LikeButton pet={pet} />
         </div>
 
         <div className={styles.tags}>

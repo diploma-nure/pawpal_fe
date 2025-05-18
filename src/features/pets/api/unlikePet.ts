@@ -1,4 +1,4 @@
-import { client } from '@/lib/api-client';
+import { authClient } from '@/lib/auth-client';
 
 type UnlikePetResponse = {
   message: string;
@@ -11,7 +11,7 @@ type UnlikePetPayload = {
 };
 
 export const unlikePet = async ({ petId }: UnlikePetPayload) => {
-  const response = await client.patch<UnlikePetResponse>(
+  const response = await authClient.patch<UnlikePetResponse>(
     `/pets/unlike/${petId}`,
   );
 

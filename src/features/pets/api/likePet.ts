@@ -1,4 +1,4 @@
-import { client } from '@/lib/api-client';
+import { authClient } from '@/lib/auth-client';
 
 type LikePetResponse = {
   message: string;
@@ -11,7 +11,9 @@ type LikePetPayload = {
 };
 
 export const likePet = async ({ petId }: LikePetPayload) => {
-  const response = await client.patch<LikePetResponse>(`/pets/like/${petId}`);
+  const response = await authClient.patch<LikePetResponse>(
+    `/pets/like/${petId}`,
+  );
 
   return response.data;
 };

@@ -1,5 +1,8 @@
-import { Icon, Tag } from '@/components/ui';
+'use client';
+
+import { Button, Icon, Tag } from '@/components/ui';
 import { placeholderImages } from '@/features/pets/constants/placeholderImages';
+import { useUnlikePet } from '@/features/pets/hooks';
 import {
   Pet,
   PetAge,
@@ -18,6 +21,12 @@ type Props = {
 };
 
 export const PetTile: FC<Props> = ({ pet }) => {
+  const unlikeMutation = useUnlikePet();
+
+  const handleUnlike = async () => {
+    await unlikeMutation.mutateAsync({ petId: pet.id });
+  };
+
   return (
     <div className={clsx(styles.card)}>
       <div className={styles.content}>
@@ -58,7 +67,9 @@ export const PetTile: FC<Props> = ({ pet }) => {
 
       <div className={styles.actionsWrapper}>
         <div className={styles.deleteButton}>
-          <Icon name="bucket" width={20} height={20} />
+          <Button variant="link" onClick={handleUnlike}>
+            <Icon name="bucket" width={20} height={20} />
+          </Button>
         </div>
 
         <Link href={`/pets/${pet.id}`} className={styles.detailsLink}>
