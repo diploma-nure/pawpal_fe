@@ -19,7 +19,20 @@ const handler = NextAuth({
       });
       cookieStore.set('token', response.data.token);
 
+      cookieStore.set('isNewUser', response.data.isNewUser ? 'true' : 'false');
+
       return true;
+    },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    async redirect({ url, baseUrl }) {
+      const cookieStore = await cookies();
+      const isNewUser = cookieStore.get('isNewUser')?.value === 'true';
+
+      if (isNewUser) {
+        return `${baseUrl}/survey`;
+      }
+
+      return baseUrl;
     },
   },
 });

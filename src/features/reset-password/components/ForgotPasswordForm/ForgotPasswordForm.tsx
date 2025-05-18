@@ -28,7 +28,9 @@ export const ForgotPasswordForm: FC = () => {
   const onForgotPassword = handleSubmit(
     async (data: ForgotPasswordSchemaType) => {
       const response = await sendCode(data.email);
-      const params = new URLSearchParams({ userId: response.data.toString() });
+      const params = new URLSearchParams({
+        userId: response.data.toString(),
+      });
 
       if (!response.errors) {
         push(pathname + '?' + params.toString());
@@ -66,6 +68,7 @@ export const ForgotPasswordForm: FC = () => {
             variant="outline"
             style={{ flexShrink: 2 }}
             onClick={back}
+            type="button"
           >
             Повернутись
           </Button>

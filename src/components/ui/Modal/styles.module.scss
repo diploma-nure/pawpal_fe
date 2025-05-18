@@ -3,7 +3,10 @@
 $modal-max-width: 400px;
 
 .modal {
-  max-width: $modal-max-width;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100svh;
   width: 100%;
   padding: rem-calc(48);
 
@@ -13,7 +16,12 @@ $modal-max-width: 400px;
   border-radius: rem-calc(8);
   outline: none;
   overflow-y: auto;
-  max-height: 90%;
+
+  @include onTablet() {
+    max-width: $modal-max-width;
+    height: unset;
+    max-height: 90%;
+  }
 
   &Close {
     position: absolute;

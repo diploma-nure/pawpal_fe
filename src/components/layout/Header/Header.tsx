@@ -4,6 +4,7 @@ import { Button, Icon } from '@/components/ui';
 import { Menu } from '@/components/ui/Menu';
 import clsx from 'clsx';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 import { Container } from '../Container/Container';
 import styles from './styles.module.scss';
@@ -13,6 +14,8 @@ type Props = {
 };
 
 export const Header: FC<Props> = ({ bgColor }) => {
+  const { push } = useRouter();
+
   return (
     <header style={{ backgroundColor: bgColor }}>
       <Container>
@@ -41,7 +44,11 @@ export const Header: FC<Props> = ({ bgColor }) => {
               styles.loginButton,
             )}
           >
-            <Button variant="link" rightIcon={() => <Icon name="log-in" />}>
+            <Button
+              variant="link"
+              rightIcon={() => <Icon name="log-in" />}
+              onClick={() => push('log-in')}
+            >
               Увійти
             </Button>
 

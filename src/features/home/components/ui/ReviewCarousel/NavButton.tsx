@@ -10,7 +10,7 @@ type Props = {
 
 export const NavButton: FC<Props> = ({ direction }) => {
   const swiper = useSwiper();
-  console.log(swiper.activeIndex);
+
   const slide = () => {
     switch (direction) {
       case 'next':

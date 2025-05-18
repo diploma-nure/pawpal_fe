@@ -1,12 +1,10 @@
 import axios from 'axios';
 import { setupCache } from 'axios-cache-interceptor';
+import { toast } from 'react-toastify';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 const API_TIMEOUT = 5000;
 
-/**
- * Base API instance for public endpoints (no auth required)
- */
 const instance = axios.create({
   baseURL: API_URL,
   timeout: API_TIMEOUT,
@@ -25,7 +23,8 @@ instance.interceptors.response.use(
       window.location.href = '/pets';
     }
 
-    return Promise.reject(new Error(message));
+    toast(message, { type: 'error', position: 'bottom-right' });
+    // return Promise.reject(new Error(message));
   },
 );
 

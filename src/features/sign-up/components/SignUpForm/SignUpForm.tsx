@@ -31,12 +31,13 @@ export const SignUpForm: FC = () => {
       password: data.password,
     });
 
-    if (response.data.isNewUser) {
-      push('/sign-up/complete');
-    }
-
     if (response.data.token) {
       Cookies.set('token', response.data.token);
+    }
+
+    if (response.data.isNewUser) {
+      push('/survey');
+    } else {
       push('/');
     }
   });
@@ -89,7 +90,7 @@ export const SignUpForm: FC = () => {
           className={styles.button}
           leftIcon={() => <Icon name="Google" fill={colors.orange} />}
           type="button"
-          onClick={() => signIn('google', { callbackUrl: '/' })}
+          onClick={() => signIn('google')}
         >
           Продовжити з Google
         </Button>

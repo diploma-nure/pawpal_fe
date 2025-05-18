@@ -65,6 +65,7 @@ export const NewPasswordForm: FC = () => {
             label="Новий пароль"
             error={errors.password}
             type="password"
+            placeholder="********"
           />
 
           <Input
@@ -73,6 +74,7 @@ export const NewPasswordForm: FC = () => {
             label="Підтвердіть пароль"
             error={errors.confirmPassword}
             type="password"
+            placeholder="********"
           />
         </div>
 

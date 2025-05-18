@@ -1,5 +1,6 @@
 import { AuthProvider } from '@/config/Auth/AuthProvider';
 import '@/styles/main.scss';
+import { ToastContainer } from 'react-toastify';
 
 import { Montserrat_Alternates } from 'next/font/google';
 
@@ -19,6 +20,7 @@ export default function RootLayout({
     <html lang="en" className={montserratAlternates.className}>
       <body>
         <AuthProvider>{children}</AuthProvider>
+        <ToastContainer />
       </body>
     </html>
   );
