@@ -1,5 +1,7 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
+const CURRENT_STEP_KEY = 'survey_current_step';
+
 type UseForwardBack = {
   forward: () => void;
   back: () => void;
@@ -16,12 +18,25 @@ export function useForwardBack(): UseForwardBack {
     currentStep = 1;
   }
 
+  const saveStepToLocalStorage = (step: number) => {
+    try {
+      localStorage.setItem(CURRENT_STEP_KEY, String(step));
+    } catch (error) {
+      console.error('Error saving step to localStorage:', error);
+    }
+  };
+
   const forward = () => {
-    push(pathname + `?currentStep=${currentStep + 1}`);
+    const nextStep = currentStep + 1;
+    saveStepToLocalStorage(nextStep);
+    push(pathname + `?currentStep=${nextStep}`);
   };
 
   const back = () => {
-    push(pathname + `?currentStep=${currentStep - 1}`);
+    if (currentStep === 1) return;
+    const prevStep = currentStep - 1;
+    saveStepToLocalStorage(prevStep);
+    push(pathname + `?currentStep=${prevStep}`);
   };
 
   return {
