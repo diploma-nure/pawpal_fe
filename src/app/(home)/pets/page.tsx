@@ -38,17 +38,7 @@ export default function PetsPage({}) {
       token: options.token,
     },
   });
-  // const data = await getPets({
-  //   token: token,
-  //   ShowRecommended: showRecommendations === 'true',
-  //   Species: species,
-  //   Sizes: sizes,
-  //   Ages: ages,
-  //   Genders: genders,
-  //   Page: page,
-  //   SortBy: sortBy,
-  // });
-  console.log(error);
+
   const items = data?.data.items;
   const count = data?.data.count;
 
@@ -69,7 +59,7 @@ export default function PetsPage({}) {
           sortBy={options.sortBy}
         />
 
-        {!error && <PetsGrid page={Number(options.page)} pets={items} />}
+        {!error && <PetsGrid pets={items} />}
 
         {error && <ErrorText text={error as unknown as string} />}
 

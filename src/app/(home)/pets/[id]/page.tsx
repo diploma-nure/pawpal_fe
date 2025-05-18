@@ -1,7 +1,9 @@
 import { Container } from '@/components/layout';
 import { getPet } from '@/features/pets/api/getPet';
 import { PetInfo } from '@/features/pets/components/PetInfo';
+import { RecommendedPets } from '@/features/pets/components/RecommendedPets/RecommendedPets';
 import { Metadata } from 'next';
+import { cookies } from 'next/headers';
 
 export async function generateStaticParams() {
   return [];
@@ -27,6 +29,8 @@ export default async function Page({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const cookiesStore = await cookies();
+  const token = cookiesStore.get('token');
   const { id } = await params;
   const { data } = await getPet({ id });
 
@@ -34,6 +38,7 @@ export default async function Page({
     <section className="section">
       <Container>
         <PetInfo pet={data} />
+        {token?.value && <RecommendedPets />}
       </Container>
     </section>
   );

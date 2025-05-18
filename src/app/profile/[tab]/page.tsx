@@ -13,7 +13,7 @@ export default async function TabPage({
 
   if (!tab || !Object.values(ProfileTab).includes(tab as ProfileTab)) {
     redirect(`/profile/${ProfileTab.Contacts}`);
-    return null;
+    // return null;
   }
 
   const TabComponent = ComponentByTab[tab];

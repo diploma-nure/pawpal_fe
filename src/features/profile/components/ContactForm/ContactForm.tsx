@@ -1,44 +1,58 @@
 'use client';
 
 import { Button, Input } from '@/components/ui';
+import { useGetUsersInfo } from '@/features/profile/api/getUsersInfo';
+import { useUpdateUsersInfo } from '@/features/profile/hooks';
+import { useGetUser } from '@/features/profile/hooks/useGetUser';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { contactFormSchema, ContactFormSchemaType } from './schema';
 import styles from './styles.module.scss';
 
-interface ContactFormProps {
-  initialValues?: {
-    fullName: string;
-    email: string;
-    phone: string;
-    location: string;
-  };
-  onSubmit?: (data: ContactFormSchemaType) => void;
-}
+export const ContactForm: FC = () => {
+  const user = useGetUser();
 
-export const ContactForm: FC<ContactFormProps> = ({
-  initialValues,
-  onSubmit,
-}) => {
+  const { data } = useGetUsersInfo({
+    payload: {
+      id: user?.id as unknown as number,
+    },
+  });
+
+  const { mutate } = useUpdateUsersInfo();
+
   const {
     handleSubmit,
     control,
     formState: { errors },
+    reset,
   } = useForm<ContactFormSchemaType>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
-      fullName: initialValues?.fullName || '',
-      email: initialValues?.email || '',
-      phone: initialValues?.phone || '',
-      location: initialValues?.location || '',
+      fullName: '',
+      email: '',
+      phone: '',
+      location: '',
     },
   });
 
-  const handleFormSubmit = handleSubmit((data) => {
-    if (onSubmit) {
-      onSubmit(data);
+  useEffect(() => {
+    if (data?.data) {
+      reset({
+        fullName: data.data.fullName || '',
+        email: data.data.email || '',
+        phone: data.data.phoneNumber || '',
+        location: data.data.address || '',
+      });
     }
+  }, [data, reset]);
+
+  const handleFormSubmit = handleSubmit((data) => {
+    mutate({
+      fullName: data.fullName,
+      phoneNumber: data.phone,
+      address: data.location,
+    });
   });
 
   return (
@@ -63,6 +77,7 @@ export const ContactForm: FC<ContactFormProps> = ({
           error={errors.email}
           placeholder="example@gmail.com"
           type="email"
+          disabled
         />
 
         <Input

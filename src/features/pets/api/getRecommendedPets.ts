@@ -1,10 +1,12 @@
 import { Pet } from '@/features/pets/types';
 import { authClient } from '@/lib/auth-client';
-import { queryOptions } from '@tanstack/react-query';
+import { QueryConfig } from '@/lib/reactQuery';
+import { queryOptions, useQuery } from '@tanstack/react-query';
 
 type RecommendedPetsPayload = {
   token?: string;
   Page?: string;
+  PageSize?: string;
 };
 
 type RecommendedPetsResponse = {
@@ -20,6 +22,7 @@ type RecommendedPetsResponse = {
 
 export const getRecommendedPets = async ({
   Page,
+  PageSize,
   token,
 }: RecommendedPetsPayload): Promise<RecommendedPetsResponse> => {
   const response = await authClient.get<RecommendedPetsResponse>(
@@ -27,7 +30,7 @@ export const getRecommendedPets = async ({
     {
       params: {
         'Pagination.Page': Page ?? 1,
-        'Pagination.PageSize': 9,
+        'Pagination.PageSize': PageSize ?? 9,
       },
       headers: {
         Authorization: token,
@@ -47,5 +50,20 @@ export const getRecommendedPetsQueryOptions = (
       getRecommendedPets({
         ...payload,
       }),
+  });
+};
+
+type UseRecommendedPetsOptions = {
+  payload?: RecommendedPetsPayload;
+  queryConfig?: QueryConfig<typeof getRecommendedPetsQueryOptions>;
+};
+
+export const useRecommendedPets = ({
+  queryConfig,
+  payload,
+}: UseRecommendedPetsOptions) => {
+  return useQuery({
+    ...getRecommendedPetsQueryOptions({ ...payload }),
+    ...queryConfig,
   });
 };

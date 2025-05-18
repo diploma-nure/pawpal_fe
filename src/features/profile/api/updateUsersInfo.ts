@@ -1,4 +1,4 @@
-import { client } from '@/lib/api-client';
+import { authClient } from '@/lib/auth-client';
 
 type Payload = {
   fullName: string;
@@ -15,7 +15,7 @@ type UpdateUsersInfoResponse = {
 export const updateUsersInfo = async (
   options: Payload,
 ): Promise<UpdateUsersInfoResponse> => {
-  const response = await client.put<UpdateUsersInfoResponse>(
+  const response = await authClient.put<UpdateUsersInfoResponse>(
     `/users/info/update`,
     {
       ...options,
