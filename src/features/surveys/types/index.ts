@@ -10,7 +10,7 @@ export type Survey = {
   hasOtherPets: boolean;
   hasSmallChildren: boolean;
   preferredSpecies: number[];
-  preferredSizes: [];
+  preferredSizes: number[];
   preferredAges: number[];
   preferredGenders: number[];
   desiredFeaturesIds: number[];

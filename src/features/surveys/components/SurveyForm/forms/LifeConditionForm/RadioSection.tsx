@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { RadioGroup } from '@/components/ui';
 import { Control, Controller } from 'react-hook-form';
-import { LifeConditionFormSchemaType } from './schema';
 import styles from './styles.module.scss';
 
 interface RadioOption {
@@ -10,8 +10,8 @@ interface RadioOption {
 
 interface RadioSectionProps {
   title: string;
-  name: keyof LifeConditionFormSchemaType;
-  control: Control<LifeConditionFormSchemaType>;
+  name: string;
+  control: Control<any>;
   options: RadioOption[];
 }
 

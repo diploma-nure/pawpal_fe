@@ -1,6 +1,7 @@
 @use 'utils' as *;
 
 .tilesWrapper {
+  width: 100%;
   display: flex;
   flex-direction: column;
   padding: 40px 32px;

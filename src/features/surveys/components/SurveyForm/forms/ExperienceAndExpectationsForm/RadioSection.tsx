@@ -1,6 +1,5 @@
 import { RadioGroup } from '@/components/ui';
 import { Control, Controller } from 'react-hook-form';
-import { ExperienceAndExpectationsFormSchemaType } from './schema';
 import styles from './styles.module.scss';
 
 interface RadioOption {
@@ -10,8 +9,9 @@ interface RadioOption {
 
 interface RadioSectionProps {
   title: string;
-  name: keyof ExperienceAndExpectationsFormSchemaType;
-  control: Control<ExperienceAndExpectationsFormSchemaType>;
+  name: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  control: Control<any>;
   options: RadioOption[];
 }
 

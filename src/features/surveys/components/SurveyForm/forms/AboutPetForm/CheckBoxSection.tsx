@@ -7,7 +7,7 @@ import styles from './styles.module.scss';
 interface CheckboxSectionProps {
   title: string;
   name: keyof AboutPetFormSchemaType;
-  control: Control<AboutPetFormSchemaType>;
+  control: Control<any>;
   options: Array<{ title: string; value: number }>;
   values: number[];
   onToggle: (value: number) => number;

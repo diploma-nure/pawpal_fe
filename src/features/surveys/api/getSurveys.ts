@@ -2,7 +2,7 @@ import { Survey } from '@/features/surveys/types';
 import { authClient } from '@/lib/auth-client';
 
 type GetSurveysPayload = {
-  id: number;
+  userId: number;
 };
 
 type GetSurveysResponse = {
@@ -12,10 +12,10 @@ type GetSurveysResponse = {
 };
 
 export const getSurveys = async ({
-  id,
+  userId,
 }: GetSurveysPayload): Promise<GetSurveysResponse> => {
   const response = await authClient.get('/surveys', {
-    params: { Id: id },
+    params: { UserId: userId },
   });
 
   return response.data;

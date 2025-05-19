@@ -1,33 +1,41 @@
+import { PetAge, PetGender, PetSize, PetSpecies } from '@/features/pets/types';
 import { z } from 'zod';
 
-// Define the schema for the survey form
 export const surveySchema = z.object({
-  // Living conditions section
-  homeType: z.string().min(1, 'Виберіть тип житла'),
-  hasSafePlace: z.boolean(),
-  petsAllowed: z.boolean().nullable(),
-  hasOtherPets: z.boolean(),
-  hasChildren: z.boolean(),
+  petType: z
+    .number()
+    .refine((value) => PetSpecies.map((p) => p.value).includes(value)),
+  gender: z
+    .number()
+    .refine((value) => PetGender.map((p) => p.value).includes(value)),
+  size: z
+    .number()
+    .refine((value) => PetSize.map((p) => p.value).includes(value)),
+  age: z.number().refine((value) => PetAge.map((p) => p.value).includes(value)),
+  hasSpecialNeeds: z.boolean().optional(),
+  characteristics: z.number().or(z.array(z.number())).optional(),
 
-  // Experience and expectations section
-  hadPetsBefore: z.boolean(),
-  activityLevel: z.string().min(1, 'Виберіть рівень активності'),
+  housingType: z.enum(['1', '2']),
+  hasYard: z.enum(['true', 'false']).transform((val) => val === 'true'),
+  allowPets: z.enum(['0', '1', '2']).transform((val) => Number(val)),
+  hasOtherPets: z.enum(['true', 'false']).transform((val) => val === 'true'),
+  hasChildren: z.enum(['true', 'false']).transform((val) => val === 'true'),
 
-  // Pet details section
-  petType: z.string().min(1, 'Виберіть тип тварини'),
-  petSize: z.number().nullable(),
-  petAge: z.number().nullable(),
-  petGender: z.string().min(1, 'Виберіть стать тварини'),
-  petWithSpecialNeeds: z.boolean(),
-  petCharacteristics: z.number().nullable(),
+  hadPetsBefore: z.enum(['true', 'false']).transform((val) => val === 'true'),
+  activityLevel: z.enum(['0', '1', '2']).transform((val) => Number(val)),
+  willingToAdoptSpecialNeeds: z
+    .enum(['true', 'false'])
+    .transform((val) => val === 'true'),
 
-  // Responsibility section
-  responsibilityAgreement: z.boolean(),
-  emergencyPlanDescription: z
+  understandsResponsibility: z
+    .enum(['true', 'false'])
+    .transform((val) => val === 'true'),
+  vacationPetCarePlan: z
     .string()
-    .min(10, 'Будь ласка, опишіть ваш план детальніше'),
-  canProvideFinancialSupport: z.boolean(),
+    .min(1, { message: 'Введіть план догляду за тваринкою' }),
+  hasSufficientFinancialResources: z
+    .enum(['true', 'false'])
+    .transform((val) => val === 'true'),
 });
 
-// Export the type for use with React Hook Form
 export type SurveyFormSchema = z.infer<typeof surveySchema>;

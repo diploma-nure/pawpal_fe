@@ -5,18 +5,13 @@ import {
   responsibilityFormSchema,
   ResponsibilityFormSchemaType,
 } from '@/features/surveys/components/SurveyForm/forms/ResponsibilityForm/schema';
+import { responsibilitySection } from '@/features/surveys/constants';
 import { useFormData } from '@/features/surveys/hooks/useFormData';
 import { useForwardBack } from '@/features/surveys/hooks/useForwardBack';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { RadioSection } from './RadioSection';
 import styles from './styles.module.scss';
-
-const YES_NO_OPTIONS = [
-  { value: 'true', label: 'Так' },
-  { value: 'false', label: 'Ні' },
-];
 
 export const ResponsibilityForm = () => {
   const { forward, back } = useForwardBack();
@@ -35,24 +30,6 @@ export const ResponsibilityForm = () => {
     },
   });
 
-  const radioSections = useMemo(
-    () => [
-      {
-        title:
-          'Чи розумієте ви всю відповідальність за догляд за домашньою тваринкою?',
-        name: 'understandsResponsibility' as const,
-        options: YES_NO_OPTIONS,
-      },
-      {
-        title:
-          'Чи маєте ви достатньо фінансових ресурсів для утримання тварини?',
-        name: 'hasSufficientFinancialResources' as const,
-        options: YES_NO_OPTIONS,
-      },
-    ],
-    [],
-  );
-
   const handleFormSubmit = handleSubmit((data) => {
     const surveyData = {
       understandsResponsibility: data.understandsResponsibility,
@@ -70,10 +47,10 @@ export const ResponsibilityForm = () => {
   return (
     <form onSubmit={handleFormSubmit} className={styles.form}>
       <RadioSection
-        title={radioSections[0].title}
-        name={radioSections[0].name}
+        title={responsibilitySection[0].title}
+        name={responsibilitySection[0].name}
         control={control}
-        options={radioSections[0].options}
+        options={responsibilitySection[0].options}
       />
 
       <div className={styles.section__container}>
@@ -90,10 +67,10 @@ export const ResponsibilityForm = () => {
       </div>
 
       <RadioSection
-        title={radioSections[1].title}
-        name={radioSections[1].name}
+        title={responsibilitySection[1].title}
+        name={responsibilitySection[1].name}
         control={control}
-        options={radioSections[1].options}
+        options={responsibilitySection[1].options}
       />
 
       <div className={styles.buttonsContainer}>

@@ -41,7 +41,9 @@ export const RadioGroup: FC<RadioGroupProps> = ({
             type="radio"
             name={name}
             value={option.value}
-            checked={selectedValue === option.value}
+            checked={
+              selectedValue === option.value || defaultValue === option.value
+            }
             onChange={handleChange}
           />
           <p className={styles['radio-custom']} />

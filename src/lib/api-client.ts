@@ -19,10 +19,6 @@ instance.interceptors.response.use(
     const message =
       error.response?.data?.message || error.response?.data?.Message;
 
-    if (error.response?.status === 401) {
-      window.location.href = '/pets';
-    }
-
     toast(message, { type: 'error', position: 'bottom-right' });
     // return Promise.reject(new Error(message));
   },
