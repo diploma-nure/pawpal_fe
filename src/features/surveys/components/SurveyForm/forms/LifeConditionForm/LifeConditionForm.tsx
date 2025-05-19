@@ -1,19 +1,44 @@
 'use client';
 
-import { Button, RadioGroup } from '@/components/ui';
+import { Button } from '@/components/ui';
 import {
   lifeConditionFormSchema,
   LifeConditionFormSchemaType,
 } from '@/features/surveys/components/SurveyForm/forms/LifeConditionForm/schema';
+import { useFormData } from '@/features/surveys/hooks/useFormData';
 import { useForwardBack } from '@/features/surveys/hooks/useForwardBack';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Controller, useForm } from 'react-hook-form';
+import { useMemo } from 'react';
+import { useForm } from 'react-hook-form';
+import { RadioSection } from './RadioSection';
 import styles from './styles.module.scss';
+
+// Form section constants
+const HOUSING_OPTIONS = [
+  { value: '1', label: 'Приватний будинок' },
+  { value: '2', label: 'Квартира' },
+];
+
+const YES_NO_OPTIONS = [
+  { value: 'true', label: 'Так' },
+  { value: 'false', label: 'Ні' },
+];
+
+const PET_ALLOWED_OPTIONS = [
+  { value: '2', label: 'Так' },
+  { value: '1', label: 'Ні' },
+  { value: '0', label: 'Не впевнений' },
+];
 
 export const LifeConditionForm = () => {
   const { forward, back } = useForwardBack();
+  const { saveData } = useFormData(3);
 
-  const { handleSubmit, control } = useForm<LifeConditionFormSchemaType>({
+  const {
+    handleSubmit,
+    control,
+    formState: { isSubmitting },
+  } = useForm<LifeConditionFormSchemaType>({
     resolver: zodResolver(lifeConditionFormSchema),
     defaultValues: {
       housingType: undefined,
@@ -24,120 +49,80 @@ export const LifeConditionForm = () => {
     },
   });
 
+  // Form sections configuration
+  const formSections = useMemo(
+    () => [
+      {
+        title: 'Де ви проживаєте?',
+        name: 'housingType' as const,
+        options: HOUSING_OPTIONS,
+      },
+      {
+        title: 'Чи є у вас двір або безпечне місце для вигулу?',
+        name: 'hasYard' as const,
+        options: YES_NO_OPTIONS,
+      },
+      {
+        title: 'Чи дозволено у вашому житлі утримувати тварин?',
+        name: 'allowPets' as const,
+        options: PET_ALLOWED_OPTIONS,
+      },
+      {
+        title: 'Чи є у вас інші домашні тварини',
+        name: 'hasOtherPets' as const,
+        options: YES_NO_OPTIONS,
+      },
+      {
+        title: "Чи є в сім'ї маленькі діти?",
+        name: 'hasChildren' as const,
+        options: YES_NO_OPTIONS,
+      },
+    ],
+    [],
+  );
+
   const handleFormSubmit = handleSubmit((data) => {
-    console.log(data);
+    const surveyData = {
+      placeOfResidence: Number(data.housingType),
+      hasSafeWalkingArea: Boolean(data.hasYard),
+      petsAllowedAtResidence: Number(data.allowPets),
+      hasOtherPets: Boolean(data.hasOtherPets),
+      hasSmallChildren: Boolean(data.hasChildren),
+    };
+
+    console.log('Form data:', data);
+    console.log('Survey data:', surveyData);
+
+    saveData(surveyData);
     forward();
   });
 
   return (
     <form onSubmit={handleFormSubmit} className={styles.form}>
-      <div className={styles.section__container}>
-        <h3 className={styles.sectionTitle}>Де ви проживаєте?</h3>
-        <Controller
-          name="housingType"
+      {/* Dynamically generate form sections */}
+      {formSections.map((section) => (
+        <RadioSection
+          key={section.name}
+          title={section.title}
+          name={section.name}
           control={control}
-          render={({ field }) => (
-            <RadioGroup
-              name="housingType"
-              options={[
-                { value: 'apartment', label: 'Квартира' },
-                { value: 'house', label: 'Приватний будинок' },
-              ]}
-              defaultValue={field.value}
-              onChange={(value) => field.onChange(value)}
-            />
-          )}
+          options={section.options}
         />
-      </div>
+      ))}
 
-      <div className={styles.section__container}>
-        <h3 className={styles.sectionTitle}>
-          Чи є у вас двір або безпечне місце для вигулу?
-        </h3>
-        <Controller
-          name="hasYard"
-          control={control}
-          render={({ field }) => (
-            <RadioGroup
-              name="hasYard"
-              options={[
-                { value: 'yes', label: 'Так' },
-                { value: 'no', label: 'Ні' },
-              ]}
-              defaultValue={field.value}
-              onChange={(value) => field.onChange(value)}
-            />
-          )}
-        />
-      </div>
-
-      <div className={styles.section__container}>
-        <h3 className={styles.sectionTitle}>
-          Чи дозволено у вашому житлі утримувати тварин?
-        </h3>
-        <Controller
-          name="allowPets"
-          control={control}
-          render={({ field }) => (
-            <RadioGroup
-              name="allowPets"
-              options={[
-                { value: 'yes', label: 'Так' },
-                { value: 'no', label: 'Ні' },
-                { value: 'unsure', label: 'Не впевнений' },
-              ]}
-              defaultValue={field.value}
-              onChange={(value) => field.onChange(value)}
-            />
-          )}
-        />
-      </div>
-
-      <div className={styles.section__container}>
-        <h3 className={styles.sectionTitle}>Чи є у вас інші домашні тварини</h3>
-        <Controller
-          name="hasOtherPets"
-          control={control}
-          render={({ field }) => (
-            <RadioGroup
-              name="hasOtherPets"
-              options={[
-                { value: 'yes', label: 'Так' },
-                { value: 'no', label: 'Ні' },
-              ]}
-              defaultValue={field.value}
-              onChange={(value) => field.onChange(value)}
-            />
-          )}
-        />
-      </div>
-
-      <div className={styles.section__container}>
-        <h3 className={styles.sectionTitle}>
-          Чи є в сім&apos;ї маленькі діти?
-        </h3>
-        <Controller
-          name="hasChildren"
-          control={control}
-          render={({ field }) => (
-            <RadioGroup
-              name="hasChildren"
-              options={[
-                { value: 'yes', label: 'Так' },
-                { value: 'no', label: 'Ні' },
-              ]}
-              defaultValue={field.value}
-              onChange={(value) => field.onChange(value)}
-            />
-          )}
-        />
-      </div>
-
+      {/* Form buttons */}
       <div className={styles.buttonsContainer}>
-        <Button onClick={back} variant="outline" type="button">
+        <Button
+          onClick={back}
+          variant="outline"
+          type="button"
+          disabled={isSubmitting}
+        >
           Повернутись
         </Button>
-        <Button type="submit">Підтвердити</Button>
+        <Button type="submit" disabled={isSubmitting}>
+          Підтвердити
+        </Button>
       </div>
     </form>
   );

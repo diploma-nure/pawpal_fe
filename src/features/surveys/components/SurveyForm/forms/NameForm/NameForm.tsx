@@ -1,6 +1,7 @@
 'use client';
 
 import { Button, Input } from '@/components/ui';
+import { useUpdateUsersInfo } from '@/features/profile/hooks';
 import {
   nameFormSchema,
   NameFormSchemaType,
@@ -23,9 +24,14 @@ export const NameForm = () => {
       location: '',
     },
   });
+  const { mutate } = useUpdateUsersInfo();
 
   const handleFormSubmit = handleSubmit((data) => {
-    console.log(data);
+    mutate({
+      fullName: data.fullName,
+      phoneNumber: data.phone,
+      address: data.location,
+    });
     forward();
   });
 

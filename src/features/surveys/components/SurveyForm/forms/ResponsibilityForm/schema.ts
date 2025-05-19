@@ -1,9 +1,15 @@
 import { z } from 'zod';
 
 export const responsibilityFormSchema = z.object({
-  understandResponsibility: z.enum(['yes', 'no']),
-  carePlanning: z.string(),
-  financialCapabale: z.enum(['yes', 'no']),
+  understandsResponsibility: z
+    .enum(['true', 'false'])
+    .transform((val) => val === 'true'),
+  vacationPetCarePlan: z
+    .string()
+    .min(1, { message: 'Введіть план догляду за тваринкою' }),
+  hasSufficientFinancialResources: z
+    .enum(['true', 'false'])
+    .transform((val) => val === 'true'),
 });
 
 export type ResponsibilityFormSchemaType = z.infer<

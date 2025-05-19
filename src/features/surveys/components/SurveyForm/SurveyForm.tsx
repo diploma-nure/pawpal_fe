@@ -1,17 +1,28 @@
+'use client';
+
 import { AboutPetForm } from '@/features/surveys/components/SurveyForm/forms/AboutPetForm';
 import { ExperienceAndExpectationsForm } from '@/features/surveys/components/SurveyForm/forms/ExperienceAndExpectationsForm';
 import { FinishMessage } from '@/features/surveys/components/SurveyForm/forms/FinishMessage';
 import { LifeConditionForm } from '@/features/surveys/components/SurveyForm/forms/LifeConditionForm';
 import { NameForm } from '@/features/surveys/components/SurveyForm/forms/NameForm/NameForm';
 import { ResponsibilityForm } from '@/features/surveys/components/SurveyForm/forms/ResponsibilityForm';
-import { FC } from 'react';
+import { useCurrentStep } from '@/features/surveys/hooks/useCurrentStep';
+import { FC, useEffect } from 'react';
 import styles from './styles.module.scss';
 
 type Props = {
   currentStep: number | undefined;
 };
 
-export const SurveyForm: FC<Props> = ({ currentStep = 1 }) => {
+export const SurveyForm: FC<Props> = ({ currentStep: propCurrentStep = 1 }) => {
+  const { currentStep, updateStep } = useCurrentStep(propCurrentStep);
+
+  useEffect(() => {
+    if (propCurrentStep !== currentStep) {
+      updateStep(propCurrentStep);
+    }
+  }, [propCurrentStep, currentStep, updateStep]);
+
   const getForm = () => {
     switch (currentStep) {
       case 1:

@@ -1,104 +1,111 @@
 'use client';
 
-import { Button, RadioGroup } from '@/components/ui';
+import { Button } from '@/components/ui';
 import {
   experienceAndExpectationsFormSchema,
   ExperienceAndExpectationsFormSchemaType,
 } from '@/features/surveys/components/SurveyForm/forms/ExperienceAndExpectationsForm/schema';
+import { useFormData } from '@/features/surveys/hooks/useFormData';
 import { useForwardBack } from '@/features/surveys/hooks/useForwardBack';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Controller, useForm } from 'react-hook-form';
+import { useMemo } from 'react';
+import { useForm } from 'react-hook-form';
+import { RadioSection } from './RadioSection';
 import styles from './styles.module.scss';
+
+// Form section constants
+const YES_NO_OPTIONS = [
+  { value: 'true', label: 'Так' },
+  { value: 'false', label: 'Ні' },
+];
+
+const ACTIVITY_LEVEL_OPTIONS = [
+  { value: '0', label: 'Спокійний' },
+  { value: '1', label: 'Помірно активний' },
+  { value: '2', label: 'Активний' },
+];
 
 export const ExperienceAndExpectationsForm = () => {
   const { forward, back } = useForwardBack();
-  const { handleSubmit, control } =
-    useForm<ExperienceAndExpectationsFormSchemaType>({
-      resolver: zodResolver(experienceAndExpectationsFormSchema),
-      defaultValues: {
-        hadPetsBefore: undefined,
-        activityLevel: undefined,
-        willingToAdoptSpecialNeeds: undefined,
+  const { saveData } = useFormData(4);
+
+  const {
+    handleSubmit,
+    control,
+    formState: { isSubmitting },
+  } = useForm<ExperienceAndExpectationsFormSchemaType>({
+    resolver: zodResolver(experienceAndExpectationsFormSchema),
+    defaultValues: {
+      hadPetsBefore: undefined,
+      activityLevel: undefined,
+      willingToAdoptSpecialNeeds: undefined,
+    },
+  });
+
+  // Form sections configuration
+  const formSections = useMemo(
+    () => [
+      {
+        title: 'Чи були у вас домашні тварини раніше?',
+        name: 'hadPetsBefore' as const,
+        options: YES_NO_OPTIONS,
       },
-    });
+      {
+        title: 'Який рівень активності вам підходить?',
+        name: 'activityLevel' as const,
+        options: ACTIVITY_LEVEL_OPTIONS,
+      },
+      {
+        title:
+          'Чи готові ви взяти тварину з особливими потребами (інвалідність, хронічні захворювання)?',
+        name: 'willingToAdoptSpecialNeeds' as const,
+        options: YES_NO_OPTIONS,
+      },
+    ],
+    [],
+  );
 
   const handleFormSubmit = handleSubmit((data) => {
-    console.log(data);
+    // Map form data to survey data
+    const surveyData = {
+      hasOwnnedPetsBefore: data.hadPetsBefore,
+      desiredActivityLevel: data.activityLevel,
+      readyForSpecialNeedsPet: data.willingToAdoptSpecialNeeds,
+    };
+
+    console.log('Form data:', data);
+    console.log('Survey data:', surveyData);
+
+    saveData(surveyData);
     forward();
   });
 
   return (
     <form onSubmit={handleFormSubmit} className={styles.form}>
-      <div className={styles.section__container}>
-        <h3 className={styles.sectionTitle}>
-          Чи були у вас домашні тварини раніше?
-        </h3>
-        <Controller
-          name="hadPetsBefore"
+      {/* Dynamically generate form sections */}
+      {formSections.map((section) => (
+        <RadioSection
+          key={section.name}
+          title={section.title}
+          name={section.name}
           control={control}
-          render={({ field }) => (
-            <RadioGroup
-              name="hadPetsBefore"
-              options={[
-                { value: 'yes', label: 'Так' },
-                { value: 'no', label: 'Ні' },
-              ]}
-              defaultValue={field.value}
-              onChange={(value) => field.onChange(value)}
-            />
-          )}
+          options={section.options}
         />
-      </div>
+      ))}
 
-      <div className={styles.section__container}>
-        <h3 className={styles.sectionTitle}>
-          Який рівень активності вам підходить?
-        </h3>
-        <Controller
-          name="activityLevel"
-          control={control}
-          render={({ field }) => (
-            <RadioGroup
-              name="activityLevel"
-              options={[
-                { value: 'calm', label: 'Спокійний' },
-                { value: 'moderate', label: 'Помірно активний' },
-                { value: 'active', label: 'Активний' },
-              ]}
-              defaultValue={field.value}
-              onChange={(value) => field.onChange(value)}
-            />
-          )}
-        />
-      </div>
-
-      <div className={styles.section__container}>
-        <h3 className={styles.sectionTitle}>
-          Чи готові ви взяти тварину з особливими потребами (інвалідність,
-          хронічні захворювання)?
-        </h3>
-        <Controller
-          name="willingToAdoptSpecialNeeds"
-          control={control}
-          render={({ field }) => (
-            <RadioGroup
-              name="willingToAdoptSpecialNeeds"
-              options={[
-                { value: 'yes', label: 'Так' },
-                { value: 'no', label: 'Ні' },
-              ]}
-              defaultValue={field.value}
-              onChange={(value) => field.onChange(value)}
-            />
-          )}
-        />
-      </div>
-
+      {/* Form buttons */}
       <div className={styles.buttonsContainer}>
-        <Button onClick={back} variant="outline" type="button">
+        <Button
+          onClick={back}
+          variant="outline"
+          type="button"
+          disabled={isSubmitting}
+        >
           Повернутись
         </Button>
-        <Button type="submit">Підтвердити</Button>
+        <Button type="submit" disabled={isSubmitting}>
+          Підтвердити
+        </Button>
       </div>
     </form>
   );

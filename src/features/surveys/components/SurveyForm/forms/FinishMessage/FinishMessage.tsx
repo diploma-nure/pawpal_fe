@@ -1,11 +1,22 @@
 'use client';
 
 import { Button, Icon } from '@/components/ui';
+import { useSurveyData } from '@/features/surveys/hooks/useFormData';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import styles from './styles.module.scss';
 
 export const FinishMessage = () => {
   const { push } = useRouter();
+  const surveyData = useSurveyData();
+
+  useEffect(() => {
+    // Log the combined survey data
+    console.log('Complete survey data:', surveyData);
+
+    // Here you could send the data to an API
+    // Example: api.submitSurvey(surveyData);
+  }, [surveyData]);
 
   return (
     <div className={styles.wrapper}>
