@@ -13,7 +13,6 @@ import { useForm } from 'react-hook-form';
 import { RadioSection } from './RadioSection';
 import styles from './styles.module.scss';
 
-// Form section constants
 const YES_NO_OPTIONS = [
   { value: 'true', label: 'Так' },
   { value: 'false', label: 'Ні' },
@@ -36,7 +35,6 @@ export const ResponsibilityForm = () => {
     },
   });
 
-  // Form sections configuration
   const radioSections = useMemo(
     () => [
       {
@@ -56,7 +54,6 @@ export const ResponsibilityForm = () => {
   );
 
   const handleFormSubmit = handleSubmit((data) => {
-    // Map form data to survey data
     const surveyData = {
       understandsResponsibility: data.understandsResponsibility,
       vacationPetCarePlan: data.vacationPetCarePlan,
@@ -72,7 +69,6 @@ export const ResponsibilityForm = () => {
 
   return (
     <form onSubmit={handleFormSubmit} className={styles.form}>
-      {/* First radio section */}
       <RadioSection
         title={radioSections[0].title}
         name={radioSections[0].name}
@@ -80,7 +76,6 @@ export const ResponsibilityForm = () => {
         options={radioSections[0].options}
       />
 
-      {/* Text input section */}
       <div className={styles.section__container}>
         <h3 className={styles.sectionTitle}>
           Як ви плануєте вирішувати питання догляду за твариною під час
@@ -94,7 +89,6 @@ export const ResponsibilityForm = () => {
         />
       </div>
 
-      {/* Second radio section */}
       <RadioSection
         title={radioSections[1].title}
         name={radioSections[1].name}
@@ -102,7 +96,6 @@ export const ResponsibilityForm = () => {
         options={radioSections[1].options}
       />
 
-      {/* Form buttons */}
       <div className={styles.buttonsContainer}>
         <Button
           onClick={back}

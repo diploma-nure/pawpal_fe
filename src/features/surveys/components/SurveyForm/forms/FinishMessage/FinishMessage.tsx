@@ -1,7 +1,9 @@
 'use client';
 
 import { Button, Icon } from '@/components/ui';
+import { completeSurvey } from '@/features/surveys/api/completeSurvey';
 import { useSurveyData } from '@/features/surveys/hooks/useFormData';
+import { Survey } from '@/features/surveys/types';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import styles from './styles.module.scss';
@@ -11,12 +13,24 @@ export const FinishMessage = () => {
   const surveyData = useSurveyData();
 
   useEffect(() => {
-    // Log the combined survey data
     console.log('Complete survey data:', surveyData);
-
-    // Here you could send the data to an API
-    // Example: api.submitSurvey(surveyData);
   }, [surveyData]);
+
+  const handleCompleteSurvey = async () => {
+    try {
+      const res = await completeSurvey({
+        survey: {
+          ...surveyData,
+        } as Omit<Survey, 'id'>,
+      });
+
+      if (res.message === 'Success') {
+        push('/pets');
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -32,7 +46,7 @@ export const FinishMessage = () => {
           для тебе ідеальних пухнастиків
         </p>
       </div>
-      <Button onClick={() => push('/pets')}>До пухнастиків</Button>
+      <Button onClick={handleCompleteSurvey}>До пухнастиків</Button>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 'use client';
 
-import { Button, Select } from '@/components/ui';
+import { Button } from '@/components/ui';
+import { PetFeaturesSelect } from '@/features/pets/components';
 import {
   PetAge,
   PetGender,
@@ -17,16 +18,8 @@ import { useCheckboxArray } from '@/features/surveys/hooks/useCheckboxArray';
 import { useFormData } from '@/features/surveys/hooks/useFormData';
 import { useForwardBack } from '@/features/surveys/hooks/useForwardBack';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import styles from './styles.module.scss';
-
-const characteristicsOptions = [
-  { value: 0, title: 'Дружелюбний' },
-  { value: 1, title: 'Спокійний' },
-  { value: 2, title: 'Активний' },
-  { value: 3, title: 'Грайливий' },
-  { value: 4, title: 'Ласкавий' },
-];
 
 export const AboutPetForm = () => {
   const { saveData } = useFormData(2);
@@ -60,7 +53,7 @@ export const AboutPetForm = () => {
       preferredSizes: size.values,
       preferredAges: age.values,
       preferredGenders: gender.values,
-      desiredFeaturesIds: data.characteristics || [],
+      desiredFeaturesIds: data.characteristics ? [data.characteristics] : [],
       readyForSpecialNeedsPet: specialNeeds.values.includes(1),
     };
 
@@ -118,18 +111,7 @@ export const AboutPetForm = () => {
 
       <div className={styles.section__container}>
         <h3 className={styles.sectionTitle}>Характеристики</h3>
-        <Controller
-          name="characteristics"
-          control={control}
-          render={({ field }) => (
-            <Select
-              options={characteristicsOptions}
-              placeholder="Характеристики"
-              onChange={(value) => field.onChange(value)}
-              value={field.value as number}
-            />
-          )}
-        />
+        <PetFeaturesSelect control={control} />
         {errors.characteristics && (
           <p className={styles.errorText}>{errors.characteristics.message}</p>
         )}

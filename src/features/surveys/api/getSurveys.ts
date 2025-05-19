@@ -1,21 +1,21 @@
 import { Survey } from '@/features/surveys/types';
-import { client } from '@/lib/api-client';
+import { authClient } from '@/lib/auth-client';
 
 type GetSurveysPayload = {
-  survey: Omit<Survey, 'id'>;
+  id: number;
 };
 
 type GetSurveysResponse = {
-  data: number;
+  data: Survey;
   message: string;
   errors: string[];
 };
 
-export const completeSurveys = async ({
-  survey,
+export const getSurveys = async ({
+  id,
 }: GetSurveysPayload): Promise<GetSurveysResponse> => {
-  const response = await client.put('/surveys/complete', {
-    ...survey,
+  const response = await authClient.get('/surveys', {
+    params: { Id: id },
   });
 
   return response.data;

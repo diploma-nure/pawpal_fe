@@ -38,6 +38,7 @@ authClient.interceptors.response.use(
 
     if (error.response && error.response.status === 401) {
       console.error(message);
+      window.location.href = '/log-in';
     }
 
     if (typeof window !== 'undefined') {
