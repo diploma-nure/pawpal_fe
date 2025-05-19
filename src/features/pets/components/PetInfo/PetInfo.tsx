@@ -1,4 +1,5 @@
-import { Button, Tag } from '@/components/ui';
+import { Tag } from '@/components/ui';
+import { MakeHappyButton } from '@/features/pets/components/PetInfo/MakeHappyButton';
 import { placeholderImages } from '@/features/pets/constants/placeholderImages';
 import {
   Pet,
@@ -69,8 +70,9 @@ export const PetInfo: FC<Props> = ({ pet }) => {
           </h4>
           <p>{pet.description ?? 'На жаль, немає інформації про улюбленця'}</p>
         </div>
+
         <div className={styles.buttonWrapper}>
-          <Button>Зробити щасливим</Button>
+          <MakeHappyButton petId={pet.id} />
         </div>
       </div>
     </div>

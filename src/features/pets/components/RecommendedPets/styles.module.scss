@@ -1,0 +1,17 @@
+@use 'utils' as *;
+
+.recommendedWrapper {
+  margin-top: 50px;
+
+  @include onTablet() {
+    margin-top: 100px;
+  }
+}
+
+.titleWrapper {
+  margin-bottom: 20px;
+
+  @include onTablet() {
+    margin-top: 40px;
+  }
+}

@@ -2,6 +2,7 @@ import { Container } from '@/components/layout';
 import { getPet } from '@/features/pets/api/getPet';
 import { PetInfo } from '@/features/pets/components/PetInfo';
 import { RecommendedPets } from '@/features/pets/components/RecommendedPets/RecommendedPets';
+import { User } from '@/features/profile/types';
 import { Metadata } from 'next';
 import { cookies } from 'next/headers';
 
@@ -33,12 +34,18 @@ export default async function Page({
   const token = cookiesStore.get('token');
   const { id } = await params;
   const { data } = await getPet({ id });
+  const user: User | null = token?.value
+    ? JSON.parse(
+        Buffer.from(token?.value.split('.')[1], 'base64url').toString('utf-8'),
+      )
+    : null;
 
+  console.log(user);
   return (
     <section className="section">
       <Container>
         <PetInfo pet={data} />
-        {token?.value && <RecommendedPets />}
+        {Boolean(token?.value) && user?.role === 'User' && <RecommendedPets />}
       </Container>
     </section>
   );
