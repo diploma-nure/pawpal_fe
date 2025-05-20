@@ -40,15 +40,20 @@ export const Select: React.FC<SelectProps> = ({
 
       {isOpen && (
         <div className={styles.optionsList}>
-          {options.map((option) => (
-            <div key={option.value} onClick={() => onSelect(option.value)}>
-              <Checkbox
-                option={option.title}
-                checked={value === option.value}
-                content={option.title}
-              />
-            </div>
-          ))}
+          {options.map((option) => {
+            return (
+              <div key={option.value} onClick={() => onSelect(option.value)}>
+                <Checkbox
+                  option={option.title}
+                  checked={
+                    value === option.value ||
+                    (value as unknown as number[])?.includes(option.value)
+                  }
+                  content={option.title}
+                />
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

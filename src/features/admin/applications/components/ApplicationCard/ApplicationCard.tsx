@@ -1,13 +1,14 @@
 'use client';
 
+import { ApplicationControl } from '@/features/admin/applications/components/ApplicationCard/ApplicationControl';
 import { ApplicationStatus } from '@/features/admin/applications/components/ApplicationStatus';
 import { Application } from '@/features/admin/applications/types';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import Image from 'next/image';
+import Link from 'next/link';
 import { FC } from 'react';
 import styles from './styles.module.scss';
-import { ApplicationControl } from '@/features/admin/applications/components/ApplicationCard/ApplicationControl';
 
 type Props = {
   application: Application;
@@ -29,7 +30,13 @@ export const ApplicationCard: FC<Props> = ({ application }) => {
 
         <div className={styles.info}>
           <p className={styles.name}>{application.pet.name}</p>
-          <p>{application.user.fullName}</p>
+          <Link
+            href={`/admin/applications/${application.user.id}`}
+            className={styles.userName}
+            target="_blank"
+          >
+            <p>{application.user.fullName}</p>
+          </Link>
           <p className={styles.description}>
             {dayjs(application.createdAt).format('DD.MM.YYYY')}
           </p>

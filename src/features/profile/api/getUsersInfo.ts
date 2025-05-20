@@ -24,7 +24,7 @@ export const getUsersInfo = async ({
 }: Payload): Promise<GetUsersInfoResponse> => {
   const response = await authClient.get<GetUsersInfoResponse>(`/users/info`, {
     params: {
-      Id: id,
+      UserId: id,
     },
   });
 

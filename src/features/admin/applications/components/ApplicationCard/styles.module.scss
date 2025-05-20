@@ -74,6 +74,19 @@
   text-overflow: ellipsis;
 }
 
+.userName {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 145%;
+  color: $dark-blue;
+  text-decoration: none;
+  width: fit-content;
+
+  @include onDesktop() {
+    font-size: 18px;
+  }
+}
+
 .status {
   display: flex;
   gap: 0.5rem;

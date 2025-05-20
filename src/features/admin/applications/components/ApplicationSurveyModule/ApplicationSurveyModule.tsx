@@ -1,38 +1,45 @@
 'use client';
 
+import { Button, Icon, Input } from '@/components/ui';
+import { useSurveyFormRetrive } from '@/features/admin/applications/hooks/useSurveyFormRetrieve';
+import { useSurveyContactInfo } from '@/features/admin/applications/hooks/useSurveyUserContactInfo';
+import { PetFeaturesSelect } from '@/features/pets/components';
 import {
-  Button,
-  Checkbox,
-  Icon,
-  Input,
-  RadioGroup,
-  Select,
-} from '@/components/ui';
+  PetAge,
+  PetGender,
+  PetSize,
+  PetSpecies,
+  PetsSpecialNeeds,
+} from '@/features/pets/types';
+import { useGetUsersInfo } from '@/features/profile/api/getUsersInfo';
+import { CheckboxSection } from '@/features/surveys/components/SurveyForm/forms/AboutPetForm/CheckBoxSection';
+import { RadioSection } from '@/features/surveys/components/SurveyForm/forms/ExperienceAndExpectationsForm/RadioSection';
+import {
+  experienceSection,
+  lifeConditionSection,
+  responsibilitySection,
+} from '@/features/surveys/constants';
 import { colors } from '@/styles/colors';
 import clsx from 'clsx';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { FC } from 'react';
-import { useForm } from 'react-hook-form';
 import styles from './styles.module.scss';
 
 export const ApplicationSurveyModule: FC = () => {
-  const { push } = useRouter();
+  const params = useParams<{ userId: string }>();
+  const userId = params.userId;
 
-  const { control } = useForm({
-    defaultValues: {
-      fullName: '',
-      phone: '',
-      location: '',
+  const { data } = useGetUsersInfo({
+    payload: {
+      id: userId as unknown as number,
     },
   });
 
-  const characteristicsOptions = [
-    { value: 0, title: 'Дружелюбний' },
-    { value: 1, title: 'Спокійний' },
-    { value: 2, title: 'Активний' },
-    { value: 3, title: 'Грайливий' },
-    { value: 4, title: 'Ласкавий' },
-  ];
+  const { contactControl } = useSurveyContactInfo(parseInt(userId));
+  const { petType, gender, size, age, specialNeeds, control } =
+    useSurveyFormRetrive(parseInt(userId));
+
+  const { push } = useRouter();
 
   return (
     <>
@@ -56,8 +63,9 @@ export const ApplicationSurveyModule: FC = () => {
       </div>
 
       <h2 className={clsx('heading2', styles.sectionTitle)}>
-        Анкета: Аліна Світоліна
+        Анкета: {data?.data.fullName}
       </h2>
+
       <div className={styles.application}>
         <div>
           <p className={clsx('heading3', styles.sectionTitle)}>
@@ -67,91 +75,94 @@ export const ApplicationSurveyModule: FC = () => {
         <div />
         <div className={styles.section__container}>
           <Input
-            control={control}
+            control={contactControl}
             name="fullName"
             label="Прізвище ім'я"
             placeholder="Ковальчук Анна"
           />
           <Input
-            control={control}
-            name="phone"
+            control={contactControl}
+            name="phoneNumber"
             label="Номер телефону"
             placeholder="+380997462594"
           />
         </div>
         <div className={styles.section__container}>
           <Input
-            control={control}
+            control={contactControl}
             name="email"
             label="Email"
             placeholder="Київ"
           />
           <Input
-            control={control}
-            name="location"
+            control={contactControl}
+            name="address"
             label="Місце проживання"
             placeholder="Київ"
           />
         </div>
 
         <div>
+          <p className={clsx('heading3', styles.sectionTitle)}>Про тваринку</p>
           <div className={styles.section__container}>
-            <p className={clsx('heading3', styles.sectionTitle)}>
-              Про тваринку
-            </p>
-            <h3 className={styles.inputTitle}>Бажана тваринка</h3>
-            <div className={styles.checkboxGroup}>
-              <Checkbox option="cat" content="Кіт" checked />
-              <Checkbox option="dog" content="Собака" checked />
-            </div>
+            <CheckboxSection
+              title="Бажана тваринка"
+              name="petType"
+              control={control}
+              options={PetSpecies}
+              values={petType.values}
+              onToggle={petType.toggle}
+            />
           </div>
 
           <div className={styles.section__container}>
-            <h3 className={styles.inputTitle}>Стать</h3>
-            <div className={styles.checkboxGroup}>
-              <Checkbox option="male" content="Хлопчик" checked />
-              <Checkbox option="female" content="Дівчинка" checked />
-            </div>
+            <CheckboxSection
+              title="Стать"
+              name="gender"
+              control={control}
+              options={PetGender}
+              values={gender.values}
+              onToggle={gender.toggle}
+            />
           </div>
 
           <div className={styles.section__container}>
-            <h3 className={styles.inputTitle}>Розмір</h3>
-            <div className={styles.checkboxGroup}>
-              <Checkbox option="small" content="Маленький (до 30 см)" checked />
-              <Checkbox
-                option="medium"
-                content="Середній (30 - 50 см)"
-                checked
-              />
-              <Checkbox option="large" content="Великий (від 50 см)" checked />
-            </div>
+            <CheckboxSection
+              title="Розмір"
+              name="size"
+              control={control}
+              options={PetSize}
+              values={size.values}
+              onToggle={size.toggle}
+            />
           </div>
 
           <div className={styles.section__container}>
-            <h3 className={styles.inputTitle}>Вік</h3>
-            <div className={styles.checkboxGroup}>
-              <Checkbox option="under1" content="До 1 року" checked />
-              <Checkbox option="1to5" content="1 - 5 рік" checked />
-              <Checkbox option="over5" content="5 і більше років" checked />
-            </div>
+            <CheckboxSection
+              title="Вік"
+              name="age"
+              control={control}
+              options={PetAge}
+              values={age.values}
+              onToggle={age.toggle}
+            />
           </div>
 
           <div className={styles.section__container}>
-            <h3 className={styles.inputTitle}>З особливостями?</h3>
-            <div className={styles.checkboxGroup}>
-              <Checkbox option="yes" content="Так" checked />
-              <Checkbox option="no" content="Ні" checked />
-            </div>
+            <CheckboxSection
+              title="З особливостями?"
+              name="hasSpecialNeeds"
+              control={control}
+              options={PetsSpecialNeeds}
+              values={specialNeeds.values}
+              onToggle={specialNeeds.toggle}
+              transform={(value) => value === 1}
+            />
           </div>
 
           <div className={styles.section__container}>
             <h3 className={styles.inputTitle}>Характеристики</h3>
-            <Select
-              value={characteristicsOptions[0].value}
-              options={characteristicsOptions}
-              placeholder="Характеристики"
-              onChange={() => {}}
-            />
+            <PetFeaturesSelect control={control} />
           </div>
         </div>
 
@@ -159,123 +170,33 @@ export const ApplicationSurveyModule: FC = () => {
           <p className={clsx('heading3', styles.sectionTitle)}>
             Умови проживання
           </p>
-          <div className={styles.section__container}>
-            <h3 className={styles.inputTitle}>Де ви проживаєте?</h3>
-
-            <RadioGroup
-              name="housingType"
-              options={[
-                { value: 'apartment', label: 'Квартира' },
-                { value: 'house', label: 'Приватний будинок' },
-              ]}
-            />
-          </div>
-
-          <div className={styles.section__container}>
-            <h3 className={styles.inputTitle}>
-              Чи є у вас двір або безпечне місце для вигулу?
-            </h3>
-
-            <RadioGroup
-              name="hasYard"
-              options={[
-                { value: 'yes', label: 'Так' },
-                { value: 'no', label: 'Ні' },
-              ]}
-            />
-          </div>
-
-          <div className={styles.section__container}>
-            <h3 className={styles.inputTitle}>
-              Чи дозволено у вашому житлі утримувати тварин?
-            </h3>
-
-            <RadioGroup
-              name="allowPets"
-              options={[
-                { value: 'yes', label: 'Так' },
-                { value: 'no', label: 'Ні' },
-                { value: 'unsure', label: 'Не впевнений' },
-              ]}
-            />
-          </div>
-
-          <div className={styles.section__container}>
-            <h3 className={styles.inputTitle}>
-              Чи є у вас інші домашні тварини
-            </h3>
-
-            <RadioGroup
-              name="hasOtherPets"
-              options={[
-                { value: 'yes', label: 'Так' },
-                { value: 'no', label: 'Ні' },
-              ]}
-            />
-          </div>
-
-          <div className={styles.section__container}>
-            <h3 className={styles.inputTitle}>
-              Чи є в сім&apos;ї маленькі діти?
-            </h3>
-
-            <RadioGroup
-              name="hasChildren"
-              options={[
-                { value: 'yes', label: 'Так' },
-                { value: 'no', label: 'Ні' },
-              ]}
-            />
-          </div>
+          {lifeConditionSection.map((section) => (
+            <div key={section.name} className={styles.section__container}>
+              <RadioSection
+                title={section.title}
+                name={section.name}
+                control={control}
+                options={section.options}
+              />
+            </div>
+          ))}
         </div>
 
         <div>
           <p className={clsx('heading3', styles.sectionTitle)}>
             Досвід та очікування
           </p>
-          <div className={styles.section__container}>
-            <h3 className={styles.inputTitle}>
-              Чи були у вас домашні тварини раніше?
-            </h3>
-
-            <RadioGroup
-              name="hadPetsBefore"
-              options={[
-                { value: 'yes', label: 'Так' },
-                { value: 'no', label: 'Ні' },
-              ]}
-            />
-          </div>
-
-          <div className={styles.section__container}>
-            <h3 className={styles.inputTitle}>
-              Який рівень активності вам підходить?
-            </h3>
-
-            <RadioGroup
-              name="activityLevel"
-              options={[
-                { value: 'calm', label: 'Спокійний' },
-                { value: 'moderate', label: 'Помірно активний' },
-                { value: 'active', label: 'Активний' },
-              ]}
-            />
-          </div>
-
-          <div className={styles.section__container}>
-            <h3 className={styles.inputTitle}>
-              Чи готові ви взяти тварину з особливими потребами (інвалідність,
-              хронічні захворювання)?
-            </h3>
-
-            <RadioGroup
-              name="willingToAdoptSpecialNeeds"
-              options={[
-                { value: 'yes', label: 'Так' },
-                { value: 'no', label: 'Ні' },
-              ]}
-            />
-          </div>
+          {experienceSection.map((section) => (
+            <div key={section.name} className={styles.section__container}>
+              <RadioSection
+                key={section.name}
+                title={section.title}
+                name={section.name}
+                control={control}
+                options={section.options}
+              />
+            </div>
+          ))}
         </div>
 
         <div>
@@ -283,44 +204,34 @@ export const ApplicationSurveyModule: FC = () => {
             Відповідальність
           </p>
           <div className={styles.section__container}>
-            <h3 className={styles.inputTitle}>
-              Чи були у вас домашні тварини раніше?
-            </h3>
-
-            <RadioGroup
-              name="understandResponsibility"
-              options={[
-                { value: 'yes', label: 'Так' },
-                { value: 'no', label: 'Ні' },
-              ]}
-            />
-          </div>
-
-          <div className={styles.section__container}>
-            <h3 className={styles.inputTitle}>
-              Як ви плануєте вирішувати питання догляду за твариною під час
-              відпусток чи відряджень?
-            </h3>
-            <Input
+            <RadioSection
+              title={responsibilitySection[0].title}
+              name={responsibilitySection[0].name}
               control={control}
-              name="carePlanning"
-              placeholder="Я планую..."
+              options={responsibilitySection[0].options}
             />
-          </div>
+            <div />
 
-          <div className={styles.section__container}>
-            <h3 className={styles.inputTitle}>
-              Чи готові ви взяти тварину з особливими потребами (інвалідність,
-              хронічні захворювання)?
-            </h3>
+            <div className={styles.section__container}>
+              <h3 className={styles.inputTitle}>
+                Як ви плануєте вирішувати питання догляду за твариною під час
+                відпусток чи відряджень?
+              </h3>
+              <Input
+                control={control}
+                name="vacationPetCarePlan"
+                placeholder="Я планую..."
+              />
+            </div>
 
-            <RadioGroup
-              name="financialCapabale"
-              options={[
-                { value: 'yes', label: 'Так' },
-                { value: 'no', label: 'Ні' },
-              ]}
-            />
+            <div className={styles.section__container}>
+              <RadioSection
+                title={responsibilitySection[1].title}
+                name={responsibilitySection[1].name}
+                control={control}
+                options={responsibilitySection[1].options}
+              />
+            </div>
           </div>
         </div>
       </div>
