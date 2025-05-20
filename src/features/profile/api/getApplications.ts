@@ -26,9 +26,9 @@ export const getApplications = async ({
     'Pagination.PageSize': 9,
   };
 
-  if (status) {
+  if (status !== null && status !== undefined) {
     Object.assign(params, {
-      Status: status,
+      Statuses: status,
     });
   }
 

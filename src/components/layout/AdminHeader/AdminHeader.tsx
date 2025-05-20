@@ -33,10 +33,10 @@ export const AdminHeader: FC<Props> = ({ bgColor }) => {
                   <Link href="/admin/pets">Тваринки</Link>
                 </li>
                 <li>
-                  <Link href="/admin/applications">Як працюємо</Link>
+                  <Link href="/admin/applications">Заявки</Link>
                 </li>
                 <li>
-                  <Link href="/admin/meetings">Відгуки</Link>
+                  <Link href="/admin/meetings">Відеоконференції</Link>
                 </li>
               </ul>
             </ul>

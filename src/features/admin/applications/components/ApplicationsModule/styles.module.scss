@@ -13,3 +13,10 @@
     justify-content: space-between;
   }
 }
+
+.requestsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: rem-calc(16);
+  margin-bottom: 16px;
+}

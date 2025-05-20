@@ -10,7 +10,7 @@ export const getApplicationsQueryOptions = ({
   status,
 }: GetApplicationsPayload) => {
   return queryOptions({
-    queryKey: ['applications'],
+    queryKey: ['applications', status],
     queryFn: () =>
       getApplications({
         page,

@@ -4,25 +4,33 @@ import PlaceholderAvatar from '@/assets/images/PlaceholderAvatar.jpg';
 import { Button, Icon } from '@/components/ui';
 import { NavLink } from '@/features/profile/components/NavLink';
 import { ProfileTab } from '@/features/profile/constants/tabs';
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import Image from 'next/image';
 import styles from './styles.module.scss';
+import { useGetUser } from '@/features/profile/hooks';
+import { useGetUsersInfo } from '@/features/profile/api/getUsersInfo';
 
 export const Navigation = () => {
-  const { data: session } = useSession();
+  const user = useGetUser();
+
+  const { data } = useGetUsersInfo({
+    payload: {
+      id: user?.id as unknown as number,
+    },
+  });
 
   return (
     <div className={styles.navigation}>
       <div className={styles.avatar}>
         <Image
           className={styles.avatar__image}
-          src={session?.user?.image ?? PlaceholderAvatar}
+          src={data?.data.profilePictureUrl ?? PlaceholderAvatar}
           width={64}
           height={64}
-          alt={`avatar-${session?.user?.name}`}
+          alt={`avatar-${data?.data?.fullName}`}
         />
 
-        <p className={styles.avatar__name}>{session?.user?.name}</p>
+        <p className={styles.avatar__name}>{data?.data?.fullName}</p>
       </div>
 
       <div className={styles.linkList}>

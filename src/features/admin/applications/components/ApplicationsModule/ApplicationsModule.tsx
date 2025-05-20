@@ -6,29 +6,27 @@ import { applicationStatuses } from '@/features/admin/applications/constants';
 import { useSearchParams } from 'next/navigation';
 import { FC, useState } from 'react';
 import styles from './styles.module.scss';
+import { useGetApplications } from '@/features/profile/hooks/useGetApplications';
 
 export const ApplicationsModule: FC = () => {
   const params = useSearchParams();
   const page = params.get('page');
   const [status, setStatus] = useState<number | null>(null);
+  const parsedPage = isNaN(parseInt(page as string))
+    ? 1
+    : parseInt(page as string);
 
-  const meetings = [
-    {
-      id: 0,
-      status: 0,
-      createdAt: '2025-05-17T20:09:04.939Z',
-      user: {
-        id: 0,
-        fullName: 'string',
-      },
-      pet: {
-        id: 0,
-        name: 'string',
-        pictureUrl: '',
-      },
+  const { data } = useGetApplications({
+    payload: {
+      page: parsedPage,
+      status: status,
     },
-  ];
-  const totalPages = 0;
+  });
+
+  const items = data?.data.items;
+  const count = data?.data.count;
+
+  const totalPages = count ? Math.ceil(count / 10) : 0;
 
   return (
     <>
@@ -41,17 +39,18 @@ export const ApplicationsModule: FC = () => {
           onChange={(value: number) => setStatus(value)}
         />
       </div>
-      <div>
-        {meetings.map((application) => (
+
+      <div className={styles.requestsWrapper}>
+        {items?.map((application) => (
           <ApplicationCard key={application.id} application={application} />
         ))}
-
-        <Pagination
-          pageCount={totalPages ?? 10}
-          page={page ? Number(page) : 1}
-          href="/admin/applications"
-        />
       </div>
+
+      <Pagination
+        pageCount={totalPages ?? 10}
+        page={page ? Number(page) : 1}
+        href="/admin/applications"
+      />
     </>
   );
 };
