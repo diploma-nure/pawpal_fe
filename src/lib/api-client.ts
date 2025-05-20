@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { setupCache } from 'axios-cache-interceptor';
 import { toast } from 'react-toastify';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
@@ -24,4 +23,4 @@ instance.interceptors.response.use(
   },
 );
 
-export const client = setupCache(instance);
+export const client = instance;

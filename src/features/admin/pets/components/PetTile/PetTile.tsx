@@ -1,5 +1,7 @@
-import { Icon, Tag } from '@/components/ui';
+import { Button, Icon, Tag } from '@/components/ui';
+import { UpdatePetButton } from '@/features/admin/pets/components/PetTile/UpdatePetButton';
 import { placeholderImages } from '@/features/pets/constants/placeholderImages';
+import { useDeletePet } from '@/features/pets/hooks/useDeletePet';
 import {
   Pet,
   PetAge,
@@ -18,6 +20,13 @@ type Props = {
 };
 
 export const PetTile: FC<Props> = ({ pet }) => {
+  const deletePetMutation = useDeletePet();
+
+  const handleDelete = () => {
+    console.log('delete pet', pet.id);
+    deletePetMutation.mutate({ petId: pet.id });
+  };
+
   return (
     <div className={clsx(styles.card)}>
       <div className={styles.content}>
@@ -57,8 +66,15 @@ export const PetTile: FC<Props> = ({ pet }) => {
       </div>
 
       <div className={styles.actionsWrapper}>
-        <div className={styles.deleteButton}>
-          <Icon name="bucket" width={20} height={20} />
+        <div className={styles.actions}>
+          <UpdatePetButton petId={pet.id} />
+          <Button
+            variant="link"
+            className={styles.deleteButton}
+            onClick={handleDelete}
+          >
+            <Icon name="bucket" width={20} height={20} />
+          </Button>
         </div>
 
         <Link href={`/pets/${pet.id}`} className={styles.detailsLink}>

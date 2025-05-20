@@ -51,7 +51,7 @@ export const getFilteredPetsQueryOptions = (
   payload: FilteredPetsPayload = {},
 ) => {
   return queryOptions({
-    queryKey: [payload],
+    queryKey: ['pets', 'filtered', payload],
     queryFn: () =>
       getFilteredPets({
         ...payload,

@@ -31,6 +31,7 @@ const icons = [
   'boldCross',
   'menu',
   'upload',
+  'edit',
 ] as const;
 
 export type IconName = (typeof icons)[number];

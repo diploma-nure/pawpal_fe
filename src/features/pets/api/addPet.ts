@@ -1,5 +1,5 @@
 import { PetAge, PetGender, PetSize, PetSpecies } from '@/features/pets/types';
-import { client } from '@/lib/api-client';
+import { authClient } from '@/lib/auth-client';
 
 type AddPetResponse = {
   data: number;
@@ -16,13 +16,38 @@ type AddPetPayload = {
   HasSpecialNeeds: boolean;
   FeaturesIds: number[];
   Description: string;
-  Pictures: string[];
+  Pictures: File[];
 };
 
 export const addPet = async (options: AddPetPayload) => {
-  const response = await client.post<AddPetResponse>('/pets/add', {
-    ...options,
+  const formData = new FormData();
+
+  // Add all text fields to form data
+  formData.append('Name', options.Name);
+  formData.append('Species', options.Species.toString());
+  formData.append('Gender', options.Gender.toString());
+  formData.append('Size', options.Size.toString());
+  formData.append('Age', options.Age.toString());
+  formData.append('HasSpecialNeeds', options.HasSpecialNeeds.toString());
+  formData.append('Description', options.Description);
+
+  options.FeaturesIds.forEach((featureId, index) => {
+    formData.append(`FeaturesIds[${index}]`, featureId.toString());
   });
+
+  options.Pictures.forEach((file, index) => {
+    formData.append(`Pictures[${index}]`, file);
+  });
+
+  const response = await authClient.post<AddPetResponse>(
+    '/pets/add',
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    },
+  );
 
   return response.data;
 };

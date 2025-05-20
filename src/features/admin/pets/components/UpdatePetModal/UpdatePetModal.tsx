@@ -1,8 +1,8 @@
 'use client';
 
 import { Button, Icon, Input, Modal, Select } from '@/components/ui';
-import { PetFeaturesSelect } from '@/features/pets/components';
-import { useAddPet } from '@/features/pets/hooks/useAddPet';
+import { useGetPet } from '@/features/pets/hooks/useGetPet';
+import { useUpdatePet } from '@/features/pets/hooks/useUpdatePet';
 import {
   PetAge,
   PetGender,
@@ -12,14 +12,15 @@ import {
 } from '@/features/pets/types';
 import { colors } from '@/styles/colors';
 import Image from 'next/image';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Controller, useForm } from 'react-hook-form';
-import styles from './styles.module.scss';
+import styles from '../AddPetModal/styles.module.scss';
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
+  petId: number;
 };
 
 interface PetFormData {
@@ -34,33 +35,51 @@ interface PetFormData {
   images: File[];
 }
 
-export const AddPetModal: FC<Props> = ({ isOpen, onClose }) => {
+export const UpdatePetModal: FC<Props> = ({ isOpen, onClose, petId }) => {
   const [files, setFiles] = useState<File[]>([]);
-  const addPetMutation = useAddPet({
+  const updatePetMutation = useUpdatePet({
     onSuccess: () => {
       onClose();
     },
   });
+  const { data, isLoading, isError } = useGetPet(petId, { enabled: isOpen });
 
   const {
     handleSubmit,
     control,
     register,
-    formState: { errors },
     reset,
+    formState: { errors },
   } = useForm<PetFormData>({
     defaultValues: {
       name: '',
       age: '',
       gender: '',
-      species: '',
       size: '',
+      species: '',
       hasSpecialNeeds: '',
-      characteristics: '',
       description: '',
       images: [],
+      characteristics: '',
     },
   });
+
+  useEffect(() => {
+    if (data?.data) {
+      const pet = data.data;
+      reset({
+        name: pet.name || '',
+        age: pet.age?.toString() || '',
+        gender: pet.gender?.toString() || '',
+        size: pet.size?.toString() || '',
+        species: pet.species?.toString() || '',
+        hasSpecialNeeds: pet.hasSpecialNeeds ? '1' : '0',
+        description: pet.description || '',
+        images: [],
+        characteristics: '', // No featuresIds in Pet, leave empty
+      });
+    }
+  }, [data, reset]);
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -71,27 +90,33 @@ export const AddPetModal: FC<Props> = ({ isOpen, onClose }) => {
     },
   });
 
-  const onSubmit = async (data: PetFormData) => {
-    console.log(data);
+  const onSubmit = (formData: PetFormData) => {
+    const pet = data?.data;
+    if (!pet) return;
     const payload = {
-      Name: data.name,
-      Species: parseInt(data.species),
-      Gender: parseInt(data.gender),
-      Size: parseInt(data.size),
-      Age: parseInt(data.age),
-      HasSpecialNeeds: parseInt(data.hasSpecialNeeds) === 1,
-      FeaturesIds: data.characteristics ? [Number(data.characteristics)] : [],
-      Description: data.description,
-      Pictures: files,
+      Id: pet.id,
+      Name: formData.name,
+      Species: parseInt(formData.species),
+      Gender: parseInt(formData.gender),
+      Size: parseInt(formData.size),
+      Age: parseInt(formData.age),
+      HasSpecialNeeds: parseInt(formData.hasSpecialNeeds) === 1,
+      FeaturesIds: formData.characteristics
+        ? [Number(formData.characteristics)]
+        : [],
+      Description: formData.description,
+      Pictures: [],
     };
-    await addPetMutation.mutate(payload);
+    updatePetMutation.mutate(payload);
   };
 
-  const handleClose = () => {
-    setFiles([]);
-    onClose();
-    reset();
-  };
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error loading pet data</div>;
+  }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} className={styles.addPetModal}>
@@ -115,8 +140,8 @@ export const AddPetModal: FC<Props> = ({ isOpen, onClose }) => {
                 <Select
                   options={PetAge}
                   placeholder="Вік"
-                  value={parseInt(field.value)}
-                  onChange={(value) => field.onChange(value)}
+                  value={Number(field.value) || 0}
+                  onChange={(value) => field.onChange(value.toString())}
                 />
               )}
             />
@@ -188,7 +213,23 @@ export const AddPetModal: FC<Props> = ({ isOpen, onClose }) => {
         </div>
         <div className={styles.formField}>
           <label className={styles.label}>Характеристики</label>
-          <PetFeaturesSelect control={control} />
+          <Controller
+            name="characteristics"
+            control={control}
+            render={({ field }) => (
+              <Select
+                placeholder="Ладнає з іншими тваринами"
+                options={[
+                  { value: 1, title: 'Ладнає з іншими тваринами' },
+                  { value: 2, title: "Підходить для сім'ї з дітьми" },
+                  { value: 3, title: 'Потребує досвідченого власника' },
+                  { value: 4, title: 'Потребує особливого догляду' },
+                ]}
+                value={Number(field.value) || 0}
+                onChange={(value) => field.onChange(value.toString())}
+              />
+            )}
+          />
         </div>
 
         <div className={styles.formField}>
@@ -226,8 +267,6 @@ export const AddPetModal: FC<Props> = ({ isOpen, onClose }) => {
               {files.map((file, index) => (
                 <div key={index} className={styles.previewItem}>
                   <Image
-                    width={72}
-                    height={72}
                     src={URL.createObjectURL(file)}
                     alt={`Preview ${index}`}
                     className={styles.previewImage}
@@ -239,10 +278,15 @@ export const AddPetModal: FC<Props> = ({ isOpen, onClose }) => {
         </div>
 
         <div className={styles.actions}>
-          <Button variant="outline" onClick={handleClose}>
+          <Button variant="outline" onClick={onClose}>
             Скасувати
           </Button>
-          <Button onClick={handleSubmit(onSubmit)}>Додати тваринку</Button>
+          <Button
+            onClick={handleSubmit(onSubmit)}
+            disabled={updatePetMutation.isPending}
+          >
+            Оновити тваринку
+          </Button>
         </div>
       </div>
     </Modal>
