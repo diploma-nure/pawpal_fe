@@ -3,7 +3,10 @@
 import { Button, Icon } from '@/components/ui';
 import { Menu } from '@/components/ui/Menu';
 import clsx from 'clsx';
+import Cookies from 'js-cookie';
+import { signOut } from 'next-auth/react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 import { Container } from '../Container/Container';
 import styles from './styles.module.scss';
@@ -13,6 +16,15 @@ type Props = {
 };
 
 export const AdminHeader: FC<Props> = ({ bgColor }) => {
+  const { push } = useRouter();
+
+  const handleLogout = () => {
+    Cookies.remove('token');
+    localStorage.clear();
+    signOut();
+    push('/');
+  };
+
   return (
     <header style={{ backgroundColor: bgColor }}>
       <Container>
@@ -48,7 +60,11 @@ export const AdminHeader: FC<Props> = ({ bgColor }) => {
               styles.loginButton,
             )}
           >
-            <Button variant="link" rightIcon={() => <Icon name="logout" />}>
+            <Button
+              variant="link"
+              rightIcon={() => <Icon name="logout" />}
+              onClick={handleLogout}
+            >
               Вийти
             </Button>
 
