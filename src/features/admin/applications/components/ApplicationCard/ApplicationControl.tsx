@@ -43,7 +43,7 @@ export const ApplicationControl: FC<Props> = ({ applicationId, status }) => {
         Призначити відеозустріч
       </Button>
 
-      <Button onClick={handleReject} disabled={status !== 0} variant="outline">
+      <Button onClick={handleReject} variant="outline">
         Відхилити заявку
       </Button>
     </>

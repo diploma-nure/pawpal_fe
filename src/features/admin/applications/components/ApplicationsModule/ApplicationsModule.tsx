@@ -3,10 +3,10 @@
 import { Pagination, Select } from '@/components/ui';
 import { ApplicationCard } from '@/features/admin/applications/components/ApplicationCard';
 import { applicationStatuses } from '@/features/admin/applications/constants';
+import { useGetApplications } from '@/features/profile/hooks/useGetApplications';
 import { useSearchParams } from 'next/navigation';
 import { FC, useState } from 'react';
 import styles from './styles.module.scss';
-import { useGetApplications } from '@/features/profile/hooks/useGetApplications';
 
 export const ApplicationsModule: FC = () => {
   const params = useSearchParams();
@@ -36,7 +36,9 @@ export const ApplicationsModule: FC = () => {
           placeholder="Статус заявки"
           options={applicationStatuses}
           value={status}
-          onChange={(value: number) => setStatus(value)}
+          onChange={(value: number | number[]) =>
+            setStatus(value as unknown as number | null)
+          }
         />
       </div>
 

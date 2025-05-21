@@ -2,15 +2,19 @@
 
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon/Icon';
+import { ProfileTab } from '@/features/profile/constants/tabs';
 import { useDisclosure } from '@/hooks/useDisclosure';
 import { colors } from '@/styles/colors';
 import clsx from 'clsx';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { FC, useEffect } from 'react';
 import styles from './styles.module.scss';
 
 export const Menu: FC = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const pathName = usePathname();
+  const profileOptionsAreVisible = pathName.includes('/profile');
 
   useEffect(() => {
     if (isOpen) {
@@ -73,6 +77,31 @@ export const Menu: FC = () => {
             <Link href="/#contacts" onClick={onClose}>
               Контакти
             </Link>
+            {profileOptionsAreVisible && (
+              <>
+                <Link
+                  onClick={onClose}
+                  href={'/profile/' + ProfileTab.Contacts}
+                >
+                  Контактна інформація
+                </Link>
+
+                <Link onClick={onClose} href={'/profile/' + ProfileTab.Liked}>
+                  Збережене
+                </Link>
+
+                <Link onClick={onClose} href={'/profile/' + ProfileTab.Surveys}>
+                  Анкетування
+                </Link>
+
+                <Link
+                  onClick={onClose}
+                  href={'/profile/' + ProfileTab.Requests}
+                >
+                  Мої заявки
+                </Link>
+              </>
+            )}
           </ul>
         </div>
       </nav>
