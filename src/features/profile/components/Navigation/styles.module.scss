@@ -21,9 +21,13 @@
 }
 
 .navigation {
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
+  display: none;
+
+  @include onDesktop() {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+  }
 }
 
 .linkList {
