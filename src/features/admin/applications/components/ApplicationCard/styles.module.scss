@@ -94,7 +94,7 @@
   align-self: flex-start;
 
   @include onTablet() {
-    margin-left: 40px;
+    margin-left: auto;
   }
 }
 
@@ -115,8 +115,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  flex-grow: 1;
-  justify-content: space-between;
+  align-self: flex-end;
   gap: 16px;
 
   & button {
