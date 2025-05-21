@@ -1,7 +1,5 @@
-import { FC } from 'react';
-import styles from './styles.module.scss';
-import clsx from 'clsx';
 import { Button, Select } from '@/components/ui';
+import { FilterValues } from '@/features/admin/pets/types';
 import {
   PetAge,
   PetGender,
@@ -10,7 +8,9 @@ import {
   PetsSpecialNeeds,
   SortByOptions,
 } from '@/features/pets/types';
-import { FilterValues } from '@/features/admin/pets/types';
+import clsx from 'clsx';
+import { FC } from 'react';
+import styles from './styles.module.scss';
 
 type Props = {
   selectedValues: FilterValues;
@@ -43,7 +43,7 @@ export const Filters: FC<Props> = ({
             value={species}
             options={PetSpecies}
             placeholder="Вид тваринки"
-            onChange={(value) => handleSelectChange('species', value)}
+            onChange={(value) => handleSelectChange('species', value as number)}
           />
         </div>
         <div
@@ -56,7 +56,7 @@ export const Filters: FC<Props> = ({
             value={ages}
             options={PetAge}
             placeholder="Вік"
-            onChange={(value) => handleSelectChange('ages', value)}
+            onChange={(value) => handleSelectChange('ages', value as number)}
           />
         </div>
         <div
@@ -69,7 +69,7 @@ export const Filters: FC<Props> = ({
             options={PetGender}
             value={genders}
             placeholder="Стать"
-            onChange={(value) => handleSelectChange('genders', value)}
+            onChange={(value) => handleSelectChange('genders', value as number)}
           />
         </div>
         <div
@@ -82,7 +82,7 @@ export const Filters: FC<Props> = ({
             options={PetSize}
             value={sizes}
             placeholder="Розмір"
-            onChange={(value) => handleSelectChange('sizes', value)}
+            onChange={(value) => handleSelectChange('sizes', value as number)}
           />
         </div>
         <div
@@ -95,7 +95,9 @@ export const Filters: FC<Props> = ({
             options={PetsSpecialNeeds}
             value={specialNeeds}
             placeholder="Особливості"
-            onChange={(value) => handleSelectChange('specialNeeds', value)}
+            onChange={(value) =>
+              handleSelectChange('specialNeeds', value as number)
+            }
           />
         </div>
         <div
@@ -108,7 +110,7 @@ export const Filters: FC<Props> = ({
             options={SortByOptions}
             value={sortBy}
             placeholder="Сортувати за"
-            onChange={(value) => handleSelectChange('sortBy', value)}
+            onChange={(value) => handleSelectChange('sortBy', value as number)}
           />
         </div>
 

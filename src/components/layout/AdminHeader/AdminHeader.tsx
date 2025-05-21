@@ -52,7 +52,9 @@ export const AdminHeader: FC<Props> = ({ bgColor }) => {
               Вийти
             </Button>
 
-            <Menu />
+            <div className={styles.menuWrapper}>
+              <Menu />
+            </div>
           </div>
         </div>
       </Container>

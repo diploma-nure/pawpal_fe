@@ -1,5 +1,6 @@
 'use client';
 
+import { ProfileButton } from '@/components/layout/Header/ProfileButton';
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon/Icon';
 import { ProfileTab } from '@/features/profile/constants/tabs';
@@ -15,6 +16,7 @@ export const Menu: FC = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const pathName = usePathname();
   const profileOptionsAreVisible = pathName.includes('/profile');
+  const adminOptionsAreVisible = pathName.includes('/admin');
 
   useEffect(() => {
     if (isOpen) {
@@ -48,9 +50,7 @@ export const Menu: FC = () => {
 
             <div className={styles.topBar__actions}>
               <div className={styles.loginButton}>
-                <Button variant="link" rightIcon={() => <Icon name="log-in" />}>
-                  Увійти
-                </Button>
+                <ProfileButton />
               </div>
 
               <Button variant="link" onClick={onClose}>
@@ -99,6 +99,20 @@ export const Menu: FC = () => {
                   href={'/profile/' + ProfileTab.Requests}
                 >
                   Мої заявки
+                </Link>
+              </>
+            )}
+
+            {adminOptionsAreVisible && (
+              <>
+                <Link onClick={onClose} href="/admin/pets">
+                  Тваринки
+                </Link>
+                <Link onClick={onClose} href="/admin/applications">
+                  Заявки
+                </Link>
+                <Link onClick={onClose} href="/admin/meetings">
+                  Відеоконференції
                 </Link>
               </>
             )}

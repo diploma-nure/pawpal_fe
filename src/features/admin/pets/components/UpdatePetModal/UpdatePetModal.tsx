@@ -11,6 +11,7 @@ import {
   PetsSpecialNeeds,
 } from '@/features/pets/types';
 import { colors } from '@/styles/colors';
+import clsx from 'clsx';
 import Image from 'next/image';
 import { FC, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
@@ -42,7 +43,8 @@ export const UpdatePetModal: FC<Props> = ({ isOpen, onClose, petId }) => {
       onClose();
     },
   });
-  const { data, isLoading, isError } = useGetPet(petId, { enabled: isOpen });
+  const { data, isError } = useGetPet(petId, { enabled: isOpen });
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const {
     handleSubmit,
@@ -90,6 +92,10 @@ export const UpdatePetModal: FC<Props> = ({ isOpen, onClose, petId }) => {
     },
   });
 
+  const handleShowConfirm = () => {
+    setShowConfirm(true);
+  };
+
   const onSubmit = (formData: PetFormData) => {
     const pet = data?.data;
     if (!pet) return;
@@ -110,185 +116,219 @@ export const UpdatePetModal: FC<Props> = ({ isOpen, onClose, petId }) => {
     updatePetMutation.mutate(payload);
   };
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
   if (isError) {
     return <div>Error loading pet data</div>;
   }
 
+  const renderModalIcon = () => {
+    if (showConfirm) {
+      return <Icon name="logo" width={92} height={78} />;
+    }
+    return null;
+  };
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose} className={styles.addPetModal}>
-      <div className={styles.form}>
-        <div className={styles.formGroup}>
-          <div className={styles.formField}>
-            <Input
-              control={control}
-              label="Ім'я"
-              placeholder="Міся"
-              {...register('name')}
-              error={errors.name}
-            />
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      className={clsx({
+        [styles.addPetModal]: !showConfirm,
+        [styles.confirmModal]: showConfirm,
+      })}
+      renderTitleIcon={renderModalIcon}
+    >
+      {!showConfirm && (
+        <div className={styles.form}>
+          <div className={styles.formGroup}>
+            <div className={styles.formField}>
+              <Input
+                control={control}
+                label="Ім'я"
+                placeholder="Міся"
+                {...register('name')}
+                error={errors.name}
+              />
+            </div>
+
+            <div className={styles.formField} style={{ alignSelf: 'flex-end' }}>
+              <Controller
+                name="age"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    options={PetAge}
+                    placeholder="Вік"
+                    value={Number(field.value) || 0}
+                    onChange={(value) => field.onChange(value.toString())}
+                  />
+                )}
+              />
+            </div>
           </div>
 
-          <div className={styles.formField} style={{ alignSelf: 'flex-end' }}>
+          <div className={styles.formGroup}>
+            <div className={styles.formField}>
+              <Controller
+                name="gender"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    options={PetGender}
+                    placeholder="Стать"
+                    value={parseInt(field.value)}
+                    onChange={(value) => field.onChange(value)}
+                  />
+                )}
+              />
+            </div>
+
+            <div className={styles.formField}>
+              <Controller
+                name="species"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    value={parseInt(field.value)}
+                    options={PetSpecies}
+                    onChange={(value) => field.onChange(value)}
+                    placeholder="Вид"
+                  />
+                )}
+              />
+            </div>
+          </div>
+
+          <div className={styles.formGroup}>
+            <div className={styles.formField}>
+              <Controller
+                name="hasSpecialNeeds"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    options={PetsSpecialNeeds}
+                    value={parseInt(field.value)}
+                    onChange={(value) => field.onChange(value)}
+                    placeholder="Особливості"
+                  />
+                )}
+              />
+            </div>
+
+            <div className={styles.formField}>
+              <Controller
+                name="size"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    options={PetSize}
+                    value={parseInt(field.value)}
+                    onChange={(value) => field.onChange(value)}
+                    placeholder="Розмір"
+                  />
+                )}
+              />
+            </div>
+          </div>
+          <div className={styles.formField}>
+            <label className={styles.label}>Характеристики</label>
             <Controller
-              name="age"
+              name="characteristics"
               control={control}
               render={({ field }) => (
                 <Select
-                  options={PetAge}
-                  placeholder="Вік"
+                  placeholder="Ладнає з іншими тваринами"
+                  options={[
+                    { value: 1, title: 'Ладнає з іншими тваринами' },
+                    { value: 2, title: "Підходить для сім'ї з дітьми" },
+                    { value: 3, title: 'Потребує досвідченого власника' },
+                    { value: 4, title: 'Потребує особливого догляду' },
+                  ]}
                   value={Number(field.value) || 0}
                   onChange={(value) => field.onChange(value.toString())}
                 />
               )}
             />
           </div>
-        </div>
 
-        <div className={styles.formGroup}>
           <div className={styles.formField}>
-            <Controller
-              name="gender"
+            <Input
+              label="Опис"
+              placeholder="Лагідна муркотинка, яка обожнює цвірінь! Любить спати на колінах та спостерігати за світом з вікна"
               control={control}
-              render={({ field }) => (
-                <Select
-                  options={PetGender}
-                  placeholder="Стать"
-                  value={parseInt(field.value)}
-                  onChange={(value) => field.onChange(value)}
-                />
-              )}
+              {...register('description')}
+              error={errors.description}
             />
           </div>
 
           <div className={styles.formField}>
-            <Controller
-              name="species"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  value={parseInt(field.value)}
-                  options={PetSpecies}
-                  onChange={(value) => field.onChange(value)}
-                  placeholder="Вид"
+            <label className={styles.label}>Фото</label>
+            <div {...getRootProps({ className: styles.dropzone })}>
+              <input {...getInputProps()} />
+              <div className={styles.uploadIcon}>
+                <Icon
+                  name="upload"
+                  height={32}
+                  width={32}
+                  fill={colors.darkBlue}
                 />
-              )}
-            />
-          </div>
-        </div>
-
-        <div className={styles.formGroup}>
-          <div className={styles.formField}>
-            <Controller
-              name="hasSpecialNeeds"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  options={PetsSpecialNeeds}
-                  value={parseInt(field.value)}
-                  onChange={(value) => field.onChange(value)}
-                  placeholder="Особливості"
-                />
-              )}
-            />
-          </div>
-
-          <div className={styles.formField}>
-            <Controller
-              name="size"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  options={PetSize}
-                  value={parseInt(field.value)}
-                  onChange={(value) => field.onChange(value)}
-                  placeholder="Розмір"
-                />
-              )}
-            />
-          </div>
-        </div>
-        <div className={styles.formField}>
-          <label className={styles.label}>Характеристики</label>
-          <Controller
-            name="characteristics"
-            control={control}
-            render={({ field }) => (
-              <Select
-                placeholder="Ладнає з іншими тваринами"
-                options={[
-                  { value: 1, title: 'Ладнає з іншими тваринами' },
-                  { value: 2, title: "Підходить для сім'ї з дітьми" },
-                  { value: 3, title: 'Потребує досвідченого власника' },
-                  { value: 4, title: 'Потребує особливого догляду' },
-                ]}
-                value={Number(field.value) || 0}
-                onChange={(value) => field.onChange(value.toString())}
-              />
+              </div>
+              <p className={styles.dropzoneText}>
+                Виберіть зображення
+                <br />
+                для завантаження
+                <br />
+                або перетягніть файли сюди
+              </p>
+            </div>
+            {files.length > 0 && (
+              <div className={styles.filePreview}>
+                {files.map((file, index) => (
+                  <div key={index} className={styles.previewItem}>
+                    <Image
+                      src={URL.createObjectURL(file)}
+                      alt={`Preview ${index}`}
+                      className={styles.previewImage}
+                    />
+                  </div>
+                ))}
+              </div>
             )}
-          />
-        </div>
-
-        <div className={styles.formField}>
-          <Input
-            label="Опис"
-            placeholder="Лагідна муркотинка, яка обожнює цвірінь! Любить спати на колінах та спостерігати за світом з вікна"
-            control={control}
-            {...register('description')}
-            error={errors.description}
-          />
-        </div>
-
-        <div className={styles.formField}>
-          <label className={styles.label}>Фото</label>
-          <div {...getRootProps({ className: styles.dropzone })}>
-            <input {...getInputProps()} />
-            <div className={styles.uploadIcon}>
-              <Icon
-                name="upload"
-                height={32}
-                width={32}
-                fill={colors.darkBlue}
-              />
-            </div>
-            <p className={styles.dropzoneText}>
-              Виберіть зображення
-              <br />
-              для завантаження
-              <br />
-              або перетягніть файли сюди
-            </p>
           </div>
-          {files.length > 0 && (
-            <div className={styles.filePreview}>
-              {files.map((file, index) => (
-                <div key={index} className={styles.previewItem}>
-                  <Image
-                    src={URL.createObjectURL(file)}
-                    alt={`Preview ${index}`}
-                    className={styles.previewImage}
-                  />
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
 
-        <div className={styles.actions}>
-          <Button variant="outline" onClick={onClose}>
-            Скасувати
-          </Button>
-          <Button
-            onClick={handleSubmit(onSubmit)}
-            disabled={updatePetMutation.isPending}
-          >
-            Оновити тваринку
-          </Button>
+          <div className={styles.actions}>
+            <Button variant="outline" onClick={onClose}>
+              Скасувати
+            </Button>
+            <Button
+              onClick={handleShowConfirm}
+              disabled={updatePetMutation.isPending}
+            >
+              Оновити тваринку
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
+      {showConfirm && (
+        <div>
+          <h3
+            className="heading3"
+            style={{ textAlign: 'center', marginBottom: '8px' }}
+          >
+            Оновлюємо?
+          </h3>
+          <p className={styles.content}>
+            Здається, ти хочеш внести зміни. Переконайся, що все правильно –
+            після цього повернення не буде!
+          </p>
+
+          <div className={styles.buttonWrapper}>
+            <Button variant="outline" onClick={onClose}>
+              Ні, скасувати
+            </Button>
+            <Button onClick={handleSubmit(onSubmit)}>Так, оновити</Button>
+          </div>
+        </div>
+      )}
     </Modal>
   );
 };

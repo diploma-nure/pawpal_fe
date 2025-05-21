@@ -7,6 +7,11 @@
   justify-content: unset;
 }
 
+.confirmModal {
+  width: 100%;
+  max-width: 507px;
+}
+
 .form {
   display: flex;
   flex-direction: column;
@@ -140,5 +145,30 @@
       width: auto;
       min-width: 160px;
     }
+  }
+}
+
+.content {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+  letter-spacing: 0%;
+  text-align: center;
+  color: $dark-blue;
+  text-align: center;
+}
+
+.buttonWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
+
+  @include onTablet() {
+    text-wrap: nowrap;
+    flex-direction: row;
+    justify-content: flex-end;
   }
 }

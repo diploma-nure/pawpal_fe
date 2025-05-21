@@ -40,7 +40,6 @@ export default async function Page({
       )
     : null;
 
-  console.log(user);
   return (
     <section className="section">
       <Container>

@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
+
 /** @type {import('next').NextConfig} */
 const path = require('path');
 
@@ -25,8 +26,12 @@ const nextConfig = {
         hostname: 'lh3.googleusercontent.com',
       },
       {
-        protocol: 'http',
+        protocol: 'https',
+        hostname: 'paw-pal-storage.fra1.digitaloceanspaces.com',
+      },
+      {
         hostname: 'paw-pal-api-4vhye.ondigitalocean.app',
+        protocol: 'http',
       },
     ],
   },

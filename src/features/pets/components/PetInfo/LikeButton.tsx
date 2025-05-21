@@ -2,28 +2,27 @@
 
 import { Button, Icon } from '@/components/ui';
 import { useLikePet, useUnlikePet } from '@/features/pets/hooks';
-import { Pet } from '@/features/pets/types';
 import { useGetUsersPetsLiked } from '@/features/profile/hooks';
 import { colors } from '@/styles/colors';
 import { FC } from 'react';
 
 type LikeButtonProps = {
-  pet: Pet;
+  petId: number;
 };
 
-export const LikeButton: FC<LikeButtonProps> = ({ pet }) => {
+export const LikeButton: FC<LikeButtonProps> = ({ petId }) => {
   const { data: likedPetsData } = useGetUsersPetsLiked();
   const likeMutation = useLikePet();
   const unlikeMutation = useUnlikePet();
 
   const isLiked =
-    likedPetsData?.data?.some((likedPet) => likedPet.id === pet.id) || false;
+    likedPetsData?.data?.some((likedPet) => likedPet.id === petId) || false;
 
   const handleToggleLike = async () => {
     if (isLiked) {
-      await unlikeMutation.mutateAsync({ petId: pet.id });
+      await unlikeMutation.mutateAsync({ petId: petId });
     } else {
-      await likeMutation.mutateAsync({ petId: pet.id });
+      await likeMutation.mutateAsync({ petId: petId });
     }
   };
 

@@ -31,7 +31,7 @@ export const PetTile: FC<Props> = ({ pet }) => {
     <div className={clsx(styles.card)}>
       <div className={styles.content}>
         <Image
-          src={pet.pictureUrl ?? placeholderImages[pet.species]}
+          src={pet.pictures?.[0]?.url ?? placeholderImages[pet.species]}
           alt={`Pet ${pet.name}`}
           className={styles.image}
           width={72}

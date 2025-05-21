@@ -20,6 +20,7 @@
       --rdp-day_button-height: 40px;
 
       display: inline-flex;
+      margin-inline: auto;
     }
 
     .rdp-month_grid {
@@ -97,16 +98,17 @@
 
   .time-buttons {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(auto-fill, 76px);
+    gap: 8px;
+    justify-content: center;
 
     @include onTablet() {
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(5, 76px);
       gap: 16px;
     }
 
     button {
-      padding: 10px 16px;
+      padding: 8px 16px;
       border: 1px solid $dark-blue;
       border-radius: 8px;
       color: $dark-blue;
@@ -135,4 +137,10 @@
       }
     }
   }
+}
+
+.actionWrapper {
+  margin-top: 32px;
+  display: flex;
+  justify-content: flex-end;
 }

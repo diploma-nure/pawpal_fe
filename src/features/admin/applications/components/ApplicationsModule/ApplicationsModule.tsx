@@ -48,11 +48,13 @@ export const ApplicationsModule: FC = () => {
         ))}
       </div>
 
-      <Pagination
-        pageCount={totalPages ?? 10}
-        page={page ? Number(page) : 1}
-        href="/admin/applications"
-      />
+      {totalPages > 1 && (
+        <Pagination
+          pageCount={totalPages ?? 10}
+          page={page ? Number(page) : 1}
+          href="/admin/applications"
+        />
+      )}
     </>
   );
 };

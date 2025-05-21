@@ -19,6 +19,7 @@ type Props = {
 };
 
 export const PetInfo: FC<Props> = ({ pet }) => {
+  console.log(pet.pictures?.[0].url);
   return (
     <div className="grid">
       <div
@@ -29,8 +30,10 @@ export const PetInfo: FC<Props> = ({ pet }) => {
       >
         <Image
           className={styles.petImage}
-          src={pet.pictureUrl ?? placeholderImages[pet.species]}
+          src={pet.pictures?.[0].url ?? placeholderImages[pet.species]}
           alt={`Фото тваринки ${pet.name}`}
+          width={300}
+          height={300}
         />
       </div>
       <div className="col-desktop-7-12 col-tablet-4-6 col-1-2">
@@ -42,7 +45,7 @@ export const PetInfo: FC<Props> = ({ pet }) => {
           }}
         >
           <h1 className="heading1">{pet.name}</h1>
-          <LikeButton pet={pet} />
+          <LikeButton petId={pet.id} />
         </div>
         <div className={styles.tags}>
           <Tag variant="gender">

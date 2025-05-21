@@ -171,13 +171,15 @@ export function DateForm({
             ))}
           </div>
 
-          <Button
-            disabled={!selectedDate && !selectedTime}
-            type="button"
-            onClick={handleScheduleMeeting}
-          >
-            Записатись на відеозустріч
-          </Button>
+          <div className={styles.actionWrapper}>
+            <Button
+              disabled={!selectedDate || !selectedTime}
+              type="button"
+              onClick={handleScheduleMeeting}
+            >
+              Записатись на відеозустріч
+            </Button>
+          </div>
         </div>
       )}
     </div>

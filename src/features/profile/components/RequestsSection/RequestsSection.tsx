@@ -36,7 +36,9 @@ export const RequestsSection: FC = () => {
           />
         ))}
       <div style={{ marginTop: 'auto' }}>
-        <Pagination page={parseInt(page)} pageCount={totalPages} />
+        {totalPages > 1 && (
+          <Pagination page={parseInt(page)} pageCount={totalPages} />
+        )}
       </div>
     </div>
   );

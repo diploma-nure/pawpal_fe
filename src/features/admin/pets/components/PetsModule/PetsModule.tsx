@@ -62,11 +62,13 @@ export function PetsModule() {
         <AddPet />
       </div>
 
-      <Filters
-        selectedValues={selectedValues}
-        handleSelectChange={handleSelectChange}
-        clearFilters={clearFilters}
-      />
+      <div className={styles.filtersWrapper}>
+        <Filters
+          selectedValues={selectedValues}
+          handleSelectChange={handleSelectChange}
+          clearFilters={clearFilters}
+        />
+      </div>
 
       <PetList pets={data?.data.items ?? []} />
 

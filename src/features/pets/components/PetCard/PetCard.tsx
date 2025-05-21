@@ -5,7 +5,7 @@ import { Icon } from '@/components/ui/Icon/Icon';
 import { LikeButton } from '@/features/pets/components/PetInfo/LikeButton';
 import { placeholderImages } from '@/features/pets/constants/placeholderImages';
 import {
-  Pet,
+  PaginatedPet,
   PetAge,
   PetGender,
   PetSize,
@@ -18,7 +18,7 @@ import { FC } from 'react';
 import styles from './styles.module.scss';
 
 interface PetCardProps {
-  pet: Pet;
+  pet: PaginatedPet;
   className?: string;
 }
 
@@ -38,7 +38,7 @@ export const PetCard: FC<PetCardProps> = ({ pet, className }) => {
       <div className={styles.content}>
         <div className={styles.header}>
           <h3 className={styles.name}>{pet.name}</h3>
-          <LikeButton pet={pet} />
+          <LikeButton petId={pet.id} />
         </div>
 
         <div className={styles.tags}>

@@ -45,7 +45,26 @@ export const SortByOptions = [
   { title: 'Нові тваринки', value: 2 },
   { title: 'Розміри', value: 3 },
 ];
+
+interface PetPicture {
+  id: number;
+  url: string;
+  order: number;
+}
+
 export interface Pet {
+  id: number;
+  name: string;
+  species: (typeof PetSpecies)[number]['value'];
+  gender: (typeof PetGender)[number]['value'];
+  size: (typeof PetSize)[number]['value'];
+  age: (typeof PetAge)[number]['value'];
+  hasSpecialNeeds: boolean;
+  description: string;
+  pictures: PetPicture[];
+}
+
+export interface PaginatedPet {
   id: number;
   name: string;
   species: (typeof PetSpecies)[number]['value'];

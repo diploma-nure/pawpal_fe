@@ -20,7 +20,7 @@
     box-shadow: 0px 8px 10px 0px #0204541A;
   }
 
-  @include onDesktop() {
+  @include onTablet() {
     flex-direction: row;
   }
 }
@@ -42,7 +42,7 @@
   flex-direction: column;
   gap: 4px;
 
-  @include onDesktop() {
+  @include onTablet() {
     max-width: 174px;
   }
 }
@@ -53,7 +53,7 @@
   gap: 12px;
   flex-shrink: 0;
 
-  @include onDesktop() {
+  @include onTablet() {
     width: unset;
   }
 }
@@ -82,7 +82,7 @@
   text-decoration: none;
   width: fit-content;
 
-  @include onDesktop() {
+  @include onTablet() {
     font-size: 18px;
   }
 }
@@ -93,7 +93,7 @@
   flex-wrap: wrap;
   align-self: flex-start;
 
-  @include onDesktop() {
+  @include onTablet() {
     margin-left: 40px;
   }
 }
@@ -123,7 +123,7 @@
     width: 100%;
   }
 
-  @include onDesktop() {
+  @include onTablet() {
     justify-content: unset;
     gap: 24px;
 

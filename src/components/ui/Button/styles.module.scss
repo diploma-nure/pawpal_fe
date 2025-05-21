@@ -59,8 +59,8 @@
       }
 
       &:disabled {
-        background-color: $light-orange;
-        border-color: $light-orange;
+        background-color: #FB821899;
+        border-color: transparent;
         cursor: not-allowed;
       }
     }
