@@ -6,11 +6,20 @@
   align-items: center;
 }
 
+
+.iconWrapper {
+  flex-shrink: 0;
+}
+
 .statusText {
   font-weight: 600;
-  font-size: 16px;
   line-height: 100%;
-  letter-spacing: 0%;
+  text-align: left;
+  font-size: 14px;
+
+  @include onDesktop() {
+    font-size: 16px;
+  }
 
   &[data-color="0"] {
     color: $grey;

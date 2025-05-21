@@ -28,7 +28,6 @@ export const ApplicationControl: FC<Props> = ({ status, applicationId }) => {
     selectedDate: Date | undefined;
     selectedTime: string;
   }) => {
-    console.log(selectedDate, selectedTime);
     setTime(selectedTime);
     setDate(selectedDate);
   };
@@ -51,7 +50,7 @@ export const ApplicationControl: FC<Props> = ({ status, applicationId }) => {
               name="diagonal-arrow"
               width={24}
               height={24}
-              style={{ transform: 'rotate(90deg)' }}
+              style={{ transform: 'rotate(90deg)', flexShrink: 0 }}
             />
           </Button>
         );
@@ -68,7 +67,7 @@ export const ApplicationControl: FC<Props> = ({ status, applicationId }) => {
                 name="diagonal-arrow"
                 width={24}
                 height={24}
-                style={{ transform: 'rotate(90deg)' }}
+                style={{ transform: 'rotate(90deg)', flexShrink: 0 }}
               />
             </Button>
 

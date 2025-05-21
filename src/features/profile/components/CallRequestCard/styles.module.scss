@@ -21,7 +21,7 @@
     box-shadow: 0px 8px 10px 0px #0204541A;
   }
 
-  @include onDesktop() {
+  @include onTablet() {
     flex-direction: row;
     align-items: center;
   }
@@ -46,21 +46,25 @@
   width: 100%;
   min-width: 0;
 
-  @include onDesktop() {
+  @include onTablet() {
     max-width: 174px;
   }
 }
 
 .content {
   display: grid;
-  grid-template-columns: 72px 1fr;
+  grid-template-columns: 72px minmax(0, 174px);
   width: 100%;
   gap: 12px;
   flex-shrink: 0;
 
-  @include onDesktop() {
+  @include onTablet() {
     width: unset;
   }
+}
+
+.statusWrapper {
+  margin-left: auto;
 }
 
 .header {
@@ -85,7 +89,6 @@
 
   @include onDesktop() {
     font-size: 20px;
-
   }
 }
 
@@ -145,7 +148,15 @@
   font-weight: 500;
   text-decoration: none;
   align-self: flex-start;
+  text-align: right;
 
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 100%;
+
+  & svg {
+    fill: $grey;
+  }
 }
 
 .detailsLink {
@@ -153,7 +164,10 @@
   align-items: center;
   gap: 0.5rem;
   color: $dark-blue;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 100%;
+  text-align: right;
   text-decoration: none;
   align-self: flex-start;
 
@@ -169,7 +183,7 @@
   justify-content: space-between;
   gap: 24px;
 
-  @include onDesktop() {
+  @include onTablet() {
     flex-direction: column;
     justify-content: unset;
   }

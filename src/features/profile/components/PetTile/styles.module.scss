@@ -20,7 +20,7 @@
     box-shadow: 0px 8px 10px 0px #0204541A;
   }
 
-  @include onDesktop() {
+  @include onTablet() {
     flex-direction: row;
     align-items: center;
   }
@@ -43,7 +43,7 @@
   flex-direction: column;
   gap: 4px;
 
-  @include onDesktop() {
+  @include onTablet() {
     max-width: 174px;
   }
 }
@@ -54,7 +54,7 @@
   gap: 12px;
   flex-shrink: 0;
 
-  @include onDesktop() {
+  @include onTablet() {
     width: unset;
   }
 }
@@ -127,7 +127,7 @@
   justify-content: space-between;
   gap: 24px;
 
-  @include onDesktop() {
+  @include onTablet() {
     flex-direction: column;
     justify-content: unset;
   }

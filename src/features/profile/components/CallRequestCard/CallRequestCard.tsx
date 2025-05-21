@@ -41,8 +41,9 @@ export const CallRequestCard: FC<Props> = ({
           </p>
         </div>
       </div>
-
-      <ApplicationStatus status={status} />
+      <div className={styles.statusWrapper}>
+        <ApplicationStatus status={status} />
+      </div>
 
       <div className={styles.actionsWrapper}>
         <ApplicationControl status={status} applicationId={applicationId} />
