@@ -34,7 +34,9 @@ export const useScheduleMeeting = ({
     mutationFn: scheduleMeeting,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['meetings-slots', 'applications'],
+        predicate: (query) =>
+          query.queryKey.includes('meeting-slots') ||
+          query.queryKey.includes('applications'),
       });
     },
     ...config,

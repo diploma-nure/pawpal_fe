@@ -112,7 +112,7 @@ export function DateForm({
     setSelectedTime(time);
   };
 
-  const handleScheduleMeeting = () => {
+  const handleScheduleMeeting = async () => {
     if (!selectedDate || !selectedTime) return;
     const start = dayjs(selectedDate)
       .set('hour', Number(selectedTime.slice(0, 2)))
@@ -120,17 +120,20 @@ export function DateForm({
       .utc()
       .toISOString();
     const end = dayjs(start).add(1, 'hour').utc().toISOString();
-    console.log(start, end);
-    // scheduleMutation.mutate({
-    //   applicationId,
-    //   start,
-    //   end,
-    // });
+
+    const res = await scheduleMutation.mutateAsync({
+      applicationId,
+      start,
+      end,
+    });
     handleChangeDate({
       selectedDate,
       selectedTime,
     });
-    onSuccess?.();
+
+    if (!res.errors) {
+      onSuccess?.();
+    }
   };
 
   return (
