@@ -1,5 +1,5 @@
-import { Button, Icon } from '@/components/ui';
 import { ApplicationStatus } from '@/features/admin/applications/components/ApplicationStatus';
+import { ApplicationControl } from '@/features/profile/components/CallRequestCard/ApplicationControl';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import Image from 'next/image';
@@ -14,9 +14,15 @@ type Props = {
   };
   status: number;
   createdAt: string;
+  applicationId: number;
 };
 
-export const CallRequestCard: FC<Props> = ({ pet, status, createdAt }) => {
+export const CallRequestCard: FC<Props> = ({
+  pet,
+  status,
+  createdAt,
+  applicationId,
+}) => {
   return (
     <div className={clsx(styles.card)}>
       <div className={styles.content}>
@@ -39,15 +45,7 @@ export const CallRequestCard: FC<Props> = ({ pet, status, createdAt }) => {
       <ApplicationStatus status={status} />
 
       <div className={styles.actionsWrapper}>
-        <Button variant="link" className={styles.detailsLink}>
-          Приєднатись до зустрічі
-          <Icon
-            name="diagonal-arrow"
-            width={24}
-            height={24}
-            style={{ transform: 'rotate(90deg)' }}
-          />
-        </Button>
+        <ApplicationControl status={status} applicationId={applicationId} />
       </div>
     </div>
   );

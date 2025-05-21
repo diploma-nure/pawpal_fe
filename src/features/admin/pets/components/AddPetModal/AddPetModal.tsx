@@ -29,7 +29,7 @@ interface PetFormData {
   size: string;
   species: string;
   hasSpecialNeeds: string;
-  characteristics: string;
+  characteristics: number[];
   description: string;
   images: File[];
 }
@@ -56,7 +56,7 @@ export const AddPetModal: FC<Props> = ({ isOpen, onClose }) => {
       species: '',
       size: '',
       hasSpecialNeeds: '',
-      characteristics: '',
+      characteristics: [],
       description: '',
       images: [],
     },
@@ -72,7 +72,7 @@ export const AddPetModal: FC<Props> = ({ isOpen, onClose }) => {
   });
 
   const onSubmit = async (data: PetFormData) => {
-    console.log(data);
+    console.log(data, files);
     const payload = {
       Name: data.name,
       Species: parseInt(data.species),
@@ -80,7 +80,7 @@ export const AddPetModal: FC<Props> = ({ isOpen, onClose }) => {
       Size: parseInt(data.size),
       Age: parseInt(data.age),
       HasSpecialNeeds: parseInt(data.hasSpecialNeeds) === 1,
-      FeaturesIds: data.characteristics ? [Number(data.characteristics)] : [],
+      FeaturesIds: data.characteristics ?? [],
       Description: data.description,
       Pictures: files,
     };

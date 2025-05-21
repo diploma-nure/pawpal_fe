@@ -31,12 +31,12 @@ export const addPet = async (options: AddPetPayload) => {
   formData.append('HasSpecialNeeds', options.HasSpecialNeeds.toString());
   formData.append('Description', options.Description);
 
-  options.FeaturesIds.forEach((featureId, index) => {
-    formData.append(`FeaturesIds[${index}]`, featureId.toString());
+  options.FeaturesIds.forEach((featureId) => {
+    formData.append(`FeaturesIds`, featureId.toString());
   });
 
-  options.Pictures.forEach((file, index) => {
-    formData.append(`Pictures[${index}]`, file);
+  options.Pictures.forEach((file) => {
+    formData.append(`Pictures`, file);
   });
 
   const response = await authClient.post<AddPetResponse>(

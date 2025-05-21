@@ -1,65 +1,136 @@
 'use client';
 
 import { Button } from '@/components/ui';
+import { useGetMeetingsSlots } from '@/features/profile/api/getMeetingsSlots';
+import { useScheduleMeeting } from '@/features/profile/api/scheduleMeeting';
 import { uk } from 'date-fns/locale';
 import dayjs from 'dayjs';
 import 'dayjs/locale/uk';
-import { useState } from 'react';
+import utc from 'dayjs/plugin/utc';
+import { useMemo, useState } from 'react';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import styles from './styles.module.scss';
 
-interface DateFormProps {
-  disabledDates?: Date[];
-  onDateSelect?: (date: Date | undefined) => void;
-  onTimeSelect?: (time: string) => void;
-}
+dayjs.extend(utc);
+
+type Props = {
+  onSuccess?: () => void;
+  applicationId: number;
+  handleChangeDate: ({
+    selectedDate,
+    selectedTime,
+  }: {
+    selectedDate: Date | undefined;
+    selectedTime: string;
+  }) => void;
+};
 
 export function DateForm({
-  disabledDates = [],
-  onDateSelect,
-  onTimeSelect,
-}: DateFormProps) {
+  onSuccess,
+  applicationId,
+  handleChangeDate,
+}: Props) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
   const [selectedTime, setSelectedTime] = useState<string>('');
+  const [visibleMonth, setVisibleMonth] = useState<Date>(() => {
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), 1);
+  });
 
-  const timeSlots = [
-    '09:00',
-    '10:00',
-    '11:00',
-    '12:00',
-    '13:00',
-    '14:00',
-    '15:00',
-    '16:00',
-    '17:00',
-  ];
+  const scheduleMutation = useScheduleMeeting();
+
+  const getMonthRange = (date: Date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    let startDate: Date;
+    if (year === new Date().getFullYear() && month === new Date().getMonth()) {
+      startDate = new Date();
+    } else {
+      startDate = new Date(year, month, 1);
+    }
+    const endDate = new Date(year, month + 1, 0);
+    return {
+      startDate: dayjs(startDate).format('YYYY-MM-DD'),
+      endDate: dayjs(endDate).format('YYYY-MM-DD'),
+    };
+  };
+
+  const { startDate, endDate } = useMemo(
+    () => getMonthRange(visibleMonth),
+    [visibleMonth],
+  );
+
+  const { data } = useGetMeetingsSlots({
+    payload: { startDate, endDate, applicationId },
+  });
+
+  const slotsByDate = useMemo(() => {
+    const map = new Map<
+      string,
+      {
+        isAvailable: boolean;
+        timeSlots: { isAvailable: boolean; time: string }[];
+      }
+    >();
+    data?.data.forEach((slot) => {
+      map.set(slot.date, slot);
+    });
+    return map;
+  }, [data]);
+
+  const isDateDisabled = (date: Date): boolean => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (date < today) return true;
+    const dateStr = dayjs(date).format('YYYY-MM-DD');
+    const slot = slotsByDate.get(dateStr);
+    if (!slot) return true; // No slot info, disable
+    return !slot.isAvailable;
+  };
+
+  const availableTimeSlots = useMemo(() => {
+    if (!selectedDate) return [];
+    const dateStr = dayjs(selectedDate).format('YYYY-MM-DD');
+    const slot = slotsByDate.get(dateStr);
+    if (!slot || !slot.isAvailable) return [];
+    return slot.timeSlots.filter((t) => t.isAvailable);
+  }, [selectedDate, slotsByDate]);
+
+  const handleMonthChange = (month: Date) => {
+    setVisibleMonth(month);
+    setSelectedDate(undefined);
+    setSelectedTime('');
+  };
 
   const handleDateSelect = (date: Date | undefined) => {
     setSelectedDate(date);
     setSelectedTime('');
-    if (onDateSelect) {
-      onDateSelect(date);
-    }
   };
 
   const handleTimeSelect = (time: string) => {
     setSelectedTime(time);
-    if (onTimeSelect) {
-      onTimeSelect(time);
-    }
   };
 
-  const isDateDisabled = (date: Date): boolean => {
-    if (date < new Date(new Date().setHours(0, 0, 0, 0))) {
-      return true;
-    }
-
-    return disabledDates.some(
-      (disabledDate) =>
-        dayjs(disabledDate).format('YYYY-MM-DD') ===
-        dayjs(date).format('YYYY-MM-DD'),
-    );
+  const handleScheduleMeeting = () => {
+    if (!selectedDate || !selectedTime) return;
+    const start = dayjs(selectedDate)
+      .set('hour', Number(selectedTime.slice(0, 2)))
+      .set('minute', Number(selectedTime.slice(3, 5)))
+      .utc()
+      .toISOString();
+    const end = dayjs(start).add(1, 'hour').utc().toISOString();
+    console.log(start, end);
+    // scheduleMutation.mutate({
+    //   applicationId,
+    //   start,
+    //   end,
+    // });
+    handleChangeDate({
+      selectedDate,
+      selectedTime,
+    });
+    onSuccess?.();
   };
 
   return (
@@ -71,6 +142,8 @@ export function DateForm({
         locale={uk}
         disabled={isDateDisabled}
         weekStartsOn={1}
+        month={visibleMonth}
+        onMonthChange={handleMonthChange}
       />
 
       {selectedDate && (
@@ -79,18 +152,29 @@ export function DateForm({
             {dayjs(selectedDate).locale('uk').format('DD MMMM')}
           </h4>
           <div className={styles['time-buttons']}>
-            {timeSlots.map((time) => (
+            {availableTimeSlots.length === 0 && (
+              <span style={{ color: '#888' }}>Немає доступних слотів</span>
+            )}
+            {availableTimeSlots.map((slot) => (
               <Button
                 variant="outline"
-                key={time}
-                onClick={() => handleTimeSelect(time)}
-                className={selectedTime === time ? styles.selected : ''}
+                key={slot.time}
+                onClick={() => handleTimeSelect(slot.time)}
+                className={selectedTime === slot.time ? styles.selected : ''}
                 type="button"
               >
-                {time}
+                {slot.time.slice(0, 5)}
               </Button>
             ))}
           </div>
+
+          <Button
+            disabled={!selectedDate && !selectedTime}
+            type="button"
+            onClick={handleScheduleMeeting}
+          >
+            Записатись на відеозустріч
+          </Button>
         </div>
       )}
     </div>

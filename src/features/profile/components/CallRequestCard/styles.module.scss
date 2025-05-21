@@ -125,6 +125,17 @@
   line-height: 145%;
 }
 
+.connectToMeeting__disabled {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: $grey;
+  font-weight: 500;
+  text-decoration: none;
+  align-self: flex-start;
+
+}
+
 .detailsLink {
   display: flex;
   align-items: center;

@@ -38,6 +38,7 @@ export const PetFeaturesSelect: React.FC<PetFeaturesSelectProps> = ({
           onChange={(value) => field.onChange(value)}
           value={field.value as number}
           placeholder="Характеристики"
+          multiselect
         />
       )}
     />

@@ -53,7 +53,7 @@ export const AboutPetForm = () => {
       preferredSizes: size.values,
       preferredAges: age.values,
       preferredGenders: gender.values,
-      desiredFeaturesIds: data.characteristics ? [data.characteristics] : [],
+      desiredFeaturesIds: data.characteristics ?? [],
       readyForSpecialNeedsPet: specialNeeds.values.includes(1),
     };
 

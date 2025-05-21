@@ -32,6 +32,7 @@ export const RequestsSection: FC = () => {
             pet={item.pet}
             status={item.status}
             createdAt={item.createdAt}
+            applicationId={item.id}
           />
         ))}
       <div style={{ marginTop: 'auto' }}>

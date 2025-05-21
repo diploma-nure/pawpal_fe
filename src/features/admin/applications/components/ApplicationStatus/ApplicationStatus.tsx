@@ -17,20 +17,20 @@ export const ApplicationStatus: FC<Props> = ({ status }) => {
         return <Icon name="clock" width={24} height={24} fill={colors.grey} />;
       case 1:
         return (
-          <Icon name="video" width={24} height={24} fill={colors.lightOrange} />
-        );
-      case 2:
-        return (
-          <Icon name="hourglass" width={24} height={24} fill={colors.pink} />
-        );
-      case 3:
-        return (
           <Icon
             name="approved"
             width={24}
             height={24}
             fill={colors.lightGreen}
           />
+        );
+      case 2:
+        return (
+          <Icon name="video" width={24} height={24} fill={colors.lightOrange} />
+        );
+      case 3:
+        return (
+          <Icon name="hourglass" width={24} height={24} fill={colors.pink} />
         );
       case 4:
         return <Icon name="smile" width={24} height={24} fill={colors.green} />;

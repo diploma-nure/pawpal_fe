@@ -1,7 +1,7 @@
-import { FC } from 'react';
 import { Button, Icon } from '@/components/ui';
-import { colors } from '@/styles/colors';
 import { useChangeApplicationStatus } from '@/features/admin/applications/api/changeApplicationStatus';
+import { colors } from '@/styles/colors';
+import { FC } from 'react';
 
 type Props = {
   applicationId: number;

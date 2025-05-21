@@ -11,7 +11,7 @@ type Props = {
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
-  renderTitleIcon?: () => JSX.Element;
+  renderTitleIcon?: () => JSX.Element | null;
   className?: string;
 };
 
