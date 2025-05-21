@@ -28,6 +28,8 @@ export const usePets = ({ queryConfig, payload }: UseGetPetsOptions) => {
       ? getRecommendedPetsQueryOptions({ ...payload })
       : getFilteredPetsQueryOptions({ ...payload });
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   return useQuery({
     ...getPetsQueryOptions,
     ...queryConfig,

@@ -53,7 +53,7 @@ export const MeetingsModule: FC = () => {
           placeholder="Статус заявки"
           options={applicationStatuses}
           value={status}
-          onChange={(value: number) => setStatus(value)}
+          onChange={(value) => setStatus(value as number)}
         />
       </div>
 

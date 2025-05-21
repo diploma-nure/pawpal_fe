@@ -1,4 +1,4 @@
-import { Pet } from '@/features/pets/types';
+import { PaginatedPet } from '@/features/pets/types';
 import { authClient } from '@/lib/auth-client';
 import { QueryConfig } from '@/lib/reactQuery';
 import { queryOptions, useQuery } from '@tanstack/react-query';
@@ -11,7 +11,7 @@ type RecommendedPetsPayload = {
 
 type RecommendedPetsResponse = {
   data: {
-    items: Pet[];
+    items: PaginatedPet[];
     page: number;
     pageSize: number;
     count: number;

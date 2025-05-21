@@ -1,6 +1,7 @@
 import { Footer, Header } from '@/components/layout';
 import { colors } from '@/styles/colors';
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 import styles from './page.module.scss';
 
 export const metadata: Metadata = {
@@ -16,7 +17,9 @@ export default function RootLayout({
   return (
     <>
       <Header bgColor={colors.beige} />
-      <main className={styles.main}>{children}</main>
+      <main className={styles.main}>
+        <Suspense>{children}</Suspense>
+      </main>
       <Footer />
     </>
   );

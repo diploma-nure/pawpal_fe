@@ -125,7 +125,7 @@ export const FilterSection = ({
             value={selectedValues.species}
             options={PetSpecies}
             placeholder="Вид тваринки"
-            onChange={(value) => handleSelectChange('species', value)}
+            onChange={(value) => handleSelectChange('species', value as number)}
           />
         </div>
         <div
@@ -138,7 +138,7 @@ export const FilterSection = ({
             value={selectedValues.ages}
             options={PetAge}
             placeholder="Вік"
-            onChange={(value) => handleSelectChange('ages', value)}
+            onChange={(value) => handleSelectChange('ages', value as number)}
           />
         </div>
         <div
@@ -165,7 +165,7 @@ export const FilterSection = ({
             options={PetGender}
             value={selectedValues.genders}
             placeholder="Стать"
-            onChange={(value) => handleSelectChange('genders', value)}
+            onChange={(value) => handleSelectChange('genders', value as number)}
           />
         </div>
         <div
@@ -178,7 +178,7 @@ export const FilterSection = ({
             options={PetSize}
             value={selectedValues.sizes}
             placeholder="Розмір"
-            onChange={(value) => handleSelectChange('sizes', value)}
+            onChange={(value) => handleSelectChange('sizes', value as number)}
           />
         </div>
         <div
@@ -191,7 +191,9 @@ export const FilterSection = ({
             options={PetsSpecialNeeds}
             value={selectedValues.specialNeeds}
             placeholder="Особливості"
-            onChange={(value) => handleSelectChange('specialNeeds', value)}
+            onChange={(value) =>
+              handleSelectChange('specialNeeds', value as number)
+            }
           />
         </div>
         <div
@@ -204,7 +206,7 @@ export const FilterSection = ({
             options={SortByOptions}
             value={selectedValues.sortBy}
             placeholder="Сортувати за"
-            onChange={(value) => handleSelectChange('sortBy', value)}
+            onChange={(value) => handleSelectChange('sortBy', value as number)}
           />
         </div>
         <div

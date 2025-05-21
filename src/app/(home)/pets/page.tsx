@@ -9,6 +9,7 @@ import { HeadingSection } from '@/features/pets/components/HeadingSection';
 import { PetsGrid } from '@/features/pets/components/PetsGrid/PetsGrid';
 import Cookies from 'js-cookie';
 import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 import styles from './page.module.scss';
 
 export default function PetsPage({}) {
@@ -45,34 +46,36 @@ export default function PetsPage({}) {
   const totalPages = count ? Math.ceil(count / 10) : 0;
 
   return (
-    <section className="section">
-      <Container>
-        <HeadingSection />
+    <Suspense>
+      <section className="section">
+        <Container>
+          <HeadingSection />
 
-        <FilterSection
-          species={options.species}
-          sizes={options.sizes}
-          ages={options.ages}
-          genders={options.genders}
-          specialNeeds={options.specialNeeds}
-          showRecommendations={options.showRecommendations}
-          sortBy={options.sortBy}
-        />
+          <FilterSection
+            species={options.species}
+            sizes={options.sizes}
+            ages={options.ages}
+            genders={options.genders}
+            specialNeeds={options.specialNeeds}
+            showRecommendations={options.showRecommendations}
+            sortBy={options.sortBy}
+          />
 
-        {!error && <PetsGrid pets={items} />}
+          {!error && <PetsGrid pets={items} />}
 
-        {error && <ErrorText text={error as unknown as string} />}
+          {error && <ErrorText text={error as unknown as string} />}
 
-        {totalPages > 1 && (
-          <div className={styles.paginationWrapper}>
-            <Pagination
-              pageCount={totalPages}
-              page={Number(options.page)}
-              href="/pets"
-            />
-          </div>
-        )}
-      </Container>
-    </section>
+          {totalPages > 1 && (
+            <div className={styles.paginationWrapper}>
+              <Pagination
+                pageCount={totalPages}
+                page={Number(options.page)}
+                href="/pets"
+              />
+            </div>
+          )}
+        </Container>
+      </section>
+    </Suspense>
   );
 }

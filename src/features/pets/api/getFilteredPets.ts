@@ -1,4 +1,4 @@
-import { Pet } from '@/features/pets/types';
+import { PaginatedPet } from '@/features/pets/types';
 import { client } from '@/lib/api-client';
 import { QueryConfig } from '@/lib/reactQuery';
 import { queryOptions, useQuery } from '@tanstack/react-query';
@@ -14,7 +14,7 @@ type FilteredPetsPayload = {
 
 type FilteredPetsResponse = {
   data: {
-    items: Pet[];
+    items: PaginatedPet[];
     page: number;
     pageSize: number;
     count: number;

@@ -1,10 +1,10 @@
 import { PetCard } from '@/features/pets/components/PetCard/PetCard';
-import { Pet } from '@/features/pets/types';
+import { PaginatedPet } from '@/features/pets/types';
 import { FC } from 'react';
 import styles from './styles.module.scss';
 
 type Props = {
-  pets?: Pet[];
+  pets?: PaginatedPet[];
 };
 
 export const PetsGrid: FC<Props> = ({ pets }) => {

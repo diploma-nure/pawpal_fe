@@ -1,10 +1,10 @@
-import { Pet } from '@/features/pets/types';
-import { FC } from 'react';
 import { PetTile } from '@/features/admin/pets/components/PetTile';
+import { PaginatedPet } from '@/features/pets/types';
+import { FC } from 'react';
 import styles from './styles.module.scss';
 
 type Props = {
-  pets: Pet[];
+  pets: PaginatedPet[];
 };
 
 export const PetList: FC<Props> = ({ pets }) => {
