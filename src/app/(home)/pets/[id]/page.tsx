@@ -1,10 +1,7 @@
 import { Container } from '@/components/layout';
 import { getPet } from '@/features/pets/api/getPet';
 import { PetInfo } from '@/features/pets/components/PetInfo';
-import { RecommendedPets } from '@/features/pets/components/RecommendedPets/RecommendedPets';
-import { User } from '@/features/profile/types';
 import { Metadata } from 'next';
-import { cookies } from 'next/headers';
 
 export async function generateStaticParams() {
   return [];
@@ -30,21 +27,21 @@ export default async function Page({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const cookiesStore = await cookies();
-  const token = cookiesStore.get('token');
+  // const cookiesStore = await cookies();
+  // const token = cookiesStore.get('token') ?? null;
   const { id } = await params;
   const { data } = await getPet({ id });
-  const user: User | null = token?.value
-    ? JSON.parse(
-        Buffer.from(token?.value.split('.')[1], 'base64url').toString('utf-8'),
-      )
-    : null;
+  // const user: User | null = token?.value
+  //   ? JSON.parse(
+  //       Buffer.from(token?.value.split('.')[1], 'base64url').toString('utf-8'),
+  //     )
+  //   : null;
 
   return (
     <section className="section">
       <Container>
         <PetInfo pet={data} />
-        {Boolean(token?.value) && user?.role === 'User' && <RecommendedPets />}
+        {/* {Boolean(token?.value) && user?.role === 'User' && <RecommendedPets />} */}
       </Container>
     </section>
   );
