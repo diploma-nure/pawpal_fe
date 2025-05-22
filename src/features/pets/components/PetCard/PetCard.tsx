@@ -11,6 +11,8 @@ import {
   PetSize,
   PetsSpecialNeeds,
 } from '@/features/pets/types';
+import { useGetUser } from '@/features/profile/hooks';
+import { useTokenValid } from '@/hooks/useTokenValid';
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -23,6 +25,9 @@ interface PetCardProps {
 }
 
 export const PetCard: FC<PetCardProps> = ({ pet, className }) => {
+  const user = useGetUser();
+  const isValid = useTokenValid();
+
   return (
     <div className={clsx(styles.card, className)}>
       <div className={styles.imageContainer}>
@@ -38,7 +43,8 @@ export const PetCard: FC<PetCardProps> = ({ pet, className }) => {
       <div className={styles.content}>
         <div className={styles.header}>
           <h3 className={styles.name}>{pet.name}</h3>
-          <LikeButton petId={pet.id} />
+
+          {isValid && user && <LikeButton petId={pet.id} />}
         </div>
 
         <div className={styles.tags}>
