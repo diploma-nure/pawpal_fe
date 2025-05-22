@@ -32,6 +32,8 @@ const icons = [
   'menu',
   'upload',
   'edit',
+  'microphone',
+  'videocam-off',
 ] as const;
 
 export type IconName = (typeof icons)[number];
