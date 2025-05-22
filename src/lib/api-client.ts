@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { toast } from 'react-toastify';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 const API_TIMEOUT = 5000;
@@ -17,8 +16,10 @@ instance.interceptors.response.use(
   (error) => {
     const message =
       error.response?.data?.message || error.response?.data?.Message;
+    console.error('API Error:', message);
 
-    toast(message, { type: 'error', position: 'bottom-right' });
+    throw new Error(message);
+    // toast(message, { type: 'error', position: 'bottom-right' });
     // return Promise.reject(new Error(message));
   },
 );
