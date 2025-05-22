@@ -25,7 +25,7 @@ export const ProfileButton: FC = () => {
               className={styles.profileButton}
               variant="link"
               rightIcon={() => <Icon name="log-in" />}
-              onClick={() => push('log-in')}
+              onClick={() => push('/log-in')}
             >
               Увійти
             </Button>
