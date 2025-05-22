@@ -1,5 +1,4 @@
 import { Tag } from '@/components/ui';
-import { LikeButtonWrapper } from '@/features/pets/components/PetInfo/LikeButtonWrapper';
 import { MakeHappyButton } from '@/features/pets/components/PetInfo/MakeHappyButton';
 import { placeholderImages } from '@/features/pets/constants/placeholderImages';
 import {
@@ -12,7 +11,6 @@ import {
 import clsx from 'clsx';
 import Image from 'next/image';
 import { FC } from 'react';
-import { LikeButton } from './LikeButton';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -45,9 +43,9 @@ export const PetInfo: FC<Props> = ({ pet }) => {
           }}
         >
           <h1 className="heading1">{pet.name}</h1>
-          <LikeButtonWrapper>
+          {/* <LikeButtonWrapper>
             <LikeButton petId={pet.id} />
-          </LikeButtonWrapper>
+          </LikeButtonWrapper> */}
         </div>
         <div className={styles.tags}>
           <Tag variant="gender">
