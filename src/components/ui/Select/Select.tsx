@@ -4,6 +4,7 @@ import { Checkbox } from '@/components/ui/Checkbox/Checkbox';
 import { useClickOutside } from '@/hooks';
 import React, { useState } from 'react';
 import styles from './styles.module.scss';
+import clsx from 'clsx';
 
 interface SelectProps {
   placeholder?: string;
@@ -11,6 +12,7 @@ interface SelectProps {
   options: { title: string; value: number }[];
   onChange: (value: number | number[]) => void;
   multiselect?: boolean;
+  className?: string;
 }
 
 export const Select: React.FC<SelectProps> = ({
@@ -19,6 +21,7 @@ export const Select: React.FC<SelectProps> = ({
   value,
   onChange,
   multiselect = false,
+  className,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useClickOutside<HTMLDivElement>(() => {
@@ -54,7 +57,7 @@ export const Select: React.FC<SelectProps> = ({
   };
 
   return (
-    <div ref={ref} className={styles.multiSelectWrapper}>
+    <div ref={ref} className={clsx(styles.multiSelectWrapper, className)}>
       <div className={styles.selectHeader} onClick={toggleDropdown}>
         <p className={styles.selectedOption}>{getSelectedTitles()}</p>
         <span className={styles.arrow}></span>

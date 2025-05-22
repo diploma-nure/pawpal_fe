@@ -5,6 +5,7 @@ export interface Meeting {
   user: {
     id: number;
     fullName: string;
+    profilePictureUrl: string;
   };
   pet: {
     id: number;

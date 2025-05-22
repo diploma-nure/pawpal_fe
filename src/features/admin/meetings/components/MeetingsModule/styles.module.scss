@@ -16,6 +16,9 @@
 
 .meetings {
   margin-block: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: rem-calc(16);
 
   &Search {
     @include onTablet() {
@@ -33,4 +36,9 @@
     flex-direction: row;
     justify-content: space-between;
   }
+}
+
+.statuses {
+  max-width: 325px;
+  width: 100%;
 }

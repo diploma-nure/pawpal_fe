@@ -9,12 +9,38 @@ import dayjs from 'dayjs';
 import Image from 'next/image';
 import { FC } from 'react';
 import styles from './styles.module.scss';
+import { useChangeApplicationStatus } from '@/features/admin/applications/api/changeApplicationStatus';
+import { useChangeMeetingStatus } from '../../api/changeMeetingStatus';
 
 type Props = {
   meeting: Meeting;
 };
 
 export const MeetingCard: FC<Props> = ({ meeting }) => {
+  const changeApplicationStatusMutation = useChangeApplicationStatus();
+  const changeMeetingStatusMutation = useChangeMeetingStatus();
+
+  const handleCancelAdoption = () => {
+    changeApplicationStatusMutation.mutate({
+      applicationId: meeting.application.id,
+      status: 5,
+    });
+  };
+
+  const handleAcceptAdoption = () => {
+    changeMeetingStatusMutation.mutate({
+      meetingId: meeting.id,
+      status: 0,
+    });
+  };
+
+  const handleCancelMeeting = () => {
+    changeMeetingStatusMutation.mutate({
+      meetingId: meeting.id,
+      status: 0,
+    });
+  };
+
   return (
     <div className={clsx(styles.card)}>
       <div className={styles.content}>
@@ -44,8 +70,10 @@ export const MeetingCard: FC<Props> = ({ meeting }) => {
       <div className={styles.actionsWrapper}>
         {meeting.status === 2 && (
           <>
-            <Button>Схвалити адопцію</Button>
-            <Button variant="outline">Відхилити адопцію</Button>
+            <Button onClick={handleAcceptAdoption}>Схвалити адопцію</Button>
+            <Button variant="outline" onClick={handleCancelAdoption}>
+              Відхилити адопцію
+            </Button>
           </>
         )}
 
@@ -65,7 +93,11 @@ export const MeetingCard: FC<Props> = ({ meeting }) => {
             >
               Приєднатись до зустрічі
             </Button>
-            <Button disabled={meeting.status === 0} variant="outline">
+            <Button
+              onClick={handleCancelMeeting}
+              disabled={meeting.status === 0}
+              variant="outline"
+            >
               Скасувати зустріч
             </Button>
           </>

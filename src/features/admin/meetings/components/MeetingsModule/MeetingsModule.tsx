@@ -1,41 +1,31 @@
 'use client';
 
-import { Input, Pagination, Select } from '@/components/ui';
-import { applicationStatuses } from '@/features/admin/applications/constants';
+import { Pagination, Select } from '@/components/ui';
+import { meetingStatuses } from '@/features/admin/applications/constants';
 import { MeetingCard } from '@/features/admin/meetings/components/MeetingCard';
 import { useSearchParams } from 'next/navigation';
-import { FC, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { FC } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { useGetMeetings } from '../../api/getMeetings';
 import styles from './styles.module.scss';
 
 export const MeetingsModule: FC = () => {
   const params = useSearchParams();
   const page = params.get('page');
-  const [status, setStatus] = useState<number | null>(null);
+  const { control, watch } = useForm();
+  const statuses: number[] = watch('statuses');
 
-  const { control } = useForm();
-
-  const meetings = [
-    {
-      id: 0,
-      status: 0,
-      start: '2025-05-17T20:09:04.939Z',
-      user: {
-        id: 0,
-        fullName: 'string',
-      },
-      pet: {
-        id: 0,
-        name: 'string',
-        pictureUrl: '',
-      },
-      application: {
-        id: 0,
-      },
+  const meetingQuery = useGetMeetings({
+    payload: {
+      page: page && !isNaN(parseInt(page)) ? parseInt(page) : 1,
+      statuses: statuses ?? [],
     },
-  ];
-  const totalPages = 0;
+  });
 
+  const items = meetingQuery?.data?.data.items;
+  const count = meetingQuery?.data?.data.count;
+
+  const totalPages = count ? Math.ceil(count / 10) : 0;
   return (
     <>
       <div className={styles.titleWrapper}>
@@ -43,22 +33,24 @@ export const MeetingsModule: FC = () => {
       </div>
 
       <div className={styles.filters}>
-        <Input
-          classNames={styles.meetingsSearch}
-          placeholder="Каспер"
-          name="search"
+        <Controller
+          name="statuses"
           control={control}
-        />
-        <Select
-          placeholder="Статус заявки"
-          options={applicationStatuses}
-          value={status}
-          onChange={(value) => setStatus(value as number)}
+          render={({ field }) => (
+            <Select
+              options={meetingStatuses}
+              onChange={(value) => field.onChange(value)}
+              value={field.value ?? []}
+              placeholder="Статус заявки"
+              multiselect
+              className={styles.statuses}
+            />
+          )}
         />
       </div>
 
       <div className={styles.meetings}>
-        {meetings.map((meeting) => (
+        {items?.map((meeting) => (
           <MeetingCard key={meeting.id} meeting={meeting} />
         ))}
       </div>
