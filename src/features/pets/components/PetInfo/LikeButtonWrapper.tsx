@@ -1,3 +1,5 @@
+'use client';
+
 import { useGetUser } from '@/features/profile/hooks';
 import { useTokenValid } from '@/hooks/useTokenValid';
 import { FC, ReactNode } from 'react';
