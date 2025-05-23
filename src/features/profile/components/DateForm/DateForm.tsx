@@ -3,15 +3,14 @@
 import { Button } from '@/components/ui';
 import { useGetMeetingsSlots } from '@/features/profile/api/getMeetingsSlots';
 import { useScheduleMeeting } from '@/features/profile/api/scheduleMeeting';
+import { getTimeSlotTime } from '@/features/profile/helpers/getTimeSlotTIme';
 import { uk } from 'date-fns/locale';
 import dayjs from 'dayjs';
-import 'dayjs/locale/uk';
 import utc from 'dayjs/plugin/utc';
 import { useMemo, useState } from 'react';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import styles from './styles.module.scss';
-
 dayjs.extend(utc);
 
 type Props = {
@@ -115,17 +114,18 @@ export function DateForm({
   const handleScheduleMeeting = async () => {
     if (!selectedDate || !selectedTime) return;
     const start = dayjs(selectedDate)
+      .utc()
       .set('hour', Number(selectedTime.slice(0, 2)))
       .set('minute', Number(selectedTime.slice(3, 5)))
-      .utc()
       .toISOString();
-    const end = dayjs(start).add(1, 'hour').utc().toISOString();
+    const end = dayjs.utc(start).add(1, 'hour').format();
 
     const res = await scheduleMutation.mutateAsync({
       applicationId,
       start,
       end,
     });
+
     handleChangeDate({
       selectedDate,
       selectedTime,
@@ -166,7 +166,7 @@ export function DateForm({
                 className={selectedTime === slot.time ? styles.selected : ''}
                 type="button"
               >
-                {slot.time.slice(0, 5)}
+                {getTimeSlotTime(slot.time)}
               </Button>
             ))}
           </div>
