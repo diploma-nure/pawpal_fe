@@ -1,4 +1,5 @@
 import { ApplicationStatus } from '@/features/admin/applications/components/ApplicationStatus';
+import { placeholderImages } from '@/features/pets/constants/placeholderImages';
 import { ApplicationControl } from '@/features/profile/components/CallRequestCard/ApplicationControl';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
@@ -27,7 +28,7 @@ export const CallRequestCard: FC<Props> = ({
     <div className={clsx(styles.card)}>
       <div className={styles.content}>
         <Image
-          src={pet.pictureUrl}
+          src={pet.pictureUrl ?? placeholderImages['2']}
           alt={`Pet ${pet.name}`}
           className={styles.image}
           width={72}

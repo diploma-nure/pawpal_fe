@@ -40,7 +40,11 @@ export const useChangeApplicationStatus = ({
   return useMutation({
     mutationFn: changeApplicationStatus,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['applications', 'meetings'] });
+      queryClient.invalidateQueries({
+        predicate: (query) =>
+          query.queryKey.includes('meetings') ||
+          query.queryKey.includes('applications'),
+      });
     },
     ...config,
   });

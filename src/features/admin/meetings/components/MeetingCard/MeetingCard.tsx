@@ -1,16 +1,16 @@
 'use client';
 
-import { Button, Icon } from '@/components/ui';
+import { Button } from '@/components/ui';
+import { useChangeApplicationStatus } from '@/features/admin/applications/api/changeApplicationStatus';
+import { AdminJoinButton } from '@/features/admin/meetings/components/AdminJoinButton/AdminJoinButton';
 import { MeetingStatus } from '@/features/admin/meetings/components/MeetingStatus';
 import { Meeting } from '@/features/admin/meetings/types';
-import { colors } from '@/styles/colors';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import { FC } from 'react';
-import styles from './styles.module.scss';
-import { useChangeApplicationStatus } from '@/features/admin/applications/api/changeApplicationStatus';
 import { useChangeMeetingStatus } from '../../api/changeMeetingStatus';
+import styles from './styles.module.scss';
 
 type Props = {
   meeting: Meeting;
@@ -28,9 +28,9 @@ export const MeetingCard: FC<Props> = ({ meeting }) => {
   };
 
   const handleAcceptAdoption = () => {
-    changeMeetingStatusMutation.mutate({
-      meetingId: meeting.id,
-      status: 0,
+    changeApplicationStatusMutation.mutate({
+      applicationId: meeting.application.id,
+      status: 4,
     });
   };
 
@@ -79,20 +79,11 @@ export const MeetingCard: FC<Props> = ({ meeting }) => {
 
         {meeting.status !== 2 && (
           <>
-            <Button
-              rightIcon={() => (
-                <Icon
-                  name="diagonal-arrow"
-                  width={24}
-                  height={24}
-                  style={{ transform: 'rotate(90deg)' }}
-                  fill={colors.white}
-                />
-              )}
-              disabled={meeting.status === 0}
-            >
-              Приєднатись до зустрічі
-            </Button>
+            <AdminJoinButton
+              meetingId={meeting.id}
+              status={meeting.status}
+              applicationId={meeting.application.id}
+            />
             <Button
               onClick={handleCancelMeeting}
               disabled={meeting.status === 0}

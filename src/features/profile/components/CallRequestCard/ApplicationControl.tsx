@@ -1,4 +1,5 @@
 import { Button, Icon } from '@/components/ui';
+import { JoinButton } from '@/features/profile/components/JoinButton/JoinButton';
 import { SelectDateModal } from '@/features/profile/components/SelectDateModal';
 import { SuccessModal } from '@/features/profile/components/SelectDateModal/SuccessModal';
 import { useDisclosure } from '@/hooks/useDisclosure';
@@ -33,14 +34,14 @@ export const ApplicationControl: FC<Props> = ({ status, applicationId }) => {
   };
 
   const handleSuccess = () => {
-    onSuccessModalOpen();
     onClose();
+    onSuccessModalOpen();
   };
 
   const renderButton = () => {
     switch (status) {
       case 0:
-      case 2:
+      case 3:
       case 4:
       case 5:
         return (
@@ -88,22 +89,31 @@ export const ApplicationControl: FC<Props> = ({ status, applicationId }) => {
             />
           </>
         );
-      case 3:
-        return (
-          <Button variant="link" className={styles.detailsLink}>
-            Приєднатись до зустрічі
-            <Icon
-              name="diagonal-arrow"
-              width={24}
-              height={24}
-              style={{ transform: 'rotate(90deg)' }}
-            />
-          </Button>
-        );
+      case 2:
+        return <JoinButton applicationId={applicationId} />;
       default:
         return null;
     }
   };
 
-  return renderButton();
+  return (
+    <>
+      {renderButton()}
+      <SelectDateModal
+        handleChangeDate={handleChangeDate}
+        onSuccess={handleSuccess}
+        key={isOpen.toString()}
+        isOpen={isOpen}
+        onClose={onClose}
+        applicationId={applicationId}
+      />
+
+      <SuccessModal
+        isOpen={isSuccessModalOpen}
+        onClose={onSuccessModalClose}
+        date={date}
+        time={time}
+      />
+    </>
+  );
 };

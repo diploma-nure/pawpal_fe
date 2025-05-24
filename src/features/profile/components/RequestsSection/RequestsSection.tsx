@@ -13,7 +13,7 @@ export const RequestsSection: FC = () => {
 
   const { data } = useGetApplications({
     payload: {
-      page: 1,
+      page: isNaN(parseInt(page)) ? 1 : parseInt(page),
       status: null,
     },
   });
@@ -37,7 +37,11 @@ export const RequestsSection: FC = () => {
         ))}
       <div style={{ marginTop: 'auto' }}>
         {totalPages > 1 && (
-          <Pagination page={parseInt(page)} pageCount={totalPages} />
+          <Pagination
+            page={parseInt(page)}
+            pageCount={totalPages}
+            href="/profile/requests"
+          />
         )}
       </div>
     </div>

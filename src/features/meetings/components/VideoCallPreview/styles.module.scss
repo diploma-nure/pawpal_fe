@@ -3,25 +3,21 @@
 .videoPreview {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 1.5rem;
-  padding: 1.5rem;
-  background: #f8f9fa;
   border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-width: 640px;
-  margin: 0 auto;
+  width: 100%;
+  align-items: center;
 }
 
 .videoContainer {
   position: relative;
+  max-width: 420px;
   width: 100%;
-  max-width: 480px;
-  aspect-ratio: 4/3;
-  background: #000;
+  height: auto;
+  background: #232323;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  aspect-ratio: 42 / 25;
 }
 
 .video {
@@ -100,7 +96,7 @@
     transform: translateY(0);
   }
 
-  &__active {
+  &__disabled {
     background: $red;
     color: white;
   }
@@ -114,13 +110,5 @@
 
   @media (max-width: 480px) {
     font-size: 0.8rem;
-  }
-}
-
-// Responsive design
-@media (max-width: 768px) {
-  .videoPreview {
-    padding: 1rem;
-    gap: 1rem;
   }
 }

@@ -3,6 +3,7 @@
 import { ApplicationControl } from '@/features/admin/applications/components/ApplicationCard/ApplicationControl';
 import { ApplicationStatus } from '@/features/admin/applications/components/ApplicationStatus';
 import { Application } from '@/features/admin/applications/types';
+import { placeholderImages } from '@/features/pets/constants/placeholderImages';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import Image from 'next/image';
@@ -18,15 +19,13 @@ export const ApplicationCard: FC<Props> = ({ application }) => {
   return (
     <div className={clsx(styles.card)}>
       <div className={styles.content}>
-        {application.pet.pictureUrl && (
-          <Image
-            src={application.pet.pictureUrl}
-            alt={`Pet ${application.pet.name}`}
-            className={styles.image}
-            width={72}
-            height={72}
-          />
-        )}
+        <Image
+          src={application.pet.pictureUrl ?? placeholderImages['2']}
+          alt={`Pet ${application.pet.name}`}
+          className={styles.image}
+          width={72}
+          height={72}
+        />
 
         <div className={styles.info}>
           <p className={styles.name}>{application.pet.name}</p>

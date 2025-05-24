@@ -1,4 +1,4 @@
-import { Button, Icon } from '@/components/ui';
+import { Icon } from '@/components/ui';
 import { colors } from '@/styles/colors';
 import clsx from 'clsx';
 import React, { useEffect, useRef, useState } from 'react';
@@ -106,7 +106,7 @@ export const VideoPreview: React.FC<VideoPreviewProps> = ({ className }) => {
       <div className={styles.controls}>
         <button
           className={clsx(styles.button, {
-            [styles.button__active]: isCameraOn,
+            [styles.button__disabled]: !isCameraOn,
           })}
           onClick={toggleCamera}
           aria-label={isCameraOn ? 'Turn off camera' : 'Turn on camera'}
@@ -115,13 +115,13 @@ export const VideoPreview: React.FC<VideoPreviewProps> = ({ className }) => {
             name={isCameraOn ? 'video' : 'videocam-off'}
             width={24}
             height={24}
-            fill={!isCameraOn ? colors.grey : colors.white}
+            fill={isCameraOn ? colors.grey : colors.white}
           />
         </button>
 
         <button
           className={clsx(styles.button, {
-            [styles.button__active]: isMicOn,
+            [styles.button__disabled]: !isMicOn,
           })}
           onClick={toggleMicrophone}
           aria-label={isMicOn ? 'Turn off microphone' : 'Turn on microphone'}
@@ -130,11 +130,9 @@ export const VideoPreview: React.FC<VideoPreviewProps> = ({ className }) => {
             name="microphone"
             width={24}
             height={24}
-            fill={!isMicOn ? colors.grey : colors.white}
+            fill={isMicOn ? colors.grey : colors.white}
           />
         </button>
-
-        <Button>Приєднатись</Button>
       </div>
     </div>
   );

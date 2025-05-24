@@ -113,10 +113,20 @@ export function DateForm({
 
   const handleScheduleMeeting = async () => {
     if (!selectedDate || !selectedTime) return;
-    const start = dayjs(selectedDate)
+    const dateObj = new Date(selectedDate);
+    const year = dateObj.getFullYear();
+    const month = dateObj.getMonth();
+    const day = dateObj.getDate();
+
+    const start = dayjs
       .utc()
+      .set('year', year)
+      .set('month', month)
+      .set('date', day)
       .set('hour', Number(selectedTime.slice(0, 2)))
       .set('minute', Number(selectedTime.slice(3, 5)))
+      .set('second', 0)
+      .set('millisecond', 0)
       .toISOString();
     const end = dayjs.utc(start).add(1, 'hour').format();
 

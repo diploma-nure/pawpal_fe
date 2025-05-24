@@ -8,7 +8,7 @@ $modal-max-width: 400px;
   justify-content: center;
   height: 100svh;
   width: 100%;
-  padding: rem-calc(48);
+  padding: rem-calc(16);
 
   position: relative;
 
@@ -18,6 +18,7 @@ $modal-max-width: 400px;
   overflow-y: auto;
 
   @include onTablet() {
+    padding: rem-calc(40);
     max-width: $modal-max-width;
     height: unset;
     max-height: 90%;

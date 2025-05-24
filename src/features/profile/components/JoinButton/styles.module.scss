@@ -1,0 +1,24 @@
+@use 'utils' as *;
+
+.detailsLink {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  gap: 0.5rem;
+  align-self: flex-start;
+
+  color: $dark-blue;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 100%;
+  text-align: right;
+  text-decoration: none;
+
+  border: none;
+  background: none;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
