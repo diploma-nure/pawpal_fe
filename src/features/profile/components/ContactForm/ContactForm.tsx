@@ -31,7 +31,7 @@ export const ContactForm: FC = () => {
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, isDirty },
     reset,
   } = useForm<ContactFormSchemaType>({
     resolver: zodResolver(contactFormSchema),
@@ -105,7 +105,9 @@ export const ContactForm: FC = () => {
       </div>
 
       <div className={styles.buttonContainer}>
-        <Button type="submit">Зберегти зміни</Button>
+        <Button disabled={!isDirty} type="submit">
+          Зберегти зміни
+        </Button>
       </div>
 
       <SuccessModal isOpen={isOpen} onClose={onClose} />

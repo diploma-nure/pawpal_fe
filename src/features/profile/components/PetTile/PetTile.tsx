@@ -4,7 +4,7 @@ import { Button, Icon, Tag } from '@/components/ui';
 import { placeholderImages } from '@/features/pets/constants/placeholderImages';
 import { useUnlikePet } from '@/features/pets/hooks';
 import {
-  Pet,
+  PaginatedPet,
   PetAge,
   PetGender,
   PetSize,
@@ -17,7 +17,7 @@ import { FC } from 'react';
 import styles from './styles.module.scss';
 
 type Props = {
-  pet: Pet;
+  pet: PaginatedPet;
 };
 
 export const PetTile: FC<Props> = ({ pet }) => {
@@ -31,7 +31,7 @@ export const PetTile: FC<Props> = ({ pet }) => {
     <div className={clsx(styles.card)}>
       <div className={styles.content}>
         <Image
-          src={pet.pictures?.[0]?.url ?? placeholderImages[pet.species]}
+          src={pet.pictureUrl ?? placeholderImages[pet.species]}
           alt={`Pet ${pet.name}`}
           className={styles.image}
           width={72}

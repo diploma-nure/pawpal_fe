@@ -1,8 +1,8 @@
-import { Pet } from '@/features/pets/types';
+import { PaginatedPet } from '@/features/pets/types';
 import { authClient } from '@/lib/auth-client';
 
 type GetUsersPetsLikedResponse = {
-  data: Pet[];
+  data: PaginatedPet[];
   message: string;
   errors: string[] | null;
 };

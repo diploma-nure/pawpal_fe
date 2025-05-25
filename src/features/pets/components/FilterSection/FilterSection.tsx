@@ -8,6 +8,7 @@ import {
   PetsSpecialNeeds,
   SortByOptions,
 } from '@/features/pets/types';
+import { useIsClient } from '@/hooks/useIsClient';
 import clsx from 'clsx';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
@@ -29,6 +30,7 @@ type FilterValues = {
 
 export const FilterSection = ({ onFiltersChange }: Props) => {
   const token = Cookies.get('token');
+  const isClient = useIsClient();
   const [filterValues, setFilterValues] = useState<FilterValues>({
     species: [],
     ages: [],
@@ -134,8 +136,9 @@ export const FilterSection = ({ onFiltersChange }: Props) => {
             'col-desktop-7-9 col-tablet-1-6 col-1-2',
             styles.filters__recommendations,
           )}
+          suppressHydrationWarning
         >
-          {token && (
+          {token && isClient && (
             <Checkbox
               content="Показати мої рекомендації за анкетою"
               option="showRecommendations"
@@ -143,7 +146,7 @@ export const FilterSection = ({ onFiltersChange }: Props) => {
               toggleOption={() => toggleShowRecommendations()}
             />
           )}
-          <div className={styles.placeholder} />
+          <div className={styles.placeholder} suppressHydrationWarning />
         </div>
         <div
           className={clsx(

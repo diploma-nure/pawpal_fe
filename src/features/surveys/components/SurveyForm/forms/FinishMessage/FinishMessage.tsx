@@ -1,6 +1,7 @@
 'use client';
 
 import { Button, Icon } from '@/components/ui';
+import { ProfileTab } from '@/features/profile/constants/tabs';
 import { completeSurvey } from '@/features/surveys/api/completeSurvey';
 import { useSurveyData } from '@/features/surveys/hooks/useFormData';
 import { Survey } from '@/features/surveys/types';
@@ -25,7 +26,7 @@ export const FinishMessage = () => {
       });
 
       if (res.message === 'Success') {
-        push('/pets');
+        push(`/profile/${ProfileTab.Surveys}`);
       }
     } catch (e) {
       console.error(e);
