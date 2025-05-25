@@ -9,6 +9,7 @@ import {
   SortByOptions,
 } from '@/features/pets/types';
 import clsx from 'clsx';
+import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 
@@ -27,6 +28,7 @@ type FilterValues = {
 };
 
 export const FilterSection = ({ onFiltersChange }: Props) => {
+  const token = Cookies.get('token');
   const [filterValues, setFilterValues] = useState<FilterValues>({
     species: [],
     ages: [],
@@ -63,7 +65,12 @@ export const FilterSection = ({ onFiltersChange }: Props) => {
 
   const toggleShowRecommendations = () => {
     setFilterValues((prev) => ({
-      ...prev,
+      species: [],
+      ages: [],
+      genders: [],
+      sizes: [],
+      specialNeeds: null,
+      sortBy: null,
       showRecommendations: !prev.showRecommendations,
     }));
   };
@@ -128,12 +135,14 @@ export const FilterSection = ({ onFiltersChange }: Props) => {
             styles.filters__recommendations,
           )}
         >
-          <Checkbox
-            content="Показати мої рекомендації за анкетою"
-            option="showRecommendations"
-            checked={filterValues.showRecommendations}
-            toggleOption={() => toggleShowRecommendations()}
-          />
+          {token && (
+            <Checkbox
+              content="Показати мої рекомендації за анкетою"
+              option="showRecommendations"
+              checked={filterValues.showRecommendations}
+              toggleOption={() => toggleShowRecommendations()}
+            />
+          )}
           <div className={styles.placeholder} />
         </div>
         <div

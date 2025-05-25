@@ -58,6 +58,28 @@ export default function PetsPage() {
     setFilters(newFilters);
   };
 
+  const renderNoPetsMessage = () => {
+    if (filters.showRecommendations) {
+      return (
+        <p className="heading3">
+          Наразі немає рекомендованих тваринок для усиновлення.
+          <br />
+          <br />
+          Спробуйте переглянути список усіх тваринок.
+        </p>
+      );
+    }
+    return (
+      <p className="heading3">
+        Жодна тваринка не підходить під ваші фільтри для пошуку.
+        <br />
+        <br />
+        Спробуйте змінити фільтри або переглянути список рекомендованих
+        тваринок.
+      </p>
+    );
+  };
+
   return (
     <Suspense>
       <section className="section">
@@ -66,8 +88,8 @@ export default function PetsPage() {
 
           <FilterSection onFiltersChange={handleFiltersChange} />
 
-          {!error && <PetsGrid pets={items} />}
-
+          {!error && items && <PetsGrid pets={items} />}
+          {items?.length === 0 && !error && renderNoPetsMessage()}
           {error && <ErrorText text={error as unknown as string} />}
 
           {totalPages > 1 && (
