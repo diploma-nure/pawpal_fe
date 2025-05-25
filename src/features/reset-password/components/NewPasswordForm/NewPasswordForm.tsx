@@ -1,5 +1,6 @@
 'use client';
 import { Button, Icon, Input } from '@/components/ui';
+import { ErrorBanner } from '@/components/ui/ErrorBanner';
 import { useDisclosure } from '@/hooks/useDisclosure';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -58,6 +59,7 @@ export const NewPasswordForm: FC = () => {
         <Icon name="logo" width={92} height={78} />
         <h3 className="heading3">Відновлення паролю</h3>
 
+        <ErrorBanner errors={errors} />
         <div className={styles.inputWrapper}>
           <Input
             name="password"
