@@ -13,9 +13,11 @@ type Props = {
   url: string;
   roomName: string;
   token: string;
+  isMicOn: boolean;
+  isCameraOn: boolean;
 };
 
-export const Room: FC<Props> = ({ url, token }) => {
+export const Room: FC<Props> = ({ url, token, isCameraOn, isMicOn }) => {
   const { back } = useRouter();
   const searchParams = useSearchParams();
   const user = useGetUser();
@@ -83,8 +85,8 @@ export const Room: FC<Props> = ({ url, token }) => {
       serverUrl={url}
       token={token}
       connect={true}
-      video={false}
-      audio={true}
+      video={isCameraOn}
+      audio={isMicOn}
       className={styles.room}
       onDisconnected={handleDisconnect}
     >

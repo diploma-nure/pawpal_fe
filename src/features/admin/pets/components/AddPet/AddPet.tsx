@@ -18,7 +18,7 @@ export const AddPet: FC = () => {
         Додати тваринку
       </Button>
 
-      <AddPetModal isOpen={isOpen} onClose={onClose} />
+      <AddPetModal key={isOpen.toString()} isOpen={isOpen} onClose={onClose} />
     </>
   );
 };

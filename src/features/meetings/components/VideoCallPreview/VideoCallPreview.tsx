@@ -6,11 +6,19 @@ import styles from './styles.module.scss';
 
 interface VideoPreviewProps {
   className?: string;
+  isCameraOn: boolean;
+  isMicOn: boolean;
+  setIsCameraOn: (value: boolean) => void;
+  setIsMicOn: (value: boolean) => void;
 }
 
-export const VideoPreview: React.FC<VideoPreviewProps> = ({ className }) => {
-  const [isCameraOn, setIsCameraOn] = useState<boolean>(false);
-  const [isMicOn, setIsMicOn] = useState<boolean>(false);
+export const VideoPreview: React.FC<VideoPreviewProps> = ({
+  className,
+  isCameraOn,
+  isMicOn,
+  setIsCameraOn,
+  setIsMicOn,
+}) => {
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [error, setError] = useState<string>('');
   const videoRef = useRef<HTMLVideoElement>(null);

@@ -32,7 +32,9 @@ export const PetTile: FC<Props> = ({ pet }) => {
         />
 
         <div className={styles.info}>
-          <h3 className={styles.name}>{pet.name}</h3>
+          <Link href={`/pets/${pet.id}`} className={styles.name}>
+            {pet.name}
+          </Link>
           <p className={styles.description}>{pet.description}</p>
         </div>
       </div>

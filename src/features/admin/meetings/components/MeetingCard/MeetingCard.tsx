@@ -5,6 +5,7 @@ import { useChangeApplicationStatus } from '@/features/admin/applications/api/ch
 import { AdminJoinButton } from '@/features/admin/meetings/components/AdminJoinButton/AdminJoinButton';
 import { MeetingStatus } from '@/features/admin/meetings/components/MeetingStatus';
 import { Meeting } from '@/features/admin/meetings/types';
+import { placeholderImages } from '@/features/pets/constants/placeholderImages';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import Image from 'next/image';
@@ -44,15 +45,13 @@ export const MeetingCard: FC<Props> = ({ meeting }) => {
   return (
     <div className={clsx(styles.card)}>
       <div className={styles.content}>
-        {meeting.pet.pictureUrl && (
-          <Image
-            src={meeting.pet.pictureUrl}
-            alt={`Pet ${meeting.pet.name}`}
-            className={styles.image}
-            width={72}
-            height={72}
-          />
-        )}
+        <Image
+          src={meeting.pet.pictureUrl ?? placeholderImages['2']}
+          alt={`Pet ${meeting.pet.name}`}
+          className={styles.image}
+          width={72}
+          height={72}
+        />
 
         <div className={styles.info}>
           <p className={styles.name}>{meeting.pet.name}</p>

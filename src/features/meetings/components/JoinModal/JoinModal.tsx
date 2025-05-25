@@ -3,7 +3,7 @@ import { joinMeeting } from '@/features/meetings/api/joinMeeting';
 import { VideoPreview } from '@/features/meetings/components/VideoCallPreview/VideoCallPreview';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { toast } from 'react-toastify';
 import styles from './styles.module.scss';
 
@@ -23,6 +23,8 @@ export const JoinModal: FC<Props> = ({
   onSuccess,
 }) => {
   const { push } = useRouter();
+  const [isCameraOn, setIsCameraOn] = useState<boolean>(false);
+  const [isMicOn, setIsMicOn] = useState<boolean>(false);
 
   const handleJoin = async () => {
     try {
@@ -38,10 +40,15 @@ export const JoinModal: FC<Props> = ({
       Cookies.set('roomInfo', JSON.stringify(data.data));
 
       const params = onSuccess?.();
+
       if (params) {
-        push(`/meeting/${data.data.roomName}?${params}`);
+        push(
+          `/meeting/${data.data.roomName}?${params}&isCameraOn=${isCameraOn}&isMicOn=${isMicOn}`,
+        );
       } else {
-        push(`/meeting/${data.data.roomName}`);
+        push(
+          `/meeting/${data.data.roomName}?isCameraOn=${isCameraOn}&isMicOn=${isMicOn}`,
+        );
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -55,7 +62,12 @@ export const JoinModal: FC<Props> = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose} className={styles.joinModal}>
       <h3 className="heading3">Готові приєднатись?</h3>
-      <VideoPreview />
+      <VideoPreview
+        isCameraOn={isCameraOn}
+        isMicOn={isMicOn}
+        setIsCameraOn={setIsCameraOn}
+        setIsMicOn={setIsMicOn}
+      />
 
       <Button onClick={handleJoin}>Приєднатись</Button>
     </Modal>

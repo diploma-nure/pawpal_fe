@@ -3,6 +3,7 @@ import { JoinButton } from '@/features/profile/components/JoinButton/JoinButton'
 import { SelectDateModal } from '@/features/profile/components/SelectDateModal';
 import { SuccessModal } from '@/features/profile/components/SelectDateModal/SuccessModal';
 import { useDisclosure } from '@/hooks/useDisclosure';
+import clsx from 'clsx';
 import { FC, useState } from 'react';
 import styles from './styles.module.scss';
 
@@ -40,7 +41,6 @@ export const ApplicationControl: FC<Props> = ({ status, applicationId }) => {
 
   const renderButton = () => {
     switch (status) {
-      case 0:
       case 3:
       case 4:
       case 5:
@@ -55,13 +55,17 @@ export const ApplicationControl: FC<Props> = ({ status, applicationId }) => {
             />
           </Button>
         );
+      case 0:
       case 1:
         return (
           <>
             <Button
               variant="link"
-              className={styles.detailsLink}
+              className={clsx(styles.detailsLink, {
+                [styles.connectToMeeting__disabled]: status === 0,
+              })}
               onClick={onOpen}
+              disabled={status === 0}
             >
               Обрати дату й час
               <Icon

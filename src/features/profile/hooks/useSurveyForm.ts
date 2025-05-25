@@ -80,7 +80,7 @@ export const useSurveyForm = (onOpen: () => void) => {
         hasSpecialNeeds: surveyData.readyForSpecialNeedsPet ? 'true' : 'false',
         characteristics: surveyData.desiredFeaturesIds,
 
-        housingType: surveyData.placeOfResidence.toString() as '1' | '0',
+        housingType: surveyData.placeOfResidence.toString() as '1' | '2',
         hasYard: surveyData.hasSafeWalkingArea ? 'true' : 'false',
         allowPets: surveyData.petsAllowedAtResidence.toString() as
           | '0'

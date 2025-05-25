@@ -32,7 +32,7 @@ export const getMeetings = async ({
     {
       params: {
         ['Pagination.Page']: page,
-        ['Pagination.PageSize']: 9,
+        ['Pagination.PageSize']: 5,
       },
     },
   );

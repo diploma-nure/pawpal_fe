@@ -36,7 +36,6 @@ export function DateForm({
     const now = new Date();
     return new Date(now.getFullYear(), now.getMonth(), 1);
   });
-
   const scheduleMutation = useScheduleMeeting();
 
   const getMonthRange = (date: Date) => {

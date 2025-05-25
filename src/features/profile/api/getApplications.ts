@@ -23,7 +23,7 @@ export const getApplications = async ({
 }: GetApplicationsPayload): Promise<GetApplicationsResponse> => {
   const params = {
     'Pagination.Page': page,
-    'Pagination.PageSize': 9,
+    'Pagination.PageSize': 5,
   };
 
   if (status !== null && status !== undefined) {

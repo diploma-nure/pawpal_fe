@@ -2,6 +2,7 @@
 
 import { Modal } from '@/components/ui';
 import { DateForm } from '@/features/profile/components/DateForm';
+import { useHighlightCurrentDate } from '@/features/profile/hooks/useHighlightCurrentDate';
 import { FC } from 'react';
 import styles from './styles.module.scss';
 
@@ -26,6 +27,7 @@ export const SelectDateModal: FC<Props> = ({
   handleChangeDate,
   onSuccess,
 }) => {
+  useHighlightCurrentDate(isOpen);
   return (
     <Modal
       className={styles.modal}
