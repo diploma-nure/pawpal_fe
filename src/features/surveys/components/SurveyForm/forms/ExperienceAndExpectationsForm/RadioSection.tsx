@@ -31,9 +31,7 @@ export const RadioSection = ({
           <RadioGroup
             name={name}
             options={options}
-            defaultValue={
-              field.value !== undefined ? String(field.value) : undefined
-            }
+            defaultValue={field.value}
             onChange={(value) => field.onChange(value)}
           />
         )}

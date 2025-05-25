@@ -1,20 +1,16 @@
 'use client';
 
 import { Button } from '@/components/ui';
+import { ErrorBanner } from '@/components/ui/ErrorBanner';
 import { PetFeaturesSelect } from '@/features/pets/components';
-import {
-  PetAge,
-  PetGender,
-  PetSize,
-  PetSpecies,
-  PetsSpecialNeeds,
-} from '@/features/pets/types';
+import { PetAge, PetGender, PetSize, PetSpecies } from '@/features/pets/types';
 import { CheckboxSection } from '@/features/surveys/components/SurveyForm/forms/AboutPetForm/CheckBoxSection';
 import {
   aboutPetFormSchema,
   AboutPetFormSchemaType,
 } from '@/features/surveys/components/SurveyForm/forms/AboutPetForm/schema';
-import { useCheckboxArray } from '@/features/surveys/hooks/useCheckboxArray';
+import { RadioSection } from '@/features/surveys/components/SurveyForm/forms/ExperienceAndExpectationsForm/RadioSection';
+import { hasSpecialNeedsOptions } from '@/features/surveys/constants';
 import { useFormData } from '@/features/surveys/hooks/useFormData';
 import { useForwardBack } from '@/features/surveys/hooks/useForwardBack';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -25,51 +21,50 @@ export const AboutPetForm = () => {
   const { saveData } = useFormData(2);
   const { forward, back } = useForwardBack();
 
-  const petType = useCheckboxArray();
-  const gender = useCheckboxArray();
-  const size = useCheckboxArray();
-  const age = useCheckboxArray();
-  const specialNeeds = useCheckboxArray([], true);
-
   const {
     handleSubmit,
     control,
     formState: { errors, isSubmitting },
+    watch,
   } = useForm<AboutPetFormSchemaType>({
     resolver: zodResolver(aboutPetFormSchema),
     defaultValues: {
-      petType: undefined,
-      gender: undefined,
-      size: undefined,
-      age: undefined,
+      petType: [],
+      gender: [],
+      size: [],
+      age: [],
       hasSpecialNeeds: undefined,
-      characteristics: undefined,
+      characteristics: [],
     },
   });
 
   const handleFormSubmit = handleSubmit((data) => {
     const submissionData = {
-      preferredSpecies: petType.values,
-      preferredSizes: size.values,
-      preferredAges: age.values,
-      preferredGenders: gender.values,
+      preferredSpecies: data.petType,
+      preferredSizes: data.size,
+      preferredAges: data.age,
+      preferredGenders: data.gender,
       desiredFeaturesIds: data.characteristics ?? [],
-      readyForSpecialNeedsPet: specialNeeds.values.includes(1),
+      readyForSpecialNeedsPet: data.hasSpecialNeeds === 'true',
     };
 
     saveData(submissionData);
     forward();
   });
+  const petType = watch('petType');
+  const gender = watch('gender');
+  const size = watch('size');
+  const age = watch('age');
 
   return (
     <form onSubmit={handleFormSubmit} className={styles.form}>
+      <ErrorBanner errors={errors} />
       <CheckboxSection
         title="Бажана тваринка"
         name="petType"
         control={control}
         options={PetSpecies}
-        values={petType.values}
-        onToggle={petType.toggle}
+        values={petType}
       />
 
       <CheckboxSection
@@ -77,8 +72,7 @@ export const AboutPetForm = () => {
         name="gender"
         control={control}
         options={PetGender}
-        values={gender.values}
-        onToggle={gender.toggle}
+        values={gender}
       />
 
       <CheckboxSection
@@ -86,8 +80,7 @@ export const AboutPetForm = () => {
         name="size"
         control={control}
         options={PetSize}
-        values={size.values}
-        onToggle={size.toggle}
+        values={size}
       />
 
       <CheckboxSection
@@ -95,26 +88,19 @@ export const AboutPetForm = () => {
         name="age"
         control={control}
         options={PetAge}
-        values={age.values}
-        onToggle={age.toggle}
+        values={age}
       />
 
-      <CheckboxSection
-        title="З особливостями?"
-        name="hasSpecialNeeds"
+      <RadioSection
+        title={hasSpecialNeedsOptions.title}
+        name={hasSpecialNeedsOptions.name}
         control={control}
-        options={PetsSpecialNeeds}
-        values={specialNeeds.values}
-        onToggle={specialNeeds.toggle}
-        transform={(value) => value === 1}
+        options={hasSpecialNeedsOptions.options}
       />
 
       <div className={styles.section__container}>
         <h3 className={styles.sectionTitle}>Характеристики</h3>
         <PetFeaturesSelect control={control} />
-        {errors.characteristics && (
-          <p className={styles.errorText}>{errors.characteristics.message}</p>
-        )}
       </div>
 
       <div className={styles.buttonsContainer}>

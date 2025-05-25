@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui';
+import { ErrorBanner } from '@/components/ui/ErrorBanner';
 import {
   experienceAndExpectationsFormSchema,
   ExperienceAndExpectationsFormSchemaType,
@@ -20,7 +21,7 @@ export const ExperienceAndExpectationsForm = () => {
   const {
     handleSubmit,
     control,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = useForm<ExperienceAndExpectationsFormSchemaType>({
     resolver: zodResolver(experienceAndExpectationsFormSchema),
     defaultValues: {
@@ -37,15 +38,13 @@ export const ExperienceAndExpectationsForm = () => {
       readyForSpecialNeedsPet: data.willingToAdoptSpecialNeeds,
     };
 
-    console.log('Form data:', data);
-    console.log('Survey data:', surveyData);
-
     saveData(surveyData);
     forward();
   });
 
   return (
     <form onSubmit={handleFormSubmit} className={styles.form}>
+      <ErrorBanner errors={errors} />
       {experienceSection.map((section) => (
         <RadioSection
           key={section.name}

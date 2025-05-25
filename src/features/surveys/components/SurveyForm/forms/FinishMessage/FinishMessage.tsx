@@ -6,16 +6,11 @@ import { completeSurvey } from '@/features/surveys/api/completeSurvey';
 import { useSurveyData } from '@/features/surveys/hooks/useFormData';
 import { Survey } from '@/features/surveys/types';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 import styles from './styles.module.scss';
 
 export const FinishMessage = () => {
   const { push } = useRouter();
   const surveyData = useSurveyData();
-
-  useEffect(() => {
-    console.log('Complete survey data:', surveyData);
-  }, [surveyData]);
 
   const handleCompleteSurvey = async () => {
     try {

@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 
 interface RadioOption {
@@ -22,8 +22,14 @@ export const RadioGroup: FC<RadioGroupProps> = ({
   onChange,
 }) => {
   const [selectedValue, setSelectedValue] = useState<string>(
-    defaultValue || '',
+    defaultValue ?? '',
   );
+
+  useEffect(() => {
+    if (defaultValue) {
+      setSelectedValue(defaultValue);
+    }
+  }, [defaultValue]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -35,21 +41,21 @@ export const RadioGroup: FC<RadioGroupProps> = ({
 
   return (
     <div className={styles['radio-button-container']}>
-      {options.map((option) => (
-        <label key={option.value} className={styles['radio-option']}>
-          <input
-            type="radio"
-            name={name}
-            value={option.value}
-            checked={
-              selectedValue === option.value || defaultValue === option.value
-            }
-            onChange={handleChange}
-          />
-          <p className={styles['radio-custom']} />
-          <p className={styles['radio-label']}>{option.label}</p>
-        </label>
-      ))}
+      {options.map((option) => {
+        return (
+          <label key={option.value} className={styles['radio-option']}>
+            <input
+              type="radio"
+              name={name}
+              value={option.value}
+              checked={selectedValue === option.value}
+              onChange={handleChange}
+            />
+            <p className={styles['radio-custom']} />
+            <p className={styles['radio-label']}>{option.label}</p>
+          </label>
+        );
+      })}
     </div>
   );
 };

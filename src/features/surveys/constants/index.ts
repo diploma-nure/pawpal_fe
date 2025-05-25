@@ -20,6 +20,12 @@ export const ACTIVITY_LEVEL_OPTIONS = [
   { value: '2', label: 'Активний' },
 ];
 
+export const hasSpecialNeedsOptions = {
+  title: 'З особливостями?',
+  name: 'hasSpecialNeeds',
+  options: YES_NO_OPTIONS,
+};
+
 export const lifeConditionSection = [
   {
     title: 'Де ви проживаєте?',

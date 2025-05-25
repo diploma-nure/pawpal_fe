@@ -72,7 +72,6 @@ export const AddPetModal: FC<Props> = ({ isOpen, onClose }) => {
   });
 
   const onSubmit = async (data: PetFormData) => {
-    console.log(data, files);
     const payload = {
       Name: data.name,
       Species: parseInt(data.species),

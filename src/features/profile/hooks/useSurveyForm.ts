@@ -1,22 +1,31 @@
+import {
+  SurveyFormSchema,
+  surveySchema,
+} from '@/features/profile/components/SurveyForm';
 import { useGetUser } from '@/features/profile/hooks/useGetUser';
 import { useCheckboxArray } from '@/features/surveys/hooks/useCheckboxArray';
 import { useCompleteSurvey } from '@/features/surveys/hooks/useCompleteSurvey';
 import { useGetSurvey } from '@/features/surveys/hooks/useGetSurvey';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-export const useSurveyForm = () => {
+export const useSurveyForm = (onOpen: () => void) => {
   const user = useGetUser();
   const { data } = useGetSurvey({
     userId: user?.id ? parseInt(user?.id) : 0,
   });
 
-  const { mutate } = useCompleteSurvey();
+  const { mutate } = useCompleteSurvey({
+    config: {
+      onSuccess: onOpen,
+    },
+  });
 
-  const petType = useCheckboxArray();
-  const gender = useCheckboxArray();
-  const size = useCheckboxArray();
-  const age = useCheckboxArray();
+  // const petType = useCheckboxArray();
+  // const gender = useCheckboxArray();
+  // const size = useCheckboxArray();
+  // const age = useCheckboxArray();
   const specialNeeds = useCheckboxArray([], true);
 
   const {
@@ -24,47 +33,38 @@ export const useSurveyForm = () => {
     control,
     reset,
     formState: { errors },
-  } = useForm<SurveyFormInputs>({
+    watch,
+  } = useForm<SurveyFormSchema>({
+    resolver: zodResolver(surveySchema),
     defaultValues: {
       petType: [],
       gender: [],
       size: [],
-      age: undefined,
-      hasSpecialNeeds: false,
+      age: [],
+      hasSpecialNeeds: 'false',
       characteristics: [],
       housingType: undefined,
-      hasYard: false,
-      allowPets: 0,
-      hasOtherPets: false,
-      hasChildren: false,
-      hadPetsBefore: false,
-      activityLevel: 0,
-      willingToAdoptSpecialNeeds: false,
-      understandsResponsibility: false,
+      hasYard: 'false',
+      allowPets: '0',
+      hasOtherPets: 'false',
+      hasChildren: 'false',
+      hadPetsBefore: 'false',
+      activityLevel: '0',
+      willingToAdoptSpecialNeeds: 'false',
+      understandsResponsibility: 'false',
       vacationPetCarePlan: '',
-      hasSufficientFinancialResources: false,
+      hasSufficientFinancialResources: 'false',
     },
   });
+
+  const petType = watch('petType');
+  const gender = watch('gender');
+  const size = watch('size');
+  const age = watch('age');
 
   useEffect(() => {
     if (data?.data) {
       const surveyData = data.data;
-
-      if (surveyData.preferredSpecies?.length) {
-        petType.setValues(surveyData.preferredSpecies);
-      }
-
-      if (surveyData.preferredGenders?.length) {
-        gender.setValues(surveyData.preferredGenders);
-      }
-
-      if (surveyData.preferredSizes?.length) {
-        size.setValues(surveyData.preferredSizes);
-      }
-
-      if (surveyData.preferredAges?.length) {
-        age.setValues(surveyData.preferredAges);
-      }
 
       if (surveyData.readyForSpecialNeedsPet) {
         specialNeeds.setValues([1]);
@@ -73,40 +73,37 @@ export const useSurveyForm = () => {
       }
 
       reset({
-        petType: surveyData.preferredSpecies?.length
-          ? surveyData.preferredSpecies
-          : undefined,
-        gender: surveyData.preferredGenders?.length
-          ? surveyData.preferredGenders
-          : undefined,
-        size:
-          surveyData.preferredSizes && surveyData.preferredSizes.length > 0
-            ? surveyData.preferredSizes
-            : undefined,
-        age: surveyData.preferredAges?.length
-          ? surveyData.preferredAges[0]
-          : undefined,
-        hasSpecialNeeds: Boolean(surveyData.readyForSpecialNeedsPet),
-        characteristics: surveyData.desiredFeaturesIds || undefined,
+        petType: surveyData.preferredSpecies,
+        gender: surveyData.preferredGenders,
+        size: surveyData.preferredSizes,
+        age: surveyData.preferredAges,
+        hasSpecialNeeds: surveyData.readyForSpecialNeedsPet ? 'true' : 'false',
+        characteristics: surveyData.desiredFeaturesIds,
 
-        housingType:
-          surveyData.placeOfResidence !== undefined
-            ? (String(surveyData.placeOfResidence) as '1' | '2')
-            : undefined,
-        hasYard: surveyData.hasSafeWalkingArea ?? false,
-        allowPets: surveyData.petsAllowedAtResidence ?? 0,
-        hasOtherPets: surveyData.hasOtherPets ?? false,
-        hasChildren: surveyData.hasSmallChildren ?? false,
+        housingType: surveyData.placeOfResidence.toString() as '1' | '0',
+        hasYard: surveyData.hasSafeWalkingArea ? 'true' : 'false',
+        allowPets: surveyData.petsAllowedAtResidence.toString() as
+          | '0'
+          | '1'
+          | '2',
+        hasOtherPets: surveyData.hasOtherPets ? 'true' : 'false',
+        hasChildren: surveyData.hasSmallChildren ? 'true' : 'false',
 
-        hadPetsBefore: surveyData.hasOwnnedPetsBefore ?? false,
-        activityLevel: surveyData.desiredActivityLevel ?? 0,
-        willingToAdoptSpecialNeeds: surveyData.readyForSpecialNeedsPet ?? false,
+        hadPetsBefore: surveyData.hasOwnnedPetsBefore ? 'true' : 'false',
+        activityLevel: surveyData.desiredActivityLevel.toString() as
+          | '0'
+          | '1'
+          | '2',
+        willingToAdoptSpecialNeeds: surveyData.readyForSpecialNeedsPet
+          ? 'true'
+          : 'false',
 
-        understandsResponsibility:
-          surveyData.understandsResponsibility ?? false,
+        understandsResponsibility: surveyData.understandsResponsibility
+          ? 'true'
+          : 'false',
         vacationPetCarePlan: surveyData.vacationPetCarePlan || '',
         hasSufficientFinancialResources:
-          surveyData.hasSufficientFinancialResources ?? false,
+          surveyData.hasSufficientFinancialResources ? 'true' : 'false',
       });
     }
   }, [data, reset]);
@@ -115,28 +112,28 @@ export const useSurveyForm = () => {
     try {
       mutate({
         survey: {
-          preferredSpecies: petType.values,
-          preferredSizes: size.values,
-          preferredAges: age.values,
-          preferredGenders: gender.values,
+          preferredSpecies: data.petType,
+          preferredSizes: data.size,
+          preferredAges: data.age,
+          preferredGenders: data.gender,
           desiredFeaturesIds: data.characteristics as number[],
 
-          hasOtherPets: data.hasOtherPets ?? false,
-          hasSafeWalkingArea: data.hasYard ?? false,
-          hasSmallChildren: data.hasChildren ?? false,
-          petsAllowedAtResidence: data.allowPets ?? 0,
-          placeOfResidence: data.housingType ? +data.housingType : 0,
+          hasOtherPets: data.hasOtherPets === 'true',
+          hasSafeWalkingArea: data.hasYard === 'true',
+          hasSmallChildren: data.hasChildren === 'true',
+          petsAllowedAtResidence: Number(data.allowPets),
+          placeOfResidence: Number(data.housingType),
 
-          hasOwnnedPetsBefore: data.hadPetsBefore ?? false,
-          desiredActivityLevel: data.activityLevel ?? 0,
+          hasOwnnedPetsBefore: data.hadPetsBefore === 'true',
+          desiredActivityLevel: Number(data.activityLevel),
           readyForSpecialNeedsPet:
-            (data.willingToAdoptSpecialNeeds ?? false) &&
+            data.willingToAdoptSpecialNeeds === 'true' &&
             specialNeeds.values.includes(1),
 
-          understandsResponsibility: data.understandsResponsibility ?? false,
+          understandsResponsibility: data.understandsResponsibility === 'true',
           vacationPetCarePlan: data.vacationPetCarePlan || '',
           hasSufficientFinancialResources:
-            data.hasSufficientFinancialResources ?? false,
+            data.hasSufficientFinancialResources === 'true',
         },
       });
     } catch (e) {
@@ -155,25 +152,4 @@ export const useSurveyForm = () => {
     onSubmit,
     errors,
   };
-};
-
-// Type for form inputs
-export type SurveyFormInputs = {
-  petType?: number[];
-  gender?: number[];
-  size?: number[];
-  age?: number;
-  hasSpecialNeeds?: boolean;
-  characteristics?: number[];
-  housingType?: '1' | '2';
-  hasYard?: boolean;
-  allowPets?: number; // changed to number to match petsAllowedAtResidence
-  hasOtherPets?: boolean;
-  hasChildren?: boolean;
-  hadPetsBefore?: boolean;
-  activityLevel?: number;
-  willingToAdoptSpecialNeeds?: boolean;
-  understandsResponsibility?: boolean;
-  vacationPetCarePlan?: string;
-  hasSufficientFinancialResources?: boolean;
 };

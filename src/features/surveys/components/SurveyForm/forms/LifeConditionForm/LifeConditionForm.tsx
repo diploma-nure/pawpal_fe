@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui';
+import { ErrorBanner } from '@/components/ui/ErrorBanner';
 import {
   lifeConditionFormSchema,
   LifeConditionFormSchemaType,
@@ -20,7 +21,7 @@ export const LifeConditionForm = () => {
   const {
     handleSubmit,
     control,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = useForm<LifeConditionFormSchemaType>({
     resolver: zodResolver(lifeConditionFormSchema),
     defaultValues: {
@@ -35,14 +36,11 @@ export const LifeConditionForm = () => {
   const handleFormSubmit = handleSubmit((data) => {
     const surveyData = {
       placeOfResidence: Number(data.housingType),
-      hasSafeWalkingArea: Boolean(data.hasYard),
+      hasSafeWalkingArea: data.hasYard === 'true',
       petsAllowedAtResidence: Number(data.allowPets),
-      hasOtherPets: Boolean(data.hasOtherPets),
-      hasSmallChildren: Boolean(data.hasChildren),
+      hasOtherPets: data.hasOtherPets === 'true',
+      hasSmallChildren: data.hasChildren === 'true',
     };
-
-    console.log('Form data:', data);
-    console.log('Survey data:', surveyData);
 
     saveData(surveyData);
     forward();
@@ -50,7 +48,7 @@ export const LifeConditionForm = () => {
 
   return (
     <form onSubmit={handleFormSubmit} className={styles.form}>
-      {/* Dynamically generate form sections */}
+      <ErrorBanner errors={errors} />
       {lifeConditionSection.map((section) => (
         <RadioSection
           key={section.name}
@@ -61,7 +59,6 @@ export const LifeConditionForm = () => {
         />
       ))}
 
-      {/* Form buttons */}
       <div className={styles.buttonsContainer}>
         <Button
           onClick={back}

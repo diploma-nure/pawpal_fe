@@ -1,6 +1,7 @@
 'use client';
 
 import { Button, Input } from '@/components/ui';
+import { ErrorBanner } from '@/components/ui/ErrorBanner';
 import { useUpdateUsersInfo } from '@/features/profile/hooks';
 import {
   nameFormSchema,
@@ -37,24 +38,22 @@ export const NameForm = () => {
 
   return (
     <form onSubmit={handleFormSubmit}>
+      <ErrorBanner errors={errors} />
       <Input
         control={control}
         name="fullName"
-        error={errors.fullName}
         label="Прізвище ім'я"
         placeholder="Ковальчук Анна"
       />
       <Input
         control={control}
         name="phone"
-        error={errors.phone}
         label="Номер телефону"
         placeholder="+380997462594"
       />
       <Input
         control={control}
         name="location"
-        error={errors.location}
         label="Місце проживання"
         placeholder="Київ"
       />

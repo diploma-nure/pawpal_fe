@@ -1,41 +1,49 @@
-import { PetAge, PetGender, PetSize, PetSpecies } from '@/features/pets/types';
 import { z } from 'zod';
 
 export const surveySchema = z.object({
   petType: z
-    .number()
-    .refine((value) => PetSpecies.map((p) => p.value).includes(value)),
-  gender: z
-    .number()
-    .refine((value) => PetGender.map((p) => p.value).includes(value)),
-  size: z
-    .number()
-    .refine((value) => PetSize.map((p) => p.value).includes(value)),
-  age: z.number().refine((value) => PetAge.map((p) => p.value).includes(value)),
-  hasSpecialNeeds: z.boolean().optional(),
-  characteristics: z.number().or(z.array(z.number())).optional(),
+    .array(z.number())
+    .min(1, { message: 'Виберіть хоча б один тип тварини' }),
+  gender: z.array(z.number()).min(1, { message: 'Виберіть хоча б одну стать' }),
+  size: z.array(z.number()).min(1, { message: 'Виберіть хоча б один розмір' }),
+  age: z.array(z.number()).min(1, { message: 'Виберіть хоча б один вік' }),
+  characteristics: z
+    .array(z.number())
+    .min(1, { message: 'Виберіть хоча б одну характеристику' }),
+  housingType: z.enum(['1', '2'], { message: 'Оберіть тип житла' }),
+  allowPets: z.enum(['0', '1', '2'], {
+    message: 'Оберіть дозвіл на утримання тварин',
+  }),
 
-  housingType: z.enum(['1', '2']),
-  hasYard: z.enum(['true', 'false']).transform((val) => val === 'true'),
-  allowPets: z.enum(['0', '1', '2']).transform((val) => Number(val)),
-  hasOtherPets: z.enum(['true', 'false']).transform((val) => val === 'true'),
-  hasChildren: z.enum(['true', 'false']).transform((val) => val === 'true'),
+  hasSpecialNeeds: z.enum(['true', 'false'], {
+    message: 'Оберіть варіант для особливих потреб',
+  }),
+  hasYard: z.enum(['true', 'false'], { message: 'Оберіть наявність двору' }),
+  hasOtherPets: z.enum(['true', 'false'], {
+    message: 'Оберіть наявність інших тварин',
+  }),
+  hasChildren: z.enum(['true', 'false'], {
+    message: 'Оберіть наявність дітей',
+  }),
+  hadPetsBefore: z.enum(['true', 'false'], {
+    message: 'Оберіть досвід утримання тварин',
+  }),
+  willingToAdoptSpecialNeeds: z.enum(['true', 'false'], {
+    message: 'Оберіть готовність до прийняття тварин з особливими потребами',
+  }),
+  hasSufficientFinancialResources: z.enum(['true', 'false'], {
+    message: 'Підтвердьте наявність достатніх фінансових ресурсів',
+  }),
 
-  hadPetsBefore: z.enum(['true', 'false']).transform((val) => val === 'true'),
-  activityLevel: z.enum(['0', '1', '2']).transform((val) => Number(val)),
-  willingToAdoptSpecialNeeds: z
-    .enum(['true', 'false'])
-    .transform((val) => val === 'true'),
-
-  understandsResponsibility: z
-    .enum(['true', 'false'])
-    .transform((val) => val === 'true'),
+  understandsResponsibility: z.enum(['true', 'false'], {
+    message: 'Підтвердьте розуміння відповідальності',
+  }),
+  activityLevel: z.enum(['0', '1', '2'], {
+    message: 'Оберіть рівень активності',
+  }),
   vacationPetCarePlan: z
     .string()
-    .min(1, { message: 'Введіть план догляду за тваринкою' }),
-  hasSufficientFinancialResources: z
-    .enum(['true', 'false'])
-    .transform((val) => val === 'true'),
+    .min(1, { message: 'Введіть план догляду за тваринкою під час відпустки' }),
 });
 
 export type SurveyFormSchema = z.infer<typeof surveySchema>;

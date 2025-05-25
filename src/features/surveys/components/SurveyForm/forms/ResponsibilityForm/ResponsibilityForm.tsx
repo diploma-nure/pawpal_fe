@@ -1,6 +1,7 @@
 'use client';
 
 import { Button, Input } from '@/components/ui';
+import { ErrorBanner } from '@/components/ui/ErrorBanner';
 import {
   responsibilityFormSchema,
   ResponsibilityFormSchemaType,
@@ -37,15 +38,13 @@ export const ResponsibilityForm = () => {
       hasSufficientFinancialResources: data.hasSufficientFinancialResources,
     };
 
-    console.log('Form data:', data);
-    console.log('Survey data:', surveyData);
-
     saveData(surveyData);
     forward();
   });
 
   return (
     <form onSubmit={handleFormSubmit} className={styles.form}>
+      <ErrorBanner errors={errors} />
       <RadioSection
         title={responsibilitySection[0].title}
         name={responsibilitySection[0].name}
@@ -61,7 +60,6 @@ export const ResponsibilityForm = () => {
         <Input
           control={control}
           name="vacationPetCarePlan"
-          error={errors.vacationPetCarePlan}
           placeholder="Я планую..."
         />
       </div>

@@ -10,7 +10,6 @@ interface CheckboxSectionProps {
   control: Control<any>;
   options: Array<{ title: string; value: number }>;
   values: number[];
-  onToggle: (value: number) => number;
   transform?: (value: number) => any;
 }
 
@@ -20,7 +19,6 @@ export const CheckboxSection = ({
   control,
   options,
   values,
-  onToggle,
   transform = (value) => value,
 }: CheckboxSectionProps) => {
   return (
@@ -37,10 +35,13 @@ export const CheckboxSection = ({
                   key={option.value}
                   option={option.value.toString()}
                   content={option.title}
-                  checked={values.includes(option.value)}
+                  checked={values?.includes(option.value)}
                   toggleOption={() => {
-                    const val = onToggle(option.value);
-                    field.onChange(transform(val));
+                    field.onChange(
+                      values?.includes(option.value)
+                        ? values.filter((v: number) => v !== option.value)
+                        : [...values, transform(option.value)],
+                    );
                   }}
                 />
               ))}
