@@ -4,10 +4,10 @@ import { QueryConfig } from '@/lib/reactQuery';
 import { queryOptions, useQuery } from '@tanstack/react-query';
 
 type FilteredPetsPayload = {
-  Species?: string;
-  Sizes?: string;
-  Ages?: string;
-  Genders?: string;
+  Species?: number[];
+  Sizes?: number[];
+  Ages?: number[];
+  Genders?: number[];
   Page?: string;
   SortBy?: string;
 };
@@ -31,17 +31,30 @@ export const getFilteredPets = async ({
   Page,
   SortBy,
 }: FilteredPetsPayload): Promise<FilteredPetsResponse> => {
+  const params = new URLSearchParams();
+
+  // Add array parameters multiple times for each value
+  if (Species && Species.length > 0) {
+    Species.forEach((species) => params.append('Species', species.toString()));
+  }
+  if (Sizes && Sizes.length > 0) {
+    Sizes.forEach((size) => params.append('Sizes', size.toString()));
+  }
+  if (Ages && Ages.length > 0) {
+    Ages.forEach((age) => params.append('Ages', age.toString()));
+  }
+  if (Genders && Genders.length > 0) {
+    Genders.forEach((gender) => params.append('Genders', gender.toString()));
+  }
+
+  // Add other parameters
+  params.append('Pagination.Page', Page ?? '1');
+  params.append('Pagination.PageSize', '9');
+  params.append('Sorting.Type', SortBy ?? '2');
+  params.append('Sorting.Direction', '0');
+
   const response = await client.get<FilteredPetsResponse>('/pets/filtered', {
-    params: {
-      Species,
-      Sizes,
-      Ages,
-      Genders,
-      'Pagination.Page': Page ?? 1,
-      'Pagination.PageSize': 9,
-      'Sorting.Type': SortBy ?? 2,
-      'Sorting.Direction': 0,
-    },
+    params,
   });
 
   return response.data;

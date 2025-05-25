@@ -4,10 +4,10 @@ import { QueryConfig } from '@/lib/reactQuery';
 import { useQuery } from '@tanstack/react-query';
 
 type PetsPayload = {
-  Species?: string;
-  Sizes?: string;
-  Ages?: string;
-  Genders?: string;
+  Species?: number[];
+  Sizes?: number[];
+  Ages?: number[];
+  Genders?: number[];
   Page?: string;
   SortBy?: string;
 

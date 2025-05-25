@@ -9,34 +9,43 @@ import { HeadingSection } from '@/features/pets/components/HeadingSection';
 import { PetsGrid } from '@/features/pets/components/PetsGrid/PetsGrid';
 import Cookies from 'js-cookie';
 import { useSearchParams } from 'next/navigation';
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 import styles from './page.module.scss';
 
-export default function PetsPage({}) {
-  const searchParams = useSearchParams();
+type FilterValues = {
+  species: number[];
+  ages: number[];
+  genders: number[];
+  sizes: number[];
+  specialNeeds: number | null;
+  sortBy: number | null;
+  showRecommendations: boolean;
+};
 
-  const options = {
-    page: searchParams.get('page') ?? undefined,
-    ages: searchParams.get('ages') ?? undefined,
-    genders: searchParams.get('genders') ?? undefined,
-    species: searchParams.get('species') ?? undefined,
-    sizes: searchParams.get('sizes') ?? undefined,
-    sortBy: searchParams.get('sortBy') ?? undefined,
-    specialNeeds: searchParams.get('specialNeeds') ?? undefined,
-    showRecommendations: searchParams.get('showRecommendations') ?? undefined,
-    token: Cookies.get('token'),
-  };
+export default function PetsPage() {
+  const searchParams = useSearchParams();
+  const page = searchParams.get('page') ?? '1';
+
+  const [filters, setFilters] = useState<FilterValues>({
+    species: [],
+    ages: [],
+    genders: [],
+    sizes: [],
+    specialNeeds: null,
+    sortBy: null,
+    showRecommendations: false,
+  });
 
   const { data, error } = usePets({
     payload: {
-      Page: options.page,
-      Ages: options.ages,
-      Genders: options.genders,
-      Species: options.species,
-      Sizes: options.sizes,
-      SortBy: options.sortBy,
-      ShowRecommended: options.showRecommendations === 'true',
-      token: options.token,
+      Page: page,
+      Ages: filters.ages,
+      Genders: filters.genders,
+      Species: filters.species,
+      Sizes: filters.sizes,
+      SortBy: filters.sortBy?.toString(),
+      ShowRecommended: filters.showRecommendations,
+      token: Cookies.get('token'),
     },
   });
 
@@ -45,21 +54,17 @@ export default function PetsPage({}) {
 
   const totalPages = count ? Math.ceil(count / 10) : 0;
 
+  const handleFiltersChange = (newFilters: FilterValues) => {
+    setFilters(newFilters);
+  };
+
   return (
     <Suspense>
       <section className="section">
         <Container>
           <HeadingSection />
 
-          <FilterSection
-            species={options.species}
-            sizes={options.sizes}
-            ages={options.ages}
-            genders={options.genders}
-            specialNeeds={options.specialNeeds}
-            showRecommendations={options.showRecommendations}
-            sortBy={options.sortBy}
-          />
+          <FilterSection onFiltersChange={handleFiltersChange} />
 
           {!error && <PetsGrid pets={items} />}
 
@@ -69,7 +74,7 @@ export default function PetsPage({}) {
             <div className={styles.paginationWrapper}>
               <Pagination
                 pageCount={totalPages}
-                page={Number(options.page)}
+                page={Number(page)}
                 href="/pets"
               />
             </div>
