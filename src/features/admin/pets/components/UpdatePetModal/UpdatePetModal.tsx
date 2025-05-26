@@ -1,6 +1,7 @@
 'use client';
 
 import { Button, Icon, Input, Modal, Select } from '@/components/ui';
+import { PetFeaturesSelect } from '@/features/pets/components';
 import { useGetPet } from '@/features/pets/hooks/useGetPet';
 import { useUpdatePet } from '@/features/pets/hooks/useUpdatePet';
 import {
@@ -231,23 +232,7 @@ export const UpdatePetModal: FC<Props> = ({ isOpen, onClose, petId }) => {
           </div>
           <div className={styles.formField}>
             <label className={styles.label}>Характеристики</label>
-            <Controller
-              name="characteristics"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  placeholder="Ладнає з іншими тваринами"
-                  options={[
-                    { value: 1, title: 'Ладнає з іншими тваринами' },
-                    { value: 2, title: "Підходить для сім'ї з дітьми" },
-                    { value: 3, title: 'Потребує досвідченого власника' },
-                    { value: 4, title: 'Потребує особливого догляду' },
-                  ]}
-                  value={Number(field.value) || 0}
-                  onChange={(value) => field.onChange(value.toString())}
-                />
-              )}
-            />
+            <PetFeaturesSelect control={control} />
           </div>
 
           <div className={styles.formField}>

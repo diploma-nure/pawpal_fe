@@ -1,4 +1,5 @@
 import { Tag } from '@/components/ui';
+import { ImageCarousel } from '@/features/pets/components/ImageCarousel/ImageCarousel';
 import { LikeButton } from '@/features/pets/components/PetInfo/LikeButton';
 import { LikeButtonWrapper } from '@/features/pets/components/PetInfo/LikeButtonWrapper';
 import { MakeHappyButton } from '@/features/pets/components/PetInfo/MakeHappyButton';
@@ -11,7 +12,6 @@ import {
   PetsSpecialNeeds,
 } from '@/features/pets/types';
 import clsx from 'clsx';
-import Image from 'next/image';
 import { FC } from 'react';
 import styles from './styles.module.scss';
 
@@ -28,12 +28,13 @@ export const PetInfo: FC<Props> = async ({ pet }) => {
           styles.imageWrapper,
         )}
       >
-        <Image
-          className={styles.petImage}
-          src={pet.pictures?.[0]?.url ?? placeholderImages[pet.species]}
-          alt={`Фото тваринки ${pet.name}`}
-          width={300}
-          height={300}
+        <ImageCarousel
+          images={
+            pet.pictures?.map((pic) => pic.url) ?? [
+              placeholderImages[pet.species],
+            ]
+          }
+          altText={`Фото тваринки ${pet.name}`}
         />
       </div>
       <div className="col-desktop-7-12 col-tablet-4-6 col-1-2">

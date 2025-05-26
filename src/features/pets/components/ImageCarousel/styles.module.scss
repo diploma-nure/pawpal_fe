@@ -1,0 +1,44 @@
+@use 'utils' as *;
+
+.activeImageWrapper {
+  margin-bottom: 1rem;
+}
+
+.activeImage {
+  height: auto;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.thumbnailWrapper {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.thumbnail {
+  cursor: pointer;
+  border-radius: 4px;
+  overflow: hidden;
+  height: 86px;
+}
+
+.thumbnail img {
+  object-fit: cover;
+}
+
+.activeThumbnail {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    height: 4px;
+    left: 0;
+    right: 0;
+
+    background-color: $orange;
+  }
+}

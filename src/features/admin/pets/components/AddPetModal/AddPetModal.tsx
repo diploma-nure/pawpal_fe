@@ -36,11 +36,7 @@ interface PetFormData {
 
 export const AddPetModal: FC<Props> = ({ isOpen, onClose }) => {
   const [files, setFiles] = useState<File[]>([]);
-  const addPetMutation = useAddPet({
-    onSuccess: () => {
-      onClose();
-    },
-  });
+  const addPetMutation = useAddPet();
 
   const {
     handleSubmit,
@@ -83,7 +79,11 @@ export const AddPetModal: FC<Props> = ({ isOpen, onClose }) => {
       Description: data.description,
       Pictures: files,
     };
-    await addPetMutation.mutate(payload);
+    const res = await addPetMutation.mutateAsync(payload);
+
+    if (!res.errors) {
+      onClose();
+    }
   };
 
   const handleClose = () => {

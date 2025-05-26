@@ -2,12 +2,23 @@
 
 import { Button, Icon } from '@/components/ui';
 import { AddPetModal } from '@/features/admin/pets/components/AddPetModal';
+import { SuccessModal } from '@/features/admin/pets/components/SuccessModal/SuccessModal';
 import { useDisclosure } from '@/hooks/useDisclosure';
 import { colors } from '@/styles/colors';
 import { FC } from 'react';
 
 export const AddPet: FC = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const {
+    isOpen: isSuccessModalOpen,
+    onClose: onSuccessModalClose,
+    onOpen: onSuccessModalOpen,
+  } = useDisclosure();
+
+  const handleClose = () => {
+    onClose();
+    onSuccessModalOpen();
+  };
 
   return (
     <>
@@ -18,7 +29,12 @@ export const AddPet: FC = () => {
         Додати тваринку
       </Button>
 
-      <AddPetModal key={isOpen.toString()} isOpen={isOpen} onClose={onClose} />
+      <AddPetModal
+        key={isOpen.toString()}
+        isOpen={isOpen}
+        onClose={handleClose}
+      />
+      <SuccessModal isOpen={isSuccessModalOpen} onClose={onSuccessModalClose} />
     </>
   );
 };
