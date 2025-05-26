@@ -24,6 +24,7 @@ export const Navigation = () => {
 
   const handleLogout = () => {
     Cookies.remove('token');
+    Cookies.remove('isNewUser');
     localStorage.clear();
     signOut();
     push('/');
