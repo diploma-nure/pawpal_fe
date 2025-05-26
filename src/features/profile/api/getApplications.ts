@@ -14,30 +14,28 @@ type GetApplicationsResponse = {
 
 export type GetApplicationsPayload = {
   page: number;
-  status: number | null;
+  status: number[] | null;
 };
 
 export const getApplications = async ({
   page = 1,
   status = null,
 }: GetApplicationsPayload): Promise<GetApplicationsResponse> => {
-  const params = {
-    'Pagination.Page': page,
-    'Pagination.PageSize': 5,
-  };
+  const params = new URLSearchParams();
+
+  params.append('Pagination.Page', page.toString());
+  params.append('Pagination.PageSize', '5');
 
   if (status !== null && status !== undefined) {
-    Object.assign(params, {
-      Statuses: status,
+    status.forEach((s) => {
+      params.append(`Statuses`, s.toString());
     });
   }
 
   const response = await authClient.get<GetApplicationsResponse>(
     `/applications/filtered`,
     {
-      params: {
-        ...params,
-      },
+      params,
     },
   );
 

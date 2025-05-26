@@ -17,7 +17,7 @@ export const RecommendedPets = () => {
       <div className={styles.titleWrapper}>
         <h2 className="heading2">Інші хвостики</h2>
       </div>
-      <PetsGrid pets={data?.data.items} /> ;
+      <PetsGrid pets={data?.data.items} />
     </div>
   ) : null;
 };

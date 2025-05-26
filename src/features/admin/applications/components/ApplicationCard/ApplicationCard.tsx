@@ -20,7 +20,10 @@ export const ApplicationCard: FC<Props> = ({ application }) => {
     <div className={clsx(styles.card)}>
       <div className={styles.content}>
         <Image
-          src={application.pet.pictureUrl ?? placeholderImages['2']}
+          src={
+            application.pet.pictureUrl ??
+            placeholderImages[application.pet.species]
+          }
           alt={`Pet ${application.pet.name}`}
           className={styles.image}
           width={72}

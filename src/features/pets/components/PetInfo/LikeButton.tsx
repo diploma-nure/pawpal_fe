@@ -3,6 +3,7 @@
 import { Button, Icon } from '@/components/ui';
 import { useLikePet, useUnlikePet } from '@/features/pets/hooks';
 import { useGetUsersPetsLiked } from '@/features/profile/hooks';
+import { useIsClient } from '@/hooks/useIsClient';
 import { colors } from '@/styles/colors';
 import { FC } from 'react';
 
@@ -14,6 +15,7 @@ export const LikeButton: FC<LikeButtonProps> = ({ petId }) => {
   const { data: likedPetsData } = useGetUsersPetsLiked();
   const likeMutation = useLikePet();
   const unlikeMutation = useUnlikePet();
+  const isClient = useIsClient();
 
   const isLiked =
     likedPetsData?.data?.some((likedPet) => likedPet.id === petId) || false;
@@ -27,17 +29,19 @@ export const LikeButton: FC<LikeButtonProps> = ({ petId }) => {
   };
 
   return (
-    <Button
-      variant="link"
-      onClick={handleToggleLike}
-      disabled={likeMutation.isPending || unlikeMutation.isPending}
-      aria-label={isLiked ? 'Видалити з улюблених' : 'Додати до улюблених'}
-    >
-      <Icon
-        name={isLiked ? 'heart-filled' : 'heart'}
-        fill={isLiked ? colors.pink : 'transparent'}
-        stroke={isLiked ? colors.pink : undefined}
-      />
-    </Button>
+    isClient && (
+      <Button
+        variant="link"
+        onClick={handleToggleLike}
+        disabled={likeMutation.isPending || unlikeMutation.isPending}
+        aria-label={isLiked ? 'Видалити з улюблених' : 'Додати до улюблених'}
+      >
+        <Icon
+          name={isLiked ? 'heart-filled' : 'heart'}
+          fill={isLiked ? colors.pink : 'transparent'}
+          stroke={isLiked ? colors.pink : undefined}
+        />
+      </Button>
+    )
   );
 };

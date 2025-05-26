@@ -46,7 +46,7 @@ export const MeetingCard: FC<Props> = ({ meeting }) => {
     <div className={clsx(styles.card)}>
       <div className={styles.content}>
         <Image
-          src={meeting.pet.pictureUrl ?? placeholderImages['2']}
+          src={meeting.pet.pictureUrl ?? placeholderImages[meeting.pet.species]}
           alt={`Pet ${meeting.pet.name}`}
           className={styles.image}
           width={72}

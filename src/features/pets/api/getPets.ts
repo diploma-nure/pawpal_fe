@@ -8,6 +8,7 @@ type PetsPayload = {
   Sizes?: number[];
   Ages?: number[];
   Genders?: number[];
+  HasSpecialNeeds?: boolean;
   Page?: string;
   SortBy?: string;
 

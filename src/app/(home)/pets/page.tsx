@@ -43,6 +43,7 @@ export default function PetsPage() {
       Genders: filters.genders,
       Species: filters.species,
       Sizes: filters.sizes,
+      HasSpecialNeeds: filters.specialNeeds === 1,
       SortBy: filters.sortBy?.toString(),
       ShowRecommended: filters.showRecommendations,
       token: Cookies.get('token'),

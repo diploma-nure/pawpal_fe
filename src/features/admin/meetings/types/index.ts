@@ -11,6 +11,7 @@ export interface Meeting {
     id: number;
     name: string;
     pictureUrl: string;
+    species: number;
   };
   application: {
     id: number;

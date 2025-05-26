@@ -11,7 +11,7 @@ import styles from './styles.module.scss';
 export const ApplicationsModule: FC = () => {
   const params = useSearchParams();
   const page = params.get('page');
-  const [status, setStatus] = useState<number | null>(null);
+  const [status, setStatus] = useState<number[] | null>(null);
   const parsedPage = isNaN(parseInt(page as string))
     ? 1
     : parseInt(page as string);
@@ -36,9 +36,9 @@ export const ApplicationsModule: FC = () => {
           placeholder="Статус заявки"
           options={applicationStatuses}
           value={status}
-          onChange={(value: number | number[]) =>
-            setStatus(value as unknown as number | null)
-          }
+          onChange={(value) => setStatus(value as number[])}
+          multiselect
+          className={styles.statusSelect}
         />
       </div>
 

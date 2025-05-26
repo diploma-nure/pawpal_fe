@@ -31,6 +31,7 @@ export function PetsModule() {
       Genders: filters.genders,
       Species: filters.species,
       Sizes: filters.sizes,
+      HasSpecialNeeds: filters.specialNeeds === 1,
       SortBy: filters.sortBy?.toString(),
       Page: page ? page : '1',
     },

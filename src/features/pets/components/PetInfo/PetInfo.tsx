@@ -19,7 +19,7 @@ type Props = {
   pet: Pet;
 };
 
-export const PetInfo: FC<Props> = ({ pet }) => {
+export const PetInfo: FC<Props> = async ({ pet }) => {
   return (
     <div className="grid">
       <div
@@ -69,6 +69,23 @@ export const PetInfo: FC<Props> = ({ pet }) => {
             }
           </Tag>
         </div>
+
+        {pet.features.length > 0 && (
+          <div className={styles.features}>
+            <h4 className={clsx('heading4', styles.description__title)}>
+              Характеристики
+            </h4>
+
+            <ul>
+              {pet.features?.map((feature) => (
+                <li className={styles.feature} key={feature}>
+                  {feature}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
         <div className={styles.description}>
           <h4 className={clsx('heading4', styles.description__title)}>
             Про мене

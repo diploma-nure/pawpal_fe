@@ -61,7 +61,8 @@ export const ApplicationControl: FC<Props> = ({ status, applicationId }) => {
           <>
             <Button
               variant="link"
-              className={clsx(styles.detailsLink, {
+              className={clsx({
+                [styles.detailsLink]: status === 1,
                 [styles.connectToMeeting__disabled]: status === 0,
               })}
               onClick={onOpen}

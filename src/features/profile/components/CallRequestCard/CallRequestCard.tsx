@@ -4,6 +4,7 @@ import { ApplicationControl } from '@/features/profile/components/CallRequestCar
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import Image from 'next/image';
+import Link from 'next/link';
 import { FC } from 'react';
 import styles from './styles.module.scss';
 
@@ -12,6 +13,7 @@ type Props = {
     id: number;
     name: string;
     pictureUrl: string;
+    species: number;
   };
   status: number;
   createdAt: string;
@@ -28,7 +30,7 @@ export const CallRequestCard: FC<Props> = ({
     <div className={clsx(styles.card)}>
       <div className={styles.content}>
         <Image
-          src={pet.pictureUrl ?? placeholderImages['2']}
+          src={pet.pictureUrl ?? placeholderImages[pet.species]}
           alt={`Pet ${pet.name}`}
           className={styles.image}
           width={72}
@@ -36,7 +38,13 @@ export const CallRequestCard: FC<Props> = ({
         />
 
         <div className={styles.info}>
-          <h3 className={styles.name}>{pet.name}</h3>
+          <Link
+            href={`/pets/${pet.id}`}
+            target="_blank"
+            className={styles.name}
+          >
+            {pet.name}
+          </Link>
           <p className={styles.description}>
             {dayjs(createdAt).format('MM.DD.YYYY')}
           </p>

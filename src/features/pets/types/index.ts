@@ -62,6 +62,7 @@ export interface Pet {
   hasSpecialNeeds: boolean;
   description: string;
   pictures: PetPicture[];
+  features: string[];
 }
 
 export interface PaginatedPet {

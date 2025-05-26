@@ -8,6 +8,7 @@ type FilteredPetsPayload = {
   Sizes?: number[];
   Ages?: number[];
   Genders?: number[];
+  HasSpecialNeeds?: boolean;
   Page?: string;
   SortBy?: string;
 };
@@ -30,6 +31,7 @@ export const getFilteredPets = async ({
   Genders,
   Page,
   SortBy,
+  HasSpecialNeeds,
 }: FilteredPetsPayload): Promise<FilteredPetsResponse> => {
   const params = new URLSearchParams();
 
@@ -52,6 +54,7 @@ export const getFilteredPets = async ({
   params.append('Pagination.PageSize', '9');
   params.append('Sorting.Type', SortBy ?? '2');
   params.append('Sorting.Direction', '0');
+  params.append('HasSpecialNeeds', HasSpecialNeeds ? 'true' : 'false');
 
   const response = await client.get<FilteredPetsResponse>('/pets/filtered', {
     params,

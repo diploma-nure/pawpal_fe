@@ -10,5 +10,6 @@ export interface Application {
     id: number;
     name: string;
     pictureUrl: string;
+    species: number;
   };
 }
