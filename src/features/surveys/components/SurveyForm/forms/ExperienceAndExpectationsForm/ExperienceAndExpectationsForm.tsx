@@ -33,9 +33,9 @@ export const ExperienceAndExpectationsForm = () => {
 
   const handleFormSubmit = handleSubmit((data) => {
     const surveyData = {
-      hasOwnnedPetsBefore: data.hadPetsBefore,
-      desiredActivityLevel: data.activityLevel,
-      readyForSpecialNeedsPet: data.willingToAdoptSpecialNeeds,
+      hasOwnnedPetsBefore: data.hadPetsBefore === 'true',
+      desiredActivityLevel: parseInt(data.activityLevel),
+      readyForSpecialNeedsPet: data.willingToAdoptSpecialNeeds === 'true',
     };
 
     saveData(surveyData);

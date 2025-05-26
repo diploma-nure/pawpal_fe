@@ -7,6 +7,7 @@ import { useCheckboxArray } from '@/features/surveys/hooks/useCheckboxArray';
 import { useCompleteSurvey } from '@/features/surveys/hooks/useCompleteSurvey';
 import { useGetSurvey } from '@/features/surveys/hooks/useGetSurvey';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -15,24 +16,20 @@ export const useSurveyForm = (onOpen: () => void) => {
   const { data } = useGetSurvey({
     userId: user?.id ? parseInt(user?.id) : 0,
   });
-
+  const { push } = useRouter();
   const { mutate } = useCompleteSurvey({
     config: {
       onSuccess: onOpen,
     },
   });
 
-  // const petType = useCheckboxArray();
-  // const gender = useCheckboxArray();
-  // const size = useCheckboxArray();
-  // const age = useCheckboxArray();
   const specialNeeds = useCheckboxArray([], true);
 
   const {
     handleSubmit,
     control,
     reset,
-    formState: { errors },
+    formState: { errors, isDirty },
     watch,
   } = useForm<SurveyFormSchema>({
     resolver: zodResolver(surveySchema),
@@ -63,6 +60,12 @@ export const useSurveyForm = (onOpen: () => void) => {
   const age = watch('age');
 
   useEffect(() => {
+    if (
+      data?.errors?.includes(`Survey for user with id ${user?.id} not found`)
+    ) {
+      push('/survey');
+    }
+
     if (data?.data) {
       const surveyData = data.data;
 
@@ -151,5 +154,6 @@ export const useSurveyForm = (onOpen: () => void) => {
     control,
     onSubmit,
     errors,
+    isDirty,
   };
 };

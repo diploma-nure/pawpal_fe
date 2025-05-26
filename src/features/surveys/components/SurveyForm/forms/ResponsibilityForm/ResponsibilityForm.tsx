@@ -33,9 +33,10 @@ export const ResponsibilityForm = () => {
 
   const handleFormSubmit = handleSubmit((data) => {
     const surveyData = {
-      understandsResponsibility: data.understandsResponsibility,
+      understandsResponsibility: data.understandsResponsibility === 'true',
       vacationPetCarePlan: data.vacationPetCarePlan,
-      hasSufficientFinancialResources: data.hasSufficientFinancialResources,
+      hasSufficientFinancialResources:
+        data.hasSufficientFinancialResources === 'true',
     };
 
     saveData(surveyData);

@@ -20,7 +20,7 @@ import styles from './styles.module.scss';
 
 export const SurveyForm: FC = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
-  const { petType, gender, size, age, control, onSubmit, errors } =
+  const { petType, gender, size, age, control, onSubmit, errors, isDirty } =
     useSurveyForm(onOpen);
 
   return (
@@ -129,7 +129,7 @@ export const SurveyForm: FC = () => {
           />
         </div>
         <div className={styles.formActions}>
-          <Button>Зберегти анкету</Button>
+          <Button disabled={!isDirty}>Зберегти анкету</Button>
         </div>
       </form>
       <SuccessModal isOpen={isOpen} onClose={onClose} />
