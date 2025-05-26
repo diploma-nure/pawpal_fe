@@ -27,6 +27,7 @@ export const Menu: FC = () => {
   const user = useGetUser();
 
   const handleLogout = () => {
+    onClose();
     Cookies.remove('token');
     Cookies.remove('isNewUser');
     localStorage.clear();
@@ -116,6 +117,16 @@ export const Menu: FC = () => {
                 >
                   Мої заявки
                 </Link>
+                <Button
+                  variant="link"
+                  rightIcon={() => (
+                    <Icon name="logout" width={24} height={24} />
+                  )}
+                  onClick={handleLogout}
+                  className={styles.logOut}
+                >
+                  Вийти
+                </Button>
               </>
             )}
 
@@ -130,6 +141,15 @@ export const Menu: FC = () => {
                 <Link onClick={onClose} href="/admin/meetings">
                   Відеоконференції
                 </Link>
+                <Button
+                  variant="link"
+                  rightIcon={() => (
+                    <Icon name="logout" width={24} height={24} />
+                  )}
+                  onClick={handleLogout}
+                >
+                  Вийти
+                </Button>
               </>
             )}
 
@@ -137,17 +157,6 @@ export const Menu: FC = () => {
               <Link onClick={onClose} href="/admin">
                 Сторінка адміна
               </Link>
-            )}
-
-            {user && (
-              <Button
-                variant="link"
-                rightIcon={() => <Icon name="logout" width={24} height={24} />}
-                onClick={handleLogout}
-                className={styles.logOut}
-              >
-                Вийти
-              </Button>
             )}
           </div>
         </div>
