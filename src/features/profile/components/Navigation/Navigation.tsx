@@ -6,6 +6,7 @@ import { useGetUsersInfo } from '@/features/profile/api/getUsersInfo';
 import { NavLink } from '@/features/profile/components/NavLink';
 import { ProfileTab } from '@/features/profile/constants/tabs';
 import { useGetUser } from '@/features/profile/hooks';
+import { useIsClient } from '@/hooks/useIsClient';
 import Cookies from 'js-cookie';
 import { signOut } from 'next-auth/react';
 import Image from 'next/image';
@@ -15,6 +16,7 @@ import styles from './styles.module.scss';
 export const Navigation = () => {
   const user = useGetUser();
   const { push } = useRouter();
+  const isClient = useIsClient();
 
   const { data } = useGetUsersInfo({
     payload: {
@@ -54,6 +56,10 @@ export const Navigation = () => {
         <NavLink href={'/profile/' + ProfileTab.Surveys}>Анкетування</NavLink>
 
         <NavLink href={'/profile/' + ProfileTab.Requests}>Мої заявки</NavLink>
+
+        {user?.role === 'Admin' && isClient && (
+          <NavLink href="/admin">Сторінка адміна</NavLink>
+        )}
 
         <Button
           variant="link"

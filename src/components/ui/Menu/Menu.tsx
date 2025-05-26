@@ -4,11 +4,15 @@ import { ProfileButton } from '@/components/layout/Header/ProfileButton';
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon/Icon';
 import { ProfileTab } from '@/features/profile/constants/tabs';
+import { useGetUser } from '@/features/profile/hooks';
 import { useDisclosure } from '@/hooks/useDisclosure';
+import { useIsClient } from '@/hooks/useIsClient';
 import { colors } from '@/styles/colors';
 import clsx from 'clsx';
+import Cookies from 'js-cookie';
+import { signOut } from 'next-auth/react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { FC, useEffect } from 'react';
 import styles from './styles.module.scss';
 
@@ -17,6 +21,18 @@ export const Menu: FC = () => {
   const pathName = usePathname();
   const profileOptionsAreVisible = pathName.includes('/profile');
   const adminOptionsAreVisible = pathName.includes('/admin');
+  const { push } = useRouter();
+  const isClient = useIsClient();
+
+  const user = useGetUser();
+
+  const handleLogout = () => {
+    Cookies.remove('token');
+    Cookies.remove('isNewUser');
+    localStorage.clear();
+    signOut();
+    push('/');
+  };
 
   useEffect(() => {
     if (isOpen) {
@@ -64,7 +80,7 @@ export const Menu: FC = () => {
             </div>
           </div>
 
-          <ul className={styles.navigation}>
+          <div className={styles.navigation}>
             <Link href="/#about-us" onClick={onClose}>
               Про нас
             </Link>
@@ -116,7 +132,24 @@ export const Menu: FC = () => {
                 </Link>
               </>
             )}
-          </ul>
+
+            {user?.role === 'Admin' && isClient && (
+              <Link onClick={onClose} href="/admin">
+                Сторінка адміна
+              </Link>
+            )}
+
+            {user && (
+              <Button
+                variant="link"
+                rightIcon={() => <Icon name="logout" width={24} height={24} />}
+                onClick={handleLogout}
+                className={styles.logOut}
+              >
+                Вийти
+              </Button>
+            )}
+          </div>
         </div>
       </nav>
     </>
