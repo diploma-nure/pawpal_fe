@@ -22,7 +22,6 @@ export default async function Page({
   }
 
   const { token, url } = JSON.parse(roomInfo.value);
-  console.log(typeof isMicOn);
   return (
     <>
       <Room

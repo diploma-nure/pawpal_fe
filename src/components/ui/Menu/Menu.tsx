@@ -147,6 +147,7 @@ export const Menu: FC = () => {
                     <Icon name="logout" width={24} height={24} />
                   )}
                   onClick={handleLogout}
+                  className={styles.logOut}
                 >
                   Вийти
                 </Button>

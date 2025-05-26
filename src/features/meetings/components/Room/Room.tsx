@@ -3,6 +3,7 @@
 import { useChangeApplicationStatus } from '@/features/admin/applications/api/changeApplicationStatus';
 import { useChangeMeetingStatus } from '@/features/admin/meetings/api/changeMeetingStatus';
 import { useGetUser } from '@/features/profile/hooks';
+import { useIsClient } from '@/hooks/useIsClient';
 import { LiveKitRoom, VideoConference } from '@livekit/components-react';
 import '@livekit/components-styles';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -18,11 +19,12 @@ type Props = {
 };
 
 export const Room: FC<Props> = ({ url, token, isCameraOn, isMicOn }) => {
-  const { back } = useRouter();
+  const { push } = useRouter();
   const searchParams = useSearchParams();
   const user = useGetUser();
   const changeApplicationStatusMutation = useChangeApplicationStatus();
   const changeMeetingStatusMutation = useChangeMeetingStatus();
+  const isClient = useIsClient();
 
   useEffect(() => {
     const textsToHide = ['Share screen', 'Chat'];
@@ -52,7 +54,7 @@ export const Room: FC<Props> = ({ url, token, isCameraOn, isMicOn }) => {
     });
 
     return () => observer.disconnect();
-  }, []);
+  }, [isClient]);
 
   const handleDisconnect = () => {
     if (user?.role === 'Admin') {
@@ -75,22 +77,26 @@ export const Room: FC<Props> = ({ url, token, isCameraOn, isMicOn }) => {
           status: 2,
         });
       }
+      push('/admin/meetings');
+      return;
     }
-    back();
+    push('/profile/requests');
   };
 
   return (
-    <LiveKitRoom
-      data-lk-theme="default"
-      serverUrl={url}
-      token={token}
-      connect={true}
-      video={isCameraOn}
-      audio={isMicOn}
-      className={styles.room}
-      onDisconnected={handleDisconnect}
-    >
-      <VideoConference />
-    </LiveKitRoom>
+    isClient && (
+      <LiveKitRoom
+        data-lk-theme="default"
+        serverUrl={url}
+        token={token}
+        connect={true}
+        video={isCameraOn}
+        audio={isMicOn}
+        className={styles.room}
+        onDisconnected={handleDisconnect}
+      >
+        <VideoConference />
+      </LiveKitRoom>
+    )
   );
 };

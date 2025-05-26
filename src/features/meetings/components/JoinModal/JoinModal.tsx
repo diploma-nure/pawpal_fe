@@ -46,6 +46,7 @@ export const JoinModal: FC<Props> = ({
           `/meeting/${data.data.roomName}?${params}&isCameraOn=${isCameraOn}&isMicOn=${isMicOn}`,
         );
       } else {
+        console.log('redirect');
         push(
           `/meeting/${data.data.roomName}?isCameraOn=${isCameraOn}&isMicOn=${isMicOn}`,
         );
