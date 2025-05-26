@@ -1,4 +1,6 @@
 import { Icon } from '@/components/ui';
+import { useGetUsersInfo } from '@/features/profile/api/getUsersInfo';
+import { useGetUser } from '@/features/profile/hooks';
 import { colors } from '@/styles/colors';
 import clsx from 'clsx';
 import React, { useEffect, useRef, useState } from 'react';
@@ -22,6 +24,13 @@ export const VideoPreview: React.FC<VideoPreviewProps> = ({
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [error, setError] = useState<string>('');
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  const user = useGetUser();
+  const { data } = useGetUsersInfo({
+    payload: {
+      id: parseInt(user?.id ?? '0'),
+    },
+  });
 
   useEffect(() => {
     return () => {
@@ -103,11 +112,20 @@ export const VideoPreview: React.FC<VideoPreviewProps> = ({
           muted
           playsInline
         />
-        {!isCameraOn && (
+        {
           <div className={styles.placeholder}>
-            <p>Camera is off</p>
+            <p>
+              {data?.data.fullName
+                .split(' ')
+                .map((str) => str.slice(0, 1))
+                .join('')}
+            </p>
           </div>
-        )}
+        }
+        <div className={styles.nicknameHolder}>
+          <p className={styles.nickName}>{data?.data.fullName}</p>
+        </div>
+
         {error && <div className={styles.error}>{error}</div>}
       </div>
 
@@ -135,7 +153,7 @@ export const VideoPreview: React.FC<VideoPreviewProps> = ({
           aria-label={isMicOn ? 'Turn off microphone' : 'Turn on microphone'}
         >
           <Icon
-            name="microphone"
+            name={isMicOn ? 'microphone' : 'microphone-off'}
             width={24}
             height={24}
             fill={isMicOn ? colors.grey : colors.white}

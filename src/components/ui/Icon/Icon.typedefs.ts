@@ -34,6 +34,7 @@ const icons = [
   'edit',
   'microphone',
   'videocam-off',
+  'microphone-off',
 ] as const;
 
 export type IconName = (typeof icons)[number];
