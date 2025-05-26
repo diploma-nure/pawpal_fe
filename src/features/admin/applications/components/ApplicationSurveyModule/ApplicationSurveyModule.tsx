@@ -111,7 +111,6 @@ export const ApplicationSurveyModule: FC = () => {
               control={control}
               options={PetSpecies}
               values={petType.values}
-              onToggle={petType.toggle}
             />
           </div>
 
@@ -122,7 +121,6 @@ export const ApplicationSurveyModule: FC = () => {
               control={control}
               options={PetGender}
               values={gender.values}
-              onToggle={gender.toggle}
             />
           </div>
 
@@ -133,7 +131,6 @@ export const ApplicationSurveyModule: FC = () => {
               control={control}
               options={PetSize}
               values={size.values}
-              onToggle={size.toggle}
             />
           </div>
 
@@ -144,7 +141,6 @@ export const ApplicationSurveyModule: FC = () => {
               control={control}
               options={PetAge}
               values={age.values}
-              onToggle={age.toggle}
             />
           </div>
 
@@ -155,7 +151,6 @@ export const ApplicationSurveyModule: FC = () => {
               control={control}
               options={PetsSpecialNeeds}
               values={specialNeeds.values}
-              onToggle={specialNeeds.toggle}
               transform={(value) => value === 1}
             />
           </div>

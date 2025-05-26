@@ -9,20 +9,58 @@ import {
   SortByOptions,
 } from '@/features/pets/types';
 import clsx from 'clsx';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 
 type Props = {
-  selectedValues: FilterValues;
-  handleSelectChange(key: keyof FilterValues, value: number): void;
-  clearFilters(): void;
+  onFiltersChange?: (filters: FilterValues) => void;
 };
 
-export const Filters: FC<Props> = ({
-  selectedValues: { species, ages, genders, specialNeeds, sortBy, sizes },
-  handleSelectChange,
-  clearFilters,
-}) => {
+export const Filters: FC<Props> = ({ onFiltersChange }) => {
+  const [filterValues, setFilterValues] = useState<FilterValues>({
+    species: [],
+    ages: [],
+    genders: [],
+    sizes: [],
+    specialNeeds: null,
+    sortBy: null,
+  });
+
+  useEffect(() => {
+    onFiltersChange?.(filterValues);
+  }, [filterValues, onFiltersChange]);
+
+  const handleMultiSelectChange = (
+    key: 'species' | 'ages' | 'genders' | 'sizes',
+    values: number[],
+  ) => {
+    setFilterValues((prev) => ({
+      ...prev,
+      [key]: values,
+    }));
+  };
+
+  const handleSelectChange = (
+    key: 'specialNeeds' | 'sortBy',
+    value: number,
+  ) => {
+    setFilterValues((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  const clearFilters = () => {
+    setFilterValues({
+      species: [],
+      ages: [],
+      genders: [],
+      sizes: [],
+      specialNeeds: null,
+      sortBy: null,
+    });
+  };
+
   return (
     <div className={styles.wrapper}>
       <input
@@ -40,10 +78,13 @@ export const Filters: FC<Props> = ({
           )}
         >
           <Select
-            value={species}
+            value={filterValues.species}
             options={PetSpecies}
             placeholder="Вид тваринки"
-            onChange={(value) => handleSelectChange('species', value as number)}
+            onChange={(value) =>
+              handleMultiSelectChange('species', value as number[])
+            }
+            multiselect
           />
         </div>
         <div
@@ -53,10 +94,13 @@ export const Filters: FC<Props> = ({
           )}
         >
           <Select
-            value={ages}
+            value={filterValues.ages}
             options={PetAge}
             placeholder="Вік"
-            onChange={(value) => handleSelectChange('ages', value as number)}
+            onChange={(value) =>
+              handleMultiSelectChange('ages', value as number[])
+            }
+            multiselect
           />
         </div>
         <div
@@ -67,9 +111,12 @@ export const Filters: FC<Props> = ({
         >
           <Select
             options={PetGender}
-            value={genders}
+            value={filterValues.genders}
             placeholder="Стать"
-            onChange={(value) => handleSelectChange('genders', value as number)}
+            onChange={(value) =>
+              handleMultiSelectChange('genders', value as number[])
+            }
+            multiselect
           />
         </div>
         <div
@@ -80,9 +127,12 @@ export const Filters: FC<Props> = ({
         >
           <Select
             options={PetSize}
-            value={sizes}
+            value={filterValues.sizes}
             placeholder="Розмір"
-            onChange={(value) => handleSelectChange('sizes', value as number)}
+            onChange={(value) =>
+              handleMultiSelectChange('sizes', value as number[])
+            }
+            multiselect
           />
         </div>
         <div
@@ -93,7 +143,7 @@ export const Filters: FC<Props> = ({
         >
           <Select
             options={PetsSpecialNeeds}
-            value={specialNeeds}
+            value={filterValues.specialNeeds}
             placeholder="Особливості"
             onChange={(value) =>
               handleSelectChange('specialNeeds', value as number)
@@ -108,7 +158,7 @@ export const Filters: FC<Props> = ({
         >
           <Select
             options={SortByOptions}
-            value={sortBy}
+            value={filterValues.sortBy}
             placeholder="Сортувати за"
             onChange={(value) => handleSelectChange('sortBy', value as number)}
           />

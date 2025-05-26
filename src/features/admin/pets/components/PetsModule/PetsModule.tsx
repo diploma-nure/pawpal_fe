@@ -1,7 +1,6 @@
 'use client';
 
 import { Pagination } from '@/components/ui';
-import { safeStringify } from '@/features/admin/helpers/getDefaultValue';
 import { Filters } from '@/features/admin/pets/components/Filters';
 import { PetList } from '@/features/admin/pets/components/PetList/PetList';
 import { FilterValues } from '@/features/admin/pets/types';
@@ -14,41 +13,25 @@ import styles from './styles.module.scss';
 export function PetsModule() {
   const params = useSearchParams();
   const page = params.get('page');
-
-  const [selectedValues, setSelectedValues] = useState<FilterValues>({
-    species: null,
-    ages: null,
-    genders: null,
-    sizes: null,
+  const [filters, setFilters] = useState<FilterValues>({
+    species: [],
+    ages: [],
+    genders: [],
+    sizes: [],
     specialNeeds: null,
     sortBy: null,
   });
-
-  const handleSelectChange = (key: keyof FilterValues, value: number) => {
-    setSelectedValues((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
-
-  const clearFilters = () => {
-    setSelectedValues({
-      species: null,
-      ages: null,
-      genders: null,
-      sizes: null,
-      specialNeeds: null,
-      sortBy: null,
-    });
+  const handleFiltersChange = (newFilters: FilterValues) => {
+    setFilters(newFilters);
   };
 
   const { data } = useFilteredPets({
     payload: {
-      Ages: safeStringify(selectedValues.ages),
-      Genders: safeStringify(selectedValues.genders),
-      Sizes: safeStringify(selectedValues.sizes),
-      Species: safeStringify(selectedValues.species),
-      SortBy: safeStringify(selectedValues.sortBy),
+      Ages: filters.ages,
+      Genders: filters.genders,
+      Species: filters.species,
+      Sizes: filters.sizes,
+      SortBy: filters.sortBy?.toString(),
       Page: page ? page : '1',
     },
   });
@@ -63,11 +46,7 @@ export function PetsModule() {
       </div>
 
       <div className={styles.filtersWrapper}>
-        <Filters
-          selectedValues={selectedValues}
-          handleSelectChange={handleSelectChange}
-          clearFilters={clearFilters}
-        />
+        <Filters onFiltersChange={handleFiltersChange} />
       </div>
 
       <PetList pets={data?.data.items ?? []} />

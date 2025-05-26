@@ -4,6 +4,8 @@ import { PetInfo } from '@/features/pets/components/PetInfo';
 import { RecommendedPetsWrapper } from '@/features/pets/components/RecommendedPets/RecommendedPetsWrapper';
 import { Metadata } from 'next';
 
+export const revalidate = 600;
+
 export async function generateStaticParams() {
   return [];
 }
