@@ -3,6 +3,6 @@ export type FilterValues = {
   ages: number[];
   genders: number[];
   sizes: number[];
-  specialNeeds: number | null;
+  specialNeeds: number[];
   sortBy: number | null;
 };

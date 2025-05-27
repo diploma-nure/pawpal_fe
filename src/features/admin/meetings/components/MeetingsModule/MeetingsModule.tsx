@@ -25,7 +25,7 @@ export const MeetingsModule: FC = () => {
   const items = meetingQuery?.data?.data.items;
   const count = meetingQuery?.data?.data.count;
 
-  const totalPages = count ? Math.ceil(count / 10) : 0;
+  const totalPages = count ? Math.ceil(count / 5) : 0;
   return (
     <>
       <div className={styles.titleWrapper}>

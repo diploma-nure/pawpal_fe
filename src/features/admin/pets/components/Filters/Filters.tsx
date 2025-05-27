@@ -22,7 +22,7 @@ export const Filters: FC<Props> = ({ onFiltersChange }) => {
     ages: [],
     genders: [],
     sizes: [],
-    specialNeeds: null,
+    specialNeeds: [],
     sortBy: null,
   });
 
@@ -31,7 +31,7 @@ export const Filters: FC<Props> = ({ onFiltersChange }) => {
   }, [filterValues, onFiltersChange]);
 
   const handleMultiSelectChange = (
-    key: 'species' | 'ages' | 'genders' | 'sizes',
+    key: 'species' | 'ages' | 'genders' | 'sizes' | 'specialNeeds',
     values: number[],
   ) => {
     setFilterValues((prev) => ({
@@ -56,7 +56,7 @@ export const Filters: FC<Props> = ({ onFiltersChange }) => {
       ages: [],
       genders: [],
       sizes: [],
-      specialNeeds: null,
+      specialNeeds: [],
       sortBy: null,
     });
   };
@@ -146,8 +146,9 @@ export const Filters: FC<Props> = ({ onFiltersChange }) => {
             value={filterValues.specialNeeds}
             placeholder="Особливості"
             onChange={(value) =>
-              handleSelectChange('specialNeeds', value as number)
+              handleMultiSelectChange('specialNeeds', value as number[])
             }
+            multiselect
           />
         </div>
         <div

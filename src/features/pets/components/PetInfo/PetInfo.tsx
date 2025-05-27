@@ -3,7 +3,6 @@ import { ImageCarousel } from '@/features/pets/components/ImageCarousel/ImageCar
 import { LikeButton } from '@/features/pets/components/PetInfo/LikeButton';
 import { LikeButtonWrapper } from '@/features/pets/components/PetInfo/LikeButtonWrapper';
 import { MakeHappyButton } from '@/features/pets/components/PetInfo/MakeHappyButton';
-import { placeholderImages } from '@/features/pets/constants/placeholderImages';
 import {
   Pet,
   PetAge,
@@ -29,11 +28,8 @@ export const PetInfo: FC<Props> = async ({ pet }) => {
         )}
       >
         <ImageCarousel
-          images={
-            pet.pictures?.map((pic) => pic.url) ?? [
-              placeholderImages[pet.species],
-            ]
-          }
+          images={pet.pictures?.map((pic) => pic.url)}
+          species={pet.species}
           altText={`Фото тваринки ${pet.name}`}
         />
       </div>

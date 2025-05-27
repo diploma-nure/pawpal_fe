@@ -21,8 +21,8 @@ export const RequestsSection: FC = () => {
   const items = data?.data.items ?? null;
   const count = data?.data.count;
 
-  const totalPages = count ? Math.ceil(count / 10) : 0;
-
+  const totalPages = count ? Math.ceil(count / 5) : 0;
+  console.log(totalPages);
   return (
     <div className={styles.tilesWrapper}>
       {items &&
@@ -36,7 +36,7 @@ export const RequestsSection: FC = () => {
           />
         ))}
       <div style={{ marginTop: 'auto' }}>
-        {totalPages > 1 && (
+        {totalPages >= 1 && (
           <Pagination
             page={parseInt(page)}
             pageCount={totalPages}

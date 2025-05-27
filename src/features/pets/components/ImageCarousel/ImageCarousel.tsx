@@ -1,4 +1,5 @@
 'use client';
+import { placeholderImages } from '@/features/pets/constants/placeholderImages';
 import clsx from 'clsx';
 import Image from 'next/image';
 import { FC, useState } from 'react';
@@ -7,11 +8,15 @@ import styles from './styles.module.scss';
 type ImageCarouselProps = {
   images: string[];
   altText: string;
+  species: number;
 };
 
-export const ImageCarousel: FC<ImageCarouselProps> = ({ images, altText }) => {
+export const ImageCarousel: FC<ImageCarouselProps> = ({
+  images,
+  altText,
+  species,
+}) => {
   const [activeIndex, setActiveIndex] = useState(0);
-
   const handleImageClick = (index: number) => {
     setActiveIndex(index);
   };
@@ -21,7 +26,7 @@ export const ImageCarousel: FC<ImageCarouselProps> = ({ images, altText }) => {
       <div className={styles.activeImageWrapper}>
         <Image
           className={styles.activeImage}
-          src={images[activeIndex]}
+          src={images[activeIndex] ?? placeholderImages[species]}
           alt={altText}
           width={300}
           height={300}

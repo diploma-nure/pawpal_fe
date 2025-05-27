@@ -79,12 +79,14 @@ export const ApplicationSurveyModule: FC = () => {
             name="fullName"
             label="Прізвище ім'я"
             placeholder="Ковальчук Анна"
+            disabled
           />
           <Input
             control={contactControl}
             name="phoneNumber"
             label="Номер телефону"
             placeholder="+380997462594"
+            disabled
           />
         </div>
         <div className={styles.section__container}>
@@ -92,17 +94,19 @@ export const ApplicationSurveyModule: FC = () => {
             control={contactControl}
             name="email"
             label="Email"
-            placeholder="Київ"
+            placeholder="example@mail.com"
+            disabled
           />
           <Input
             control={contactControl}
             name="address"
             label="Місце проживання"
             placeholder="Київ"
+            disabled
           />
         </div>
 
-        <div>
+        <div inert>
           <p className={clsx('heading3', styles.sectionTitle)}>Про тваринку</p>
           <div className={styles.section__container}>
             <CheckboxSection
@@ -161,7 +165,7 @@ export const ApplicationSurveyModule: FC = () => {
           </div>
         </div>
 
-        <div>
+        <div inert>
           <p className={clsx('heading3', styles.sectionTitle)}>
             Умови проживання
           </p>
@@ -177,7 +181,7 @@ export const ApplicationSurveyModule: FC = () => {
           ))}
         </div>
 
-        <div>
+        <div inert>
           <p className={clsx('heading3', styles.sectionTitle)}>
             Досвід та очікування
           </p>
@@ -194,7 +198,7 @@ export const ApplicationSurveyModule: FC = () => {
           ))}
         </div>
 
-        <div>
+        <div inert>
           <p className={clsx('heading3', styles.sectionTitle)}>
             Відповідальність
           </p>

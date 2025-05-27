@@ -4,7 +4,7 @@ import PlaceholderPetImage from '@/assets/images/PlaceholderPet.png';
 import { StaticImageData } from 'next/image';
 
 export const placeholderImages: { [key: number]: StaticImageData } = {
-  0: PlaceholderCatImage,
-  1: PlaceholderDogImage,
+  0: PlaceholderDogImage,
+  1: PlaceholderCatImage,
   2: PlaceholderPetImage,
 };

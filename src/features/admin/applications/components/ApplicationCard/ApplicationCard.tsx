@@ -31,7 +31,13 @@ export const ApplicationCard: FC<Props> = ({ application }) => {
         />
 
         <div className={styles.info}>
-          <p className={styles.name}>{application.pet.name}</p>
+          <Link
+            target="_blank"
+            href={`/pets/${application.pet.id}`}
+            className={styles.name}
+          >
+            {application.pet.name}
+          </Link>
           <Link
             href={`/admin/applications/${application.user.id}`}
             className={styles.userName}

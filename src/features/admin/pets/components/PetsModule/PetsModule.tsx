@@ -18,7 +18,7 @@ export function PetsModule() {
     ages: [],
     genders: [],
     sizes: [],
-    specialNeeds: null,
+    specialNeeds: [],
     sortBy: null,
   });
   const handleFiltersChange = (newFilters: FilterValues) => {
@@ -31,13 +31,14 @@ export function PetsModule() {
       Genders: filters.genders,
       Species: filters.species,
       Sizes: filters.sizes,
-      HasSpecialNeeds: filters.specialNeeds === 1,
+      HasSpecialNeeds: filters.specialNeeds,
       SortBy: filters.sortBy?.toString(),
       Page: page ? page : '1',
+      PageSize: 5,
     },
   });
 
-  const totalPages = data?.data?.count ? Math.ceil(data.data.count / 10) : 0;
+  const totalPages = data?.data?.count ? Math.ceil(data.data.count / 5) : 0;
 
   return (
     <>

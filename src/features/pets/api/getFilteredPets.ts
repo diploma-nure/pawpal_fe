@@ -8,9 +8,10 @@ type FilteredPetsPayload = {
   Sizes?: number[];
   Ages?: number[];
   Genders?: number[];
-  HasSpecialNeeds?: boolean;
+  HasSpecialNeeds?: number[];
   Page?: string;
   SortBy?: string;
+  PageSize?: number;
 };
 
 type FilteredPetsResponse = {
@@ -32,6 +33,7 @@ export const getFilteredPets = async ({
   Page,
   SortBy,
   HasSpecialNeeds,
+  PageSize = 9,
 }: FilteredPetsPayload): Promise<FilteredPetsResponse> => {
   const params = new URLSearchParams();
 
@@ -48,13 +50,19 @@ export const getFilteredPets = async ({
   if (Genders && Genders.length > 0) {
     Genders.forEach((gender) => params.append('Genders', gender.toString()));
   }
+  console.log(HasSpecialNeeds);
+  if (HasSpecialNeeds?.length === 1 && HasSpecialNeeds[0] === 1) {
+    params.append('HasSpecialNeeds', 'true');
+  } else if (HasSpecialNeeds?.length === 1 && HasSpecialNeeds[0] === 0) {
+    params.append('HasSpecialNeeds', 'false');
+  } else {
+    params.delete('HasSpecialNeeds');
+  }
 
-  // Add other parameters
   params.append('Pagination.Page', Page ?? '1');
-  params.append('Pagination.PageSize', '9');
+  params.append('Pagination.PageSize', PageSize.toString());
   params.append('Sorting.Type', SortBy ?? '2');
-  params.append('Sorting.Direction', '0');
-  params.append('HasSpecialNeeds', HasSpecialNeeds ? 'true' : 'false');
+  params.append('Sorting.Direction', '1');
 
   const response = await client.get<FilteredPetsResponse>('/pets/filtered', {
     params,

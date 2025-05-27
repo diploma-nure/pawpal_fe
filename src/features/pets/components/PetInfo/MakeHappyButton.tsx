@@ -19,6 +19,7 @@ export const MakeHappyButton: FC<Props> = ({ petId }) => {
 
       if (user && user.role === 'User') {
         await submitApplication({ petId });
+        push('/profile/requests');
       } else {
         push('/log-in');
       }

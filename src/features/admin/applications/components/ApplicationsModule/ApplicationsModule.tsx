@@ -26,7 +26,7 @@ export const ApplicationsModule: FC = () => {
   const items = data?.data.items;
   const count = data?.data.count;
 
-  const totalPages = count ? Math.ceil(count / 10) : 0;
+  const totalPages = count ? Math.ceil(count / 5) : 0;
 
   return (
     <>

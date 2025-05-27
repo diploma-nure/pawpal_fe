@@ -23,7 +23,7 @@ type FilterValues = {
   ages: number[];
   genders: number[];
   sizes: number[];
-  specialNeeds: number | null;
+  specialNeeds: number[];
   sortBy: number | null;
   showRecommendations: boolean;
 };
@@ -36,7 +36,7 @@ export const FilterSection = ({ onFiltersChange }: Props) => {
     ages: [],
     genders: [],
     sizes: [],
-    specialNeeds: null,
+    specialNeeds: [],
     sortBy: null,
     showRecommendations: false,
   });
@@ -46,7 +46,7 @@ export const FilterSection = ({ onFiltersChange }: Props) => {
   }, [filterValues, onFiltersChange]);
 
   const handleMultiSelectChange = (
-    key: 'species' | 'ages' | 'genders' | 'sizes',
+    key: 'species' | 'ages' | 'genders' | 'sizes' | 'specialNeeds',
     values: number[],
   ) => {
     setFilterValues((prev) => ({
@@ -55,10 +55,7 @@ export const FilterSection = ({ onFiltersChange }: Props) => {
     }));
   };
 
-  const handleSelectChange = (
-    key: 'specialNeeds' | 'sortBy',
-    value: number,
-  ) => {
+  const handleSelectChange = (key: 'sortBy', value: number) => {
     setFilterValues((prev) => ({
       ...prev,
       [key]: value,
@@ -71,7 +68,7 @@ export const FilterSection = ({ onFiltersChange }: Props) => {
       ages: [],
       genders: [],
       sizes: [],
-      specialNeeds: null,
+      specialNeeds: [],
       sortBy: null,
       showRecommendations: !prev.showRecommendations,
     }));
@@ -83,7 +80,7 @@ export const FilterSection = ({ onFiltersChange }: Props) => {
       ages: [],
       genders: [],
       sizes: [],
-      specialNeeds: null,
+      specialNeeds: [],
       sortBy: null,
       showRecommendations: false,
     });
@@ -91,14 +88,29 @@ export const FilterSection = ({ onFiltersChange }: Props) => {
 
   return (
     <div className={styles.wrapper}>
-      <input
-        type="checkbox"
-        id="filtersToggle"
-        className={styles.filters__checkbox}
-      />
-      <label htmlFor="filtersToggle" className={styles.filters__toggle}></label>
+      {!filterValues.showRecommendations && (
+        <>
+          <input
+            type="checkbox"
+            id="filtersToggle"
+            className={styles.filters__checkbox}
+          />
+          <label
+            htmlFor="filtersToggle"
+            className={styles.filters__toggle}
+          ></label>
+        </>
+      )}
 
-      <div className={clsx('grid', styles.filters)}>
+      <div
+        className={clsx(
+          'grid',
+          clsx(styles.filters, {
+            [styles.filters__recommended_only]:
+              filterValues.showRecommendations,
+          }),
+        )}
+      >
         <div
           className={clsx(
             'col-desktop-1-3 col-tablet-1-3 col-1-2',
@@ -133,7 +145,13 @@ export const FilterSection = ({ onFiltersChange }: Props) => {
         </div>
         <div
           className={clsx(
-            'col-desktop-7-9 col-tablet-1-6 col-1-2',
+            {
+              'col-desktop-7-9 col-tablet-1-6 ':
+                !filterValues.showRecommendations,
+              'col-desktop-1-5 col-tablet-1-3':
+                filterValues.showRecommendations,
+            },
+            'col-1-2',
             styles.filters__recommendations,
           )}
           suppressHydrationWarning
@@ -191,8 +209,9 @@ export const FilterSection = ({ onFiltersChange }: Props) => {
             value={filterValues.specialNeeds}
             placeholder="Особливості"
             onChange={(value) =>
-              handleSelectChange('specialNeeds', value as number)
+              handleMultiSelectChange('specialNeeds', value as number[])
             }
+            multiselect
           />
         </div>
         <div

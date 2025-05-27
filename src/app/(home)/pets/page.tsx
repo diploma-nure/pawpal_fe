@@ -17,7 +17,7 @@ type FilterValues = {
   ages: number[];
   genders: number[];
   sizes: number[];
-  specialNeeds: number | null;
+  specialNeeds: number[];
   sortBy: number | null;
   showRecommendations: boolean;
 };
@@ -31,7 +31,7 @@ export default function PetsPage() {
     ages: [],
     genders: [],
     sizes: [],
-    specialNeeds: null,
+    specialNeeds: [],
     sortBy: null,
     showRecommendations: false,
   });
@@ -43,7 +43,7 @@ export default function PetsPage() {
       Genders: filters.genders,
       Species: filters.species,
       Sizes: filters.sizes,
-      HasSpecialNeeds: filters.specialNeeds === 1,
+      HasSpecialNeeds: filters.specialNeeds,
       SortBy: filters.sortBy?.toString(),
       ShowRecommended: filters.showRecommendations,
       token: Cookies.get('token'),
