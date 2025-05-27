@@ -112,7 +112,7 @@ export const VideoPreview: React.FC<VideoPreviewProps> = ({
           muted
           playsInline
         />
-        {
+        {!isCameraOn && (
           <div className={styles.placeholder}>
             <p>
               {data?.data.fullName
@@ -121,7 +121,7 @@ export const VideoPreview: React.FC<VideoPreviewProps> = ({
                 .join('')}
             </p>
           </div>
-        }
+        )}
         <div className={styles.nicknameHolder}>
           <p className={styles.nickName}>{data?.data.fullName}</p>
         </div>
