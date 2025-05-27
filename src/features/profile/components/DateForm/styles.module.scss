@@ -78,6 +78,10 @@
       }
     }
 
+    .rdp-today .rdp-day_button {
+      border: 1px solid var(--rdp-accent-color);
+    }
+
     .rdp-selected {
       background-color: $dark-blue;
       border-radius: 50%;
