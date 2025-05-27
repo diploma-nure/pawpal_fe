@@ -70,7 +70,11 @@ export const PetCard: FC<PetCardProps> = ({ pet, className }) => {
 
         <p className={styles.description}>{pet.description}</p>
 
-        <Link href={`/pets/${pet.id}`} className={styles.detailsLink}>
+        <Link
+          data-cy="details-link"
+          href={`/pets/${pet.id}`}
+          className={styles.detailsLink}
+        >
           Детальніше
           <Icon
             name="diagonal-arrow"

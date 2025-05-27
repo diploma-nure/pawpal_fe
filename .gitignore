@@ -39,3 +39,5 @@ next-env.d.ts
 *storybook.log
 
 .idea/**
+
+cypress/screenshots

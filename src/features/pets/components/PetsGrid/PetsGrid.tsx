@@ -9,7 +9,7 @@ type Props = {
 
 export const PetsGrid: FC<Props> = ({ pets }) => {
   return (
-    <div className={styles.grid}>
+    <div className={styles.grid} data-cy="pets-grid">
       {pets?.map((pet) => <PetCard key={pet.id} pet={pet} />)}
     </div>
   );
