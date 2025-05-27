@@ -12,16 +12,16 @@ interface TagProps {
   className?: string;
 }
 
-export const Tag: FC<TagProps> = ({
-  children,
-  variant = 'primary',
-  className,
-}) => {
+export const Tag: FC<TagProps> = ({ children, variant, className }) => {
   return (
-    <div className={clsx(styles.tag, styles[`tag_${variant}`], className)}>
+    <div
+      className={clsx(
+        styles.tag,
+        variant && styles[`tag_${variant}`],
+        className,
+      )}
+    >
       {children}
     </div>
   );
 };
-
-export default Tag;

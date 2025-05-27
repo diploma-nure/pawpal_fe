@@ -1,7 +1,7 @@
 'use client';
 
-import { Tag } from '@/components/ui';
 import { Icon } from '@/components/ui/Icon/Icon';
+import { Tag } from '@/components/ui/Tag/Tag';
 import { LikeButton } from '@/features/pets/components/PetInfo/LikeButton';
 import { placeholderImages } from '@/features/pets/constants/placeholderImages';
 import {
@@ -11,7 +11,7 @@ import {
   PetSize,
   PetsSpecialNeeds,
 } from '@/features/pets/types';
-import { useGetUser } from '@/features/profile/hooks';
+import { useGetUser } from '@/features/profile/hooks/useGetUser';
 import { useTokenValid } from '@/hooks/useTokenValid';
 import clsx from 'clsx';
 import Image from 'next/image';

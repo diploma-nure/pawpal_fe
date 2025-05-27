@@ -1,10 +1,10 @@
 'use client';
 
 import { Checkbox } from '@/components/ui/Checkbox/Checkbox';
-import { useClickOutside } from '@/hooks';
+import { useClickOutside } from '@/hooks/useClickOutside';
+import clsx from 'clsx';
 import React, { useState } from 'react';
 import styles from './styles.module.scss';
-import clsx from 'clsx';
 
 interface SelectProps {
   placeholder?: string;

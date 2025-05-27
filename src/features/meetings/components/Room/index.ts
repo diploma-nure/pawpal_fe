@@ -1,1 +1,1 @@
-export * from './Room';
+export { Room } from './Room';
