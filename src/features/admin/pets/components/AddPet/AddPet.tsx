@@ -34,7 +34,11 @@ export const AddPet: FC = () => {
         isOpen={isOpen}
         onClose={handleClose}
       />
-      <SuccessModal isOpen={isSuccessModalOpen} onClose={onSuccessModalClose} />
+      <SuccessModal
+        key={isSuccessModalOpen.toString()}
+        isOpen={isSuccessModalOpen}
+        onClose={onSuccessModalClose}
+      />
     </>
   );
 };

@@ -31,11 +31,15 @@ export const SignUpForm: FC = () => {
       password: data.password,
     });
 
-    if (response.data.token) {
+    if (!response?.data.token) {
+      return;
+    }
+
+    if (response?.data.token) {
       Cookies.set('token', response.data.token);
     }
 
-    if (response.data.isNewUser) {
+    if (response?.data.isNewUser) {
       push('/survey');
     } else {
       push('/');

@@ -20,7 +20,6 @@ instance.interceptors.response.use(
       error.response?.data?.message || error.response?.data?.Message;
 
     toast(message, { type: 'error', position: 'bottom-right' });
-    // return Promise.reject(new Error(message));
   },
 );
 

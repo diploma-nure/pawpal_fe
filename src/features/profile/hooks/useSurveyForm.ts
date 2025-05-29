@@ -7,7 +7,6 @@ import { useCheckboxArray } from '@/features/surveys/hooks/useCheckboxArray';
 import { useCompleteSurvey } from '@/features/surveys/hooks/useCompleteSurvey';
 import { useGetSurvey } from '@/features/surveys/hooks/useGetSurvey';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -16,7 +15,6 @@ export const useSurveyForm = (onOpen: () => void) => {
   const { data } = useGetSurvey({
     userId: user?.id ? parseInt(user?.id) : 0,
   });
-  const { push } = useRouter();
   const { mutate } = useCompleteSurvey({
     config: {
       onSuccess: onOpen,
@@ -60,12 +58,6 @@ export const useSurveyForm = (onOpen: () => void) => {
   const age = watch('age');
 
   useEffect(() => {
-    if (
-      data?.errors?.includes(`Survey for user with id ${user?.id} not found`)
-    ) {
-      push('/survey');
-    }
-
     if (data?.data) {
       const surveyData = data.data;
 
@@ -109,7 +101,7 @@ export const useSurveyForm = (onOpen: () => void) => {
           surveyData.hasSufficientFinancialResources ? 'true' : 'false',
       });
     }
-  }, [data, reset]);
+  }, [data, reset, user?.id]);
 
   const onSubmit = handleSubmit(async (data) => {
     try {

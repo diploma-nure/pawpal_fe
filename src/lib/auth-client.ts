@@ -41,6 +41,10 @@ authClient.interceptors.response.use(
       window.location.href = '/log-in';
     }
 
+    if (message.includes('Survey for user with id')) {
+      window.location.href = '/survey';
+    }
+
     if (typeof window !== 'undefined') {
       toast(message, {
         type: 'error',

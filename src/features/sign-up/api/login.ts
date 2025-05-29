@@ -12,5 +12,5 @@ export const login = async ({ email, password }: LoginPayload) => {
     password,
   });
 
-  return response.data;
+  return response?.data;
 };
