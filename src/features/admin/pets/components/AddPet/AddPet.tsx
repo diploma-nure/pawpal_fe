@@ -30,12 +30,13 @@ export const AddPet: FC = () => {
       </Button>
 
       <AddPetModal
-        key={isOpen.toString()}
+        key={`${isOpen.toString()}-add-pet`}
         isOpen={isOpen}
-        onClose={handleClose}
+        onSuccess={handleClose}
+        onClose={onClose}
       />
       <SuccessModal
-        key={isSuccessModalOpen.toString()}
+        key={`${isSuccessModalOpen.toString()}-success`}
         isOpen={isSuccessModalOpen}
         onClose={onSuccessModalClose}
       />

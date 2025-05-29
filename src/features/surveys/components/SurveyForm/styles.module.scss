@@ -7,6 +7,11 @@
   align-items: center;
   flex-grow: 1;
   padding-inline: 16px;
+  padding-block: 20px;
+
+  & div[class*='optionsList'] {
+    background-color: $white;
+  }
 }
 
 .titleContainer {

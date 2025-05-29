@@ -17,6 +17,10 @@ $modal-max-width: 400px;
   outline: none;
   overflow-y: auto;
 
+  & div[class*='optionsList'] {
+    background-color: $white;
+  }
+
   @include onTablet() {
     padding: rem-calc(40);
     max-width: $modal-max-width;

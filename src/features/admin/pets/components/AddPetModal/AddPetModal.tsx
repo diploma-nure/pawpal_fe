@@ -20,6 +20,7 @@ import styles from './styles.module.scss';
 type Props = {
   isOpen: boolean;
   onClose: () => void;
+  onSuccess?: () => void;
 };
 
 interface PetFormData {
@@ -34,7 +35,7 @@ interface PetFormData {
   images: File[];
 }
 
-export const AddPetModal: FC<Props> = ({ isOpen, onClose }) => {
+export const AddPetModal: FC<Props> = ({ isOpen, onClose, onSuccess }) => {
   const [files, setFiles] = useState<File[]>([]);
   const addPetMutation = useAddPet();
 
@@ -82,7 +83,7 @@ export const AddPetModal: FC<Props> = ({ isOpen, onClose }) => {
     const res = await addPetMutation.mutateAsync(payload);
 
     if (!res.errors) {
-      onClose();
+      onSuccess?.();
     }
   };
 
