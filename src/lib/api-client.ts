@@ -1,3 +1,4 @@
+import { getErrorMessage } from '@/config/responseCodes';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
@@ -16,8 +17,9 @@ const instance = axios.create({
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
-    const message =
-      error.response?.data?.message || error.response?.data?.Message;
+    const message = getErrorMessage(
+      error.response?.data?.code || error.response?.data?.Code,
+    );
 
     toast(message, { type: 'error', position: 'bottom-right' });
   },

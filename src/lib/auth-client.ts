@@ -1,3 +1,4 @@
+import { getErrorMessage } from '@/config/responseCodes';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
@@ -23,8 +24,9 @@ authClient.interceptors.request.use(
     return config;
   },
   (error) => {
-    const message =
-      error.response?.data?.message || error.response?.data?.Message;
+    const message = getErrorMessage(
+      error.response?.data?.code || error.response?.data?.Code,
+    );
 
     toast(message, { type: 'error', position: 'bottom-right' });
   },
@@ -33,15 +35,15 @@ authClient.interceptors.request.use(
 authClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    const message =
-      error.response?.data?.message || error.response?.data?.Message;
+    const code = error.response?.data?.code || error.response?.data?.Code;
+    const message = getErrorMessage(code);
 
     if (error.response && error.response.status === 401) {
       console.error(message);
       window.location.href = '/log-in';
     }
 
-    if (message.includes('Survey for user with id')) {
+    if (['NF001', 'NF005'].includes(code)) {
       window.location.href = '/survey';
       return;
     }
