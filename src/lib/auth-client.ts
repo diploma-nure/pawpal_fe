@@ -43,6 +43,7 @@ authClient.interceptors.response.use(
 
     if (message.includes('Survey for user with id')) {
       window.location.href = '/survey';
+      return;
     }
 
     if (typeof window !== 'undefined') {

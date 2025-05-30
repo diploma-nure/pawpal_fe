@@ -17,9 +17,13 @@ const handler = NextAuth({
       const response = await loginGoogle({
         token: account?.id_token as string,
       });
-      cookieStore.set('token', response.data.token);
+      cookieStore.set('token', response.data.token, {
+        maxAge: 60 * 60,
+      });
 
-      cookieStore.set('isNewUser', response.data.isNewUser ? 'true' : 'false');
+      cookieStore.set('isNewUser', response.data.isNewUser ? 'true' : 'false', {
+        maxAge: 60 * 60,
+      });
 
       return true;
     },
