@@ -17,6 +17,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: 'PawPal',
+    description: 'PawPal - твій помічник у пошуку домашнього улюбленця',
+  };
+
   return (
     <html lang="en" className={montserratAlternates.className}>
       <body>
@@ -24,6 +31,13 @@ export default function RootLayout({
           <AuthProvider>{children}</AuthProvider>
           <ToastContainer />
         </QueryProvider>
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
+          }}
+        />
       </body>
     </html>
   );
