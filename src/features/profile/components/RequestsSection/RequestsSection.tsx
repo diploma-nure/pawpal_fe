@@ -22,7 +22,7 @@ export const RequestsSection: FC = () => {
   const count = data?.data.count;
 
   const totalPages = count ? Math.ceil(count / 5) : 0;
-  console.log(totalPages);
+
   return (
     <div className={styles.tilesWrapper}>
       {items &&

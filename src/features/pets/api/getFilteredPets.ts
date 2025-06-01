@@ -50,7 +50,7 @@ export const getFilteredPets = async ({
   if (Genders && Genders.length > 0) {
     Genders.forEach((gender) => params.append('Genders', gender.toString()));
   }
-  console.log(HasSpecialNeeds);
+
   if (HasSpecialNeeds?.length === 1 && HasSpecialNeeds[0] === 1) {
     params.append('HasSpecialNeeds', 'true');
   } else if (HasSpecialNeeds?.length === 1 && HasSpecialNeeds[0] === 0) {

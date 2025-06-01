@@ -8,7 +8,6 @@ type LoginGooglePayload = {
 export const loginGoogle = async ({
   token,
 }: LoginGooglePayload): Promise<LoginResponse> => {
-  console.log('TOKEN', token);
   const response = await fetch(API_URL + '/auth/login/google', {
     method: 'POST',
     body: JSON.stringify({ token }),

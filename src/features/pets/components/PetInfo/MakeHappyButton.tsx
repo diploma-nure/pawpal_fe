@@ -24,7 +24,7 @@ export const MakeHappyButton: FC<Props> = ({ petId }) => {
         push('/log-in');
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
