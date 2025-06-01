@@ -9,48 +9,40 @@ type UpdatePetResponse = {
 
 type UpdatePetPayload = {
   Id: number;
-  Name?: string;
-  Speies?: (typeof PetSpecies)[number]['value'];
-  Gender?: (typeof PetGender)[number]['value'];
-  Size?: (typeof PetSize)[number]['value'];
-  Age?: (typeof PetAge)[number]['value'];
-  HasSpecialNeeds?: boolean;
-  FeaturesIds?: number[];
-  Description?: string;
-  Pictures?: File[];
+  Name: string;
+  Species: (typeof PetSpecies)[number]['value'];
+  Gender: (typeof PetGender)[number]['value'];
+  Size: (typeof PetSize)[number]['value'];
+  Age: (typeof PetAge)[number]['value'];
+  HasSpecialNeeds: boolean;
+  FeaturesIds: number[];
+  Description: string;
+  Pictures: File[];
 };
 
 export const updatePet = async (options: UpdatePetPayload) => {
   const formData = new FormData();
-
-  // Add ID (required field)
   formData.append('Id', options.Id.toString());
 
-  // Add optional text fields to form data if they exist
-  if (options.Name) formData.append('Name', options.Name);
-  if (options.Speies) formData.append('Speies', options.Speies.toString());
-  if (options.Gender) formData.append('Gender', options.Gender.toString());
-  if (options.Size) formData.append('Size', options.Size.toString());
-  if (options.Age) formData.append('Age', options.Age.toString());
-  if (options.HasSpecialNeeds !== undefined)
-    formData.append('HasSpecialNeeds', options.HasSpecialNeeds.toString());
-  if (options.Description) formData.append('Description', options.Description);
+  formData.append('Name', options.Name);
+  formData.append('Species', options.Species.toString());
+  formData.append('Gender', options.Gender.toString());
+  formData.append('Size', options.Size.toString());
+  formData.append('Age', options.Age.toString());
+  formData.append('HasSpecialNeeds', options.HasSpecialNeeds.toString());
 
-  // Add array of feature IDs if it exists
-  if (options.FeaturesIds && options.FeaturesIds.length > 0) {
-    options.FeaturesIds.forEach((featureId, index) => {
-      formData.append(`FeaturesIds[${index}]`, featureId.toString());
-    });
+  if (options.Description) {
+    formData.append('Description', options.Description);
   }
 
-  // Add picture files if they exist
-  if (options.Pictures && options.Pictures.length > 0) {
-    options.Pictures.forEach((file, index) => {
-      formData.append(`Pictures[${index}]`, file);
-    });
-  }
+  options.FeaturesIds.forEach((featureId) => {
+    formData.append(`FeaturesIds`, featureId.toString());
+  });
 
-  // Send as multipart/form-data (content-type will be set automatically)
+  options.Pictures.forEach((file) => {
+    formData.append(`Pictures`, file);
+  });
+
   const response = await authClient.patch<UpdatePetResponse>(
     '/pets/update',
     formData,

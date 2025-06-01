@@ -3,6 +3,7 @@
 import { Button, Icon, Input, Modal, Select } from '@/components/ui';
 import { PetFeaturesSelect } from '@/features/pets/components';
 import { useGetPet } from '@/features/pets/hooks/useGetPet';
+import { usePetFeatures } from '@/features/pets/hooks/usePetFeatures';
 import { useUpdatePet } from '@/features/pets/hooks/useUpdatePet';
 import {
   PetAge,
@@ -32,20 +33,22 @@ interface PetFormData {
   size: string;
   species: string;
   hasSpecialNeeds: string;
-  characteristics: string;
+  characteristics: number[];
   description: string;
   images: File[];
 }
 
 export const UpdatePetModal: FC<Props> = ({ isOpen, onClose, petId }) => {
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<(File | string)[]>([]);
   const updatePetMutation = useUpdatePet({
     onSuccess: () => {
       onClose();
     },
   });
   const { data, isError } = useGetPet(petId, { enabled: isOpen });
+  const { data: featuresData } = usePetFeatures();
   const [showConfirm, setShowConfirm] = useState(false);
+  const { data: features } = usePetFeatures();
 
   const {
     handleSubmit,
@@ -63,12 +66,12 @@ export const UpdatePetModal: FC<Props> = ({ isOpen, onClose, petId }) => {
       hasSpecialNeeds: '',
       description: '',
       images: [],
-      characteristics: '',
+      characteristics: [],
     },
   });
 
   useEffect(() => {
-    if (data?.data) {
+    if (data?.data && featuresData?.data) {
       const pet = data.data;
       reset({
         name: pet.name || '',
@@ -78,11 +81,21 @@ export const UpdatePetModal: FC<Props> = ({ isOpen, onClose, petId }) => {
         species: pet.species?.toString() || '',
         hasSpecialNeeds: pet.hasSpecialNeeds ? '1' : '0',
         description: pet.description || '',
-        images: [],
-        characteristics: '', // No featuresIds in Pet, leave empty
+        images: pet.pictures.map((picture) => {
+          const file = new File([], picture.url);
+          return file;
+        }),
+        characteristics:
+          features?.data
+            ?.filter((feature) =>
+              pet.features.some((f) => f === feature.feature),
+            )
+            .map((feature) => feature.id) || [],
       });
+
+      setFiles(pet.pictures.map((picture) => picture.url));
     }
-  }, [data, reset]);
+  }, [data, reset, featuresData]);
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -100,6 +113,8 @@ export const UpdatePetModal: FC<Props> = ({ isOpen, onClose, petId }) => {
   const onSubmit = (formData: PetFormData) => {
     const pet = data?.data;
     if (!pet) return;
+    console.log(formData);
+    console.log(files.filter((file) => file instanceof File));
     const payload = {
       Id: pet.id,
       Name: formData.name,
@@ -108,11 +123,9 @@ export const UpdatePetModal: FC<Props> = ({ isOpen, onClose, petId }) => {
       Size: parseInt(formData.size),
       Age: parseInt(formData.age),
       HasSpecialNeeds: parseInt(formData.hasSpecialNeeds) === 1,
-      FeaturesIds: formData.characteristics
-        ? [Number(formData.characteristics)]
-        : [],
+      FeaturesIds: formData.characteristics ?? [],
       Description: formData.description,
-      Pictures: [],
+      Pictures: files.filter((file) => file instanceof File),
     };
     updatePetMutation.mutate(payload);
   };
@@ -267,15 +280,21 @@ export const UpdatePetModal: FC<Props> = ({ isOpen, onClose, petId }) => {
             </div>
             {files.length > 0 && (
               <div className={styles.filePreview}>
-                {files.map((file, index) => (
-                  <div key={index} className={styles.previewItem}>
-                    <Image
-                      src={URL.createObjectURL(file)}
-                      alt={`Preview ${index}`}
-                      className={styles.previewImage}
-                    />
-                  </div>
-                ))}
+                {files.map((file, index) => {
+                  const imageSrc =
+                    file instanceof File ? URL.createObjectURL(file) : file;
+                  return (
+                    <div key={index} className={styles.previewItem}>
+                      <Image
+                        src={imageSrc}
+                        alt={`Preview ${index}`}
+                        className={styles.previewImage}
+                        width={80}
+                        height={80}
+                      />
+                    </div>
+                  );
+                })}
               </div>
             )}
           </div>
