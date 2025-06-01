@@ -64,9 +64,13 @@ export const AddPetModal: FC<Props> = ({ isOpen, onClose, onSuccess }) => {
       'image/*': ['.jpeg', '.jpg', '.png'],
     },
     onDrop: (acceptedFiles) => {
-      setFiles(acceptedFiles);
+      setFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
     },
   });
+
+  const handleRemoveImage = (index: number) => {
+    setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+  };
 
   const onSubmit = async (data: PetFormData) => {
     const payload = {
@@ -224,7 +228,11 @@ export const AddPetModal: FC<Props> = ({ isOpen, onClose, onSuccess }) => {
           {files.length > 0 && (
             <div className={styles.filePreview}>
               {files.map((file, index) => (
-                <div key={index} className={styles.previewItem}>
+                <div
+                  key={index}
+                  className={styles.previewItem}
+                  onClick={() => handleRemoveImage(index)}
+                >
                   <Image
                     width={72}
                     height={72}

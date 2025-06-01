@@ -1,4 +1,10 @@
-import { PetAge, PetGender, PetSize, PetSpecies } from '@/features/pets/types';
+import {
+  PetAge,
+  PetGender,
+  PetPicture,
+  PetSize,
+  PetSpecies,
+} from '@/features/pets/types';
 import { authClient } from '@/lib/auth-client';
 
 type UpdatePetResponse = {
@@ -17,7 +23,7 @@ type UpdatePetPayload = {
   HasSpecialNeeds: boolean;
   FeaturesIds: number[];
   Description: string;
-  Pictures: File[];
+  Pictures: Array<File | PetPicture>;
 };
 
 export const updatePet = async (options: UpdatePetPayload) => {
@@ -39,8 +45,14 @@ export const updatePet = async (options: UpdatePetPayload) => {
     formData.append(`FeaturesIds`, featureId.toString());
   });
 
-  options.Pictures.forEach((file) => {
-    formData.append(`Pictures`, file);
+  options.Pictures.forEach((file, index) => {
+    if (file instanceof File) {
+      formData.append(`Pictures[${index}].File`, file);
+      formData.append(`Pictures[${index}].Id`, '');
+    } else {
+      formData.append(`Pictures[${index}].Id`, file.id.toString());
+      formData.append(`Pictures[${index}].File`, file.url);
+    }
   });
 
   const response = await authClient.patch<UpdatePetResponse>(

@@ -2,6 +2,7 @@
 import { Button, Icon, Input } from '@/components/ui';
 import { colors } from '@/styles/colors';
 import { zodResolver } from '@hookform/resolvers/zod';
+import dayjs from 'dayjs';
 import Cookies from 'js-cookie';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -36,7 +37,10 @@ export const SignUpForm: FC = () => {
     }
 
     if (response?.data.token) {
-      Cookies.set('token', response.data.token);
+      const inThreeHours = dayjs().add(3, 'hour').toDate();
+      Cookies.set('token', response.data.token, {
+        expires: inThreeHours,
+      });
     }
 
     if (response?.data.isNewUser) {

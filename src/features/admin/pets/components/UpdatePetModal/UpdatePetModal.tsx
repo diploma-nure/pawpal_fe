@@ -8,6 +8,7 @@ import { useUpdatePet } from '@/features/pets/hooks/useUpdatePet';
 import {
   PetAge,
   PetGender,
+  PetPicture,
   PetSize,
   PetSpecies,
   PetsSpecialNeeds,
@@ -39,14 +40,13 @@ interface PetFormData {
 }
 
 export const UpdatePetModal: FC<Props> = ({ isOpen, onClose, petId }) => {
-  const [files, setFiles] = useState<(File | string)[]>([]);
+  const [files, setFiles] = useState<(File | PetPicture)[]>([]);
   const updatePetMutation = useUpdatePet({
     onSuccess: () => {
       onClose();
     },
   });
   const { data, isError } = useGetPet(petId, { enabled: isOpen });
-  const { data: featuresData } = usePetFeatures();
   const [showConfirm, setShowConfirm] = useState(false);
   const { data: features } = usePetFeatures();
 
@@ -71,7 +71,7 @@ export const UpdatePetModal: FC<Props> = ({ isOpen, onClose, petId }) => {
   });
 
   useEffect(() => {
-    if (data?.data && featuresData?.data) {
+    if (data?.data && features?.data) {
       const pet = data.data;
       reset({
         name: pet.name || '',
@@ -93,16 +93,16 @@ export const UpdatePetModal: FC<Props> = ({ isOpen, onClose, petId }) => {
             .map((feature) => feature.id) || [],
       });
 
-      setFiles(pet.pictures.map((picture) => picture.url));
+      setFiles(pet.pictures);
     }
-  }, [data, reset, featuresData]);
+  }, [data, reset, features]);
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
       'image/*': ['.jpeg', '.jpg', '.png'],
     },
     onDrop: (acceptedFiles) => {
-      setFiles(acceptedFiles);
+      setFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
     },
   });
 
@@ -110,11 +110,14 @@ export const UpdatePetModal: FC<Props> = ({ isOpen, onClose, petId }) => {
     setShowConfirm(true);
   };
 
+  const handleRemoveImage = (index: number) => {
+    setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+  };
+
   const onSubmit = (formData: PetFormData) => {
     const pet = data?.data;
     if (!pet) return;
-    console.log(formData);
-    console.log(files.filter((file) => file instanceof File));
+
     const payload = {
       Id: pet.id,
       Name: formData.name,
@@ -125,7 +128,7 @@ export const UpdatePetModal: FC<Props> = ({ isOpen, onClose, petId }) => {
       HasSpecialNeeds: parseInt(formData.hasSpecialNeeds) === 1,
       FeaturesIds: formData.characteristics ?? [],
       Description: formData.description,
-      Pictures: files.filter((file) => file instanceof File),
+      Pictures: files,
     };
     updatePetMutation.mutate(payload);
   };
@@ -282,9 +285,13 @@ export const UpdatePetModal: FC<Props> = ({ isOpen, onClose, petId }) => {
               <div className={styles.filePreview}>
                 {files.map((file, index) => {
                   const imageSrc =
-                    file instanceof File ? URL.createObjectURL(file) : file;
+                    file instanceof File ? URL.createObjectURL(file) : file.url;
                   return (
-                    <div key={index} className={styles.previewItem}>
+                    <div
+                      key={index}
+                      className={styles.previewItem}
+                      onClick={() => handleRemoveImage(index)}
+                    >
                       <Image
                         src={imageSrc}
                         alt={`Preview ${index}`}

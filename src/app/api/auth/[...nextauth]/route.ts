@@ -18,11 +18,11 @@ const handler = NextAuth({
         token: account?.id_token as string,
       });
       cookieStore.set('token', response.data.token, {
-        maxAge: 60 * 60,
+        maxAge: 60 * 60 * 3,
       });
 
       cookieStore.set('isNewUser', response.data.isNewUser ? 'true' : 'false', {
-        maxAge: 60 * 60,
+        maxAge: 60 * 60 * 3,
       });
 
       return true;

@@ -6,10 +6,16 @@ export const useUpdatePet = (config?: MutationConfig<typeof updatePet>) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: updatePet,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['pets'] });
-    },
     ...config,
+    mutationFn: updatePet,
+    onSettled: (data) => {
+      queryClient.invalidateQueries({
+        predicate: (query) => query.queryKey.includes('pets'),
+      });
+      queryClient.invalidateQueries({
+        predicate: (query) => query.queryKey.includes(data?.data),
+        refetchType: 'none',
+      });
+    },
   });
 };

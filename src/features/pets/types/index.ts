@@ -46,7 +46,7 @@ export const SortByOptions = [
   { title: 'Розміри', value: 3 },
 ];
 
-interface PetPicture {
+export interface PetPicture {
   id: number;
   url: string;
   order: number;
