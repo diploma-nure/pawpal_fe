@@ -3,7 +3,7 @@
 import { Checkbox } from '@/components/ui/Checkbox/Checkbox';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import clsx from 'clsx';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styles from './styles.module.scss';
 
 interface SelectProps {
@@ -24,10 +24,37 @@ export const Select: React.FC<SelectProps> = ({
   className,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const ref = useClickOutside<HTMLDivElement>(() => {
+  const [dropdownPosition, setDropdownPosition] = useState<'top' | 'bottom'>(
+    'bottom',
+  );
+  const selectRef = useRef<HTMLDivElement>(null);
+  const clickOutsideRef = useClickOutside<HTMLDivElement>(() => {
     setIsOpen(false);
   });
-  const toggleDropdown = () => setIsOpen(!isOpen);
+
+  // Combine refs using callback
+  const setRefs = (node: HTMLDivElement | null) => {
+    // Use type assertion to bypass readonly
+    (selectRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
+    (clickOutsideRef as React.MutableRefObject<HTMLDivElement | null>).current =
+      node;
+  };
+  const toggleDropdown = () => {
+    if (!isOpen && selectRef.current) {
+      const rect = selectRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const spaceBelow = viewportHeight - rect.bottom;
+      const spaceAbove = rect.top;
+      const dropdownHeight = Math.min(300, options.length * 60);
+
+      if (spaceBelow >= dropdownHeight || spaceBelow >= spaceAbove) {
+        setDropdownPosition('bottom');
+      } else {
+        setDropdownPosition('top');
+      }
+    }
+    setIsOpen(!isOpen);
+  };
 
   const onSelect = (selectedValue: number) => {
     if (multiselect) {
@@ -57,14 +84,19 @@ export const Select: React.FC<SelectProps> = ({
   };
 
   return (
-    <div ref={ref} className={clsx(styles.multiSelectWrapper, className)}>
+    <div ref={setRefs} className={clsx(styles.multiSelectWrapper, className)}>
       <div className={styles.selectHeader} onClick={toggleDropdown}>
         <p className={styles.selectedOption}>{getSelectedTitles()}</p>
         <span className={styles.arrow}></span>
       </div>
 
       {isOpen && (
-        <div className={styles.optionsList}>
+        <div
+          className={clsx(
+            styles.optionsList,
+            dropdownPosition === 'top' && styles.optionsListTop,
+          )}
+        >
           {options.map((option) => {
             const checked = multiselect
               ? Array.isArray(value) && value.includes(option.value)
