@@ -114,7 +114,7 @@ export const ApplicationSurveyModule: FC = () => {
               name="petType"
               control={control}
               options={PetSpecies}
-              values={petType.values}
+              values={petType}
             />
           </div>
 
@@ -124,7 +124,7 @@ export const ApplicationSurveyModule: FC = () => {
               name="gender"
               control={control}
               options={PetGender}
-              values={gender.values}
+              values={gender}
             />
           </div>
 
@@ -134,7 +134,7 @@ export const ApplicationSurveyModule: FC = () => {
               name="size"
               control={control}
               options={PetSize}
-              values={size.values}
+              values={size}
             />
           </div>
 
@@ -144,7 +144,7 @@ export const ApplicationSurveyModule: FC = () => {
               name="age"
               control={control}
               options={PetAge}
-              values={age.values}
+              values={age}
             />
           </div>
 

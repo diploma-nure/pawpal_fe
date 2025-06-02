@@ -1,3 +1,4 @@
+import { SurveyFormSchema } from '@/features/profile/components/SurveyForm';
 import { useCheckboxArray } from '@/features/surveys/hooks/useCheckboxArray';
 import { useGetSurvey } from '@/features/surveys/hooks/useGetSurvey';
 import { useEffect } from 'react';
@@ -8,57 +9,43 @@ export const useSurveyFormRetrive = (userId: number) => {
     userId: userId,
   });
 
-  const petType = useCheckboxArray();
-  const gender = useCheckboxArray();
-  const size = useCheckboxArray();
-  const age = useCheckboxArray();
   const specialNeeds = useCheckboxArray([], true);
 
   const {
     control,
     reset,
+    watch,
     formState: { errors },
-  } = useForm<SurveyFormInputs>({
+  } = useForm<SurveyFormSchema>({
     defaultValues: {
       petType: [],
       gender: [],
       size: [],
-      age: undefined,
-      hasSpecialNeeds: false,
+      age: [],
+      hasSpecialNeeds: 'false',
       characteristics: [],
       housingType: undefined,
-      hasYard: false,
-      allowPets: 0,
-      hasOtherPets: false,
-      hasChildren: false,
-      hadPetsBefore: false,
-      activityLevel: 0,
-      willingToAdoptSpecialNeeds: false,
-      understandsResponsibility: false,
+      hasYard: 'false',
+      allowPets: '0',
+      hasOtherPets: 'false',
+      hasChildren: 'false',
+      hadPetsBefore: 'false',
+      activityLevel: '0',
+      willingToAdoptSpecialNeeds: 'false',
+      understandsResponsibility: 'false',
       vacationPetCarePlan: '',
-      hasSufficientFinancialResources: false,
+      hasSufficientFinancialResources: 'false',
     },
   });
+
+  const petType = watch('petType');
+  const gender = watch('gender');
+  const size = watch('size');
+  const age = watch('age');
 
   useEffect(() => {
     if (data?.data) {
       const surveyData = data.data;
-
-      if (surveyData.preferredSpecies?.length) {
-        petType.setValues(surveyData.preferredSpecies);
-      }
-
-      if (surveyData.preferredGenders?.length) {
-        gender.setValues(surveyData.preferredGenders);
-      }
-
-      if (surveyData.preferredSizes?.length) {
-        size.setValues(surveyData.preferredSizes);
-      }
-
-      if (surveyData.preferredAges?.length) {
-        age.setValues(surveyData.preferredAges);
-      }
 
       if (surveyData.readyForSpecialNeedsPet) {
         specialNeeds.setValues([1]);
@@ -67,43 +54,40 @@ export const useSurveyFormRetrive = (userId: number) => {
       }
 
       reset({
-        petType: surveyData.preferredSpecies?.length
-          ? surveyData.preferredSpecies
-          : undefined,
-        gender: surveyData.preferredGenders?.length
-          ? surveyData.preferredGenders
-          : undefined,
-        size:
-          surveyData.preferredSizes && surveyData.preferredSizes.length > 0
-            ? surveyData.preferredSizes
-            : undefined,
-        age: surveyData.preferredAges?.length
-          ? surveyData.preferredAges[0]
-          : undefined,
-        hasSpecialNeeds: Boolean(surveyData.readyForSpecialNeedsPet),
-        characteristics: surveyData.desiredFeaturesIds || undefined,
+        petType: surveyData.preferredSpecies,
+        gender: surveyData.preferredGenders,
+        size: surveyData.preferredSizes,
+        age: surveyData.preferredAges,
+        hasSpecialNeeds: surveyData.readyForSpecialNeedsPet ? 'true' : 'false',
+        characteristics: surveyData.desiredFeaturesIds,
 
-        housingType:
-          surveyData.placeOfResidence !== undefined
-            ? (String(surveyData.placeOfResidence) as '1' | '2')
-            : undefined,
-        hasYard: surveyData.hasSafeWalkingArea ?? false,
-        allowPets: surveyData.petsAllowedAtResidence ?? 0,
-        hasOtherPets: surveyData.hasOtherPets ?? false,
-        hasChildren: surveyData.hasSmallChildren ?? false,
+        housingType: surveyData.placeOfResidence.toString() as '1' | '2',
+        hasYard: surveyData.hasSafeWalkingArea ? 'true' : 'false',
+        allowPets: surveyData.petsAllowedAtResidence.toString() as
+          | '0'
+          | '1'
+          | '2',
+        hasOtherPets: surveyData.hasOtherPets ? 'true' : 'false',
+        hasChildren: surveyData.hasSmallChildren ? 'true' : 'false',
 
-        hadPetsBefore: surveyData.hasOwnnedPetsBefore ?? false,
-        activityLevel: surveyData.desiredActivityLevel ?? 0,
-        willingToAdoptSpecialNeeds: surveyData.readyForSpecialNeedsPet ?? false,
+        hadPetsBefore: surveyData.hasOwnnedPetsBefore ? 'true' : 'false',
+        activityLevel: surveyData.desiredActivityLevel.toString() as
+          | '0'
+          | '1'
+          | '2',
+        willingToAdoptSpecialNeeds: surveyData.readyForSpecialNeedsPet
+          ? 'true'
+          : 'false',
 
-        understandsResponsibility:
-          surveyData.understandsResponsibility ?? false,
+        understandsResponsibility: surveyData.understandsResponsibility
+          ? 'true'
+          : 'false',
         vacationPetCarePlan: surveyData.vacationPetCarePlan || '',
         hasSufficientFinancialResources:
-          surveyData.hasSufficientFinancialResources ?? false,
+          surveyData.hasSufficientFinancialResources ? 'true' : 'false',
       });
     }
-  }, [data, reset]);
+  }, [data, reset, userId]);
 
   return {
     data,
