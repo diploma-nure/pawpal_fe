@@ -8,21 +8,20 @@ $modal-max-width: 400px;
   justify-content: center;
   height: 100svh;
   width: 100%;
-  padding: rem-calc(16);
+  padding-block: rem-calc(16);
 
   position: relative;
 
   background-color: $white;
   border-radius: rem-calc(8);
   outline: none;
-  overflow-y: auto;
 
   & div[class*='optionsList'] {
     background-color: $white;
   }
 
   @include onTablet() {
-    padding: rem-calc(40);
+    padding-block: rem-calc(40);
     max-width: $modal-max-width;
     height: unset;
     max-height: 90%;
@@ -52,6 +51,14 @@ $modal-max-width: 400px;
     align-items: center;
     justify-content: center;
     gap: rem-calc(16);
+    overflow-y: auto;
+
+    padding-inline: rem-calc(16);
+    padding-block: rem-calc(16);
+
+    @include onTablet() {
+      padding-inline: rem-calc(40);
+    }
   }
 }
 

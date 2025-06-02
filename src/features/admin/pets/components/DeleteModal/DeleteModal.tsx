@@ -29,6 +29,7 @@ export const DeleteModal: FC<Props> = ({ petId }) => {
         key={isOpen.toString()}
         onClose={onClose}
         className={clsx(styles.deleteModal)}
+        modalBodyClassName={styles.deleteModalBody}
       >
         <div>
           <h3

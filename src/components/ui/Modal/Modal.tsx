@@ -13,6 +13,7 @@ type Props = {
   children: ReactNode;
   renderTitleIcon?: () => JSX.Element | null;
   className?: string;
+  modalBodyClassName?: string;
 };
 
 export const Modal: FC<Props> = ({
@@ -21,6 +22,7 @@ export const Modal: FC<Props> = ({
   children,
   renderTitleIcon = () => <Icon name="logo" width={92} height={78} />,
   className,
+  modalBodyClassName,
 }) => {
   useEffect(() => {
     if (isOpen) {
@@ -48,7 +50,9 @@ export const Modal: FC<Props> = ({
         <div className={styles.modalTitleIcon}>{renderTitleIcon?.()}</div>
       )}
 
-      <div className={styles.modalBody}>{children}</div>
+      <div className={clsx(styles.modalBody, modalBodyClassName)}>
+        {children}
+      </div>
     </ReactModal>
   );
 };

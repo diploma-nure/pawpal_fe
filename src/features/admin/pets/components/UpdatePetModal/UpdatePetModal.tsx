@@ -152,6 +152,7 @@ export const UpdatePetModal: FC<Props> = ({ isOpen, onClose, petId }) => {
         [styles.addPetModal]: !showConfirm,
         [styles.confirmModal]: showConfirm,
       })}
+      modalBodyClassName={styles.addPetModalBody}
       renderTitleIcon={renderModalIcon}
     >
       {!showConfirm && (

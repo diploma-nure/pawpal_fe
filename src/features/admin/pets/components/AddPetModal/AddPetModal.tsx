@@ -98,7 +98,12 @@ export const AddPetModal: FC<Props> = ({ isOpen, onClose, onSuccess }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} className={styles.addPetModal}>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      modalBodyClassName={styles.addPetModalBody}
+      className={styles.addPetModal}
+    >
       <div className={styles.form}>
         <div className={styles.formGroup}>
           <div className={styles.formField}>

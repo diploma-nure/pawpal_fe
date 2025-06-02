@@ -1,3 +1,15 @@
 .modal {
   max-width: 540px;
+
+  & div[class*='modalBody'] {
+    overflow-y: hidden;
+
+    @media (max-height: 700px) {
+      overflow-y: auto;
+    }
+  }
+}
+
+.text {
+  text-align: center;
 }
