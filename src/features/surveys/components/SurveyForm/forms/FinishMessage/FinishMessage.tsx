@@ -4,6 +4,7 @@ import { Button, Icon } from '@/components/ui';
 import { completeSurvey } from '@/features/surveys/api/completeSurvey';
 import { useSurveyData } from '@/features/surveys/hooks/useFormData';
 import { Survey } from '@/features/surveys/types';
+import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import styles from './styles.module.scss';
 
@@ -20,6 +21,7 @@ export const FinishMessage = () => {
       });
 
       if (res.message === 'Success') {
+        Cookies.set('isNewUser', 'false');
         push(`/pets`);
       }
     } catch (e) {
